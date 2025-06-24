@@ -269,52 +269,42 @@ YOLO автоматически создает визуализации обуч
 Сравнение ground truth меток с предсказаниями модели:
 
 
-![Ground Truth метки](https://github.com/amir2628/restaurant-object-detection/blob/ea25c74bfb511a8f1858ac9a80ed9367a8459f0d/outputs/experiments/yolo_restaurant_detection_1750757663/val_batch0_labels.jpg)
+![Ground Truth метки](https://github.com/amir2628/restaurant-object-detection/blob/a76036c23ea311ffb59f2a5f9e21cfaefda708e3/outputs/experiments/yolo_restaurant_detection_1750757663/val_batch0_labels.jpg)
 
 *Ground Truth метки - `outputs/experiments/yolo_restaurant_detection_1750757663/val_batch0_labels.jpg`*
 
 
-![Предсказания модели](https://github.com/amir2628/restaurant-object-detection/blob/ea25c74bfb511a8f1858ac9a80ed9367a8459f0d/outputs/experiments/yolo_restaurant_detection_1750757663/val_batch0_pred.jpg)
+![Предсказания модели](https://github.com/amir2628/restaurant-object-detection/blob/a76036c23ea311ffb59f2a5f9e21cfaefda708e3/outputs/experiments/yolo_restaurant_detection_1750757663/val_batch0_pred.jpg)
 
 *Предсказания модели - `outputs/experiments/yolo_restaurant_detection_1750757663/val_batch0_pred.jpg`*
 
 
-![Ground Truth метки (batch 1)](https://github.com/amir2628/restaurant-object-detection/blob/ea25c74bfb511a8f1858ac9a80ed9367a8459f0d/outputs/experiments/yolo_restaurant_detection_1750757663/val_batch1_labels.jpg)
+![Ground Truth метки (batch 1)](https://github.com/amir2628/restaurant-object-detection/blob/a76036c23ea311ffb59f2a5f9e21cfaefda708e3/outputs/experiments/yolo_restaurant_detection_1750757663/val_batch1_labels.jpg)
 
 *Ground Truth метки (batch 1) - `outputs/experiments/yolo_restaurant_detection_1750757663/val_batch1_labels.jpg`*
 
 
-![Предсказания модели (batch 1)](https://github.com/amir2628/restaurant-object-detection/blob/ea25c74bfb511a8f1858ac9a80ed9367a8459f0d/outputs/experiments/yolo_restaurant_detection_1750757663/val_batch1_pred.jpg)
+![Предсказания модели (batch 1)](https://github.com/amir2628/restaurant-object-detection/blob/a76036c23ea311ffb59f2a5f9e21cfaefda708e3/outputs/experiments/yolo_restaurant_detection_1750757663/val_batch1_pred.jpg)
 
 *Предсказания модели (batch 1) - `outputs/experiments/yolo_restaurant_detection_1750757663/val_batch1_pred.jpg`*
 
 
 #### 🔬 Дополнительный анализ
 
-
-##### 📦 **Box F1 кривая**
-
-F1-score для bounding box детекции
-
-![📦 **Box F1 кривая**](https://github.com/amir2628/restaurant-object-detection/blob/ea25c74bfb511a8f1858ac9a80ed9367a8459f0d/outputs/experiments/yolo_restaurant_detection_1750757663/BoxF1_curve.png)
-
-*Файл: `outputs/experiments/yolo_restaurant_detection_1750757663/BoxF1_curve.png`*
-
-
 ##### 📊 **Расширенный обучающий батч**
 
 Дополнительные примеры обучающих данных
 
-![📊 **Расширенный обучающий батч**](https://github.com/amir2628/restaurant-object-detection/blob/ea25c74bfb511a8f1858ac9a80ed9367a8459f0d/outputs/experiments/yolo_restaurant_detection_1750757663/train_batch5760.jpg)
+![📊 **Расширенный обучающий батч**](https://github.com/amir2628/restaurant-object-detection/blob/a76036c23ea311ffb59f2a5f9e21cfaefda708e3/outputs/experiments/yolo_restaurant_detection_1750757663/train_batch22861.jpg)
 
-*Файл: `outputs/experiments/yolo_restaurant_detection_1750757663/train_batch5760.jpg`*
+*Файл: `outputs/experiments/yolo_restaurant_detection_1750757663/train_batch22861.jpg`*
 
 
 ### 📁 Полные результаты
 
 Все визуализации и результаты обучения доступны в репозитории:
 
-🔗 **[Просмотреть все результаты эксперимента](https://github.com/amir2628/restaurant-object-detection/blob/ea25c74bfb511a8f1858ac9a80ed9367a8459f0d/outputs/experiments/yolo_restaurant_detection_1750757663/)**
+🔗 **[Просмотреть все результаты эксперимента](https://github.com/amir2628/restaurant-object-detection/tree/a76036c23ea311ffb59f2a5f9e21cfaefda708e3/outputs/experiments/yolo_restaurant_detection_1750757663/)**
 
 **Структура файлов результатов:**
 ```
@@ -637,12 +627,3 @@ patience: 15             # early stopping
 
 **Система готова к внедрению в реальные ресторанные процессы!** 🚀
 
----
-
-*Сгенерировано автоматически системой профессиональной аналитики ML проектов*  
-*Время создания отчета: 2025-06-24 14:39:17*
-
-
----
-
-*Отчет создан автоматически с использованием профессиональной системы анализа данных.*
