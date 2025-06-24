@@ -311,15 +311,6 @@ YOLO автоматически создает визуализации обуч
 #### 🔬 Дополнительный анализ
 
 
-##### 📦 **Box F1 кривая**
-
-F1-score для bounding box детекции
-
-![📦 **Box F1 кривая**](https://github.com/amir2628/restaurant-object-detection/blob/ea25c74bfb511a8f1858ac9a80ed9367a8459f0d/outputs/experiments/yolo_restaurant_detection_1750703156/BoxF1_curve.png)
-
-*Файл: `outputs/experiments/yolo_restaurant_detection_1750703156/BoxF1_curve.png`*
-
-
 ##### 📊 **Расширенный обучающий батч**
 
 Дополнительные примеры обучающих данных

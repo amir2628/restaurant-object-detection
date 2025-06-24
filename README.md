@@ -75,8 +75,7 @@ restaurant-object-detection/
 ├── 📁 src/
 │   ├── data/                         # Модули обработки данных
 │   ├── models/                       # Модели и инференс
-│   ├── utils/                        # Утилиты
-│   └── api/                          # API интерфейсы
+│   └── utils/                        # Утилиты
 ├── 📁 data/
 │   ├── raw/                          # Исходные видео
 │   ├── processed/dataset/            # Готовый датасет
@@ -141,7 +140,7 @@ python scripts/train_model.py --data "dataset.yaml" --config "config/train_confi
 python scripts/train_model.py --data "dataset.yaml" --wandb
 ```
 
-### 4. Инференс
+### 5. Инференс
 
 ```bash
 # Инференс на изображениях
@@ -160,7 +159,7 @@ python scripts/run_inference.py \
   --realtime --camera 0
 ```
 
-### 5. Генерация отчетов
+### 6. Генерация отчетов
 
 ```bash
 # Полный отчет по проекту
@@ -183,8 +182,6 @@ python scripts/generate_final_report.py \
 | **Скорость инференса** | **~2ms** | ⚡ Real-time обработка |
 | **Размер модели** | **~6MB** | 📦 Компактная |
 | **Время обучения** | **17.5 мин** | 🚀 Быстрое обучение |
-
-<img width="1280" alt="Image" src="https://github.com/user-attachments/assets/66c2826a-59ff-4134-9a34-aec64a3c271b" />
 
 ### 📈 Особенности реализации
 
@@ -213,24 +210,6 @@ python scripts/generate_final_report.py \
 }
 ```
 
-## 🎯 API использование
-
-```python
-from src.api.detection_api import DetectionAPI
-
-# Инициализация
-api = DetectionAPI(model_path="path/to/best.pt")
-
-# Детекция на изображении
-results = api.detect_image("image.jpg")
-
-# Детекция на видео
-results = api.detect_video("video.mp4")
-
-# Batch обработка
-results = api.detect_batch(["img1.jpg", "img2.jpg"])
-```
-
 ## 🛠️ Системные требования
 
 - **Python:** 3.8+
@@ -238,6 +217,10 @@ results = api.detect_batch(["img1.jpg", "img2.jpg"])
 - **RAM:** 8GB+
 - **GPU память:** 4GB+ (рекомендуется)
 - **Место на диске:** 10GB+
+
+## 📝 Лицензия
+
+MIT License - см. [LICENSE](LICENSE) файл.
 
 ## 👥 Автор
 
@@ -293,8 +276,7 @@ restaurant-object-detection/
 ├── 📁 src/
 │   ├── data/                         # Data processing modules
 │   ├── models/                       # Models and inference
-│   ├── utils/                        # Utilities
-│   └── api/                          # API interfaces
+│   └── utils/                        # Utilities
 ├── 📁 data/
 │   ├── raw/                          # Source videos
 │   ├── processed/dataset/            # Ready dataset
@@ -402,8 +384,6 @@ python scripts/generate_final_report.py \
 | **Model Size** | **~6MB** | 📦 Compact |
 | **Training Time** | **17.5 min** | 🚀 Fast training |
 
-<img width="1280" alt="Image" src="https://github.com/user-attachments/assets/66c2826a-59ff-4134-9a34-aec64a3c271b" />
-
 ### 📈 Implementation Features
 
 - **🤖 Ensemble annotation** - Using 3 models (YOLOv11n, s, m)
@@ -431,24 +411,6 @@ python scripts/generate_final_report.py \
 }
 ```
 
-## 🎯 API Usage
-
-```python
-from src.api.detection_api import DetectionAPI
-
-# Initialization
-api = DetectionAPI(model_path="path/to/best.pt")
-
-# Image detection
-results = api.detect_image("image.jpg")
-
-# Video detection
-results = api.detect_video("video.mp4")
-
-# Batch processing
-results = api.detect_batch(["img1.jpg", "img2.jpg"])
-```
-
 ## 🛠️ System Requirements
 
 - **Python:** 3.8+
@@ -464,25 +426,6 @@ results = api.detect_batch(["img1.jpg", "img2.jpg"])
 - **Memory usage:** ✅ <2GB GPU memory
 - **Model accuracy:** ✅ Production-ready (79.7% mAP@0.5)
 
-## 🚀 Deployment Options
-
-### Docker Deployment
-```bash
-# Build container
-docker build -t restaurant-detector .
-
-# Run inference service
-docker run -p 8000:8000 restaurant-detector
-```
-
-### API Service
-```bash
-# Start FastAPI service
-python src/api/main.py
-
-# Access at http://localhost:8000/docs
-```
-
 ## 🤝 Contributing
 
 1. Fork the repository
@@ -490,6 +433,10 @@ python src/api/main.py
 3. Commit changes (`git commit -m 'Add amazing feature'`)
 4. Push to branch (`git push origin feature/amazing-feature`)
 5. Open Pull Request
+
+## 📝 License
+
+MIT License - see [LICENSE](LICENSE) file.
 
 ## 👥 Author
 
@@ -503,5 +450,10 @@ python src/api/main.py
 ---
 
 <div align="center">
+
 **🌟 If this project helped you, please give it a star! 🌟**
+
+[![GitHub stars](https://img.shields.io/github/stars/amir2628/restaurant-object-detection?style=social)](https://github.com/amir2628/restaurant-object-detection)
+[![GitHub forks](https://img.shields.io/github/forks/amir2628/restaurant-object-detection?style=social)](https://github.com/amir2628/restaurant-object-detection)
+
 </div>
