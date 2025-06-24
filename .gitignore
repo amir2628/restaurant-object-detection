@@ -50,6 +50,8 @@ dataset.yaml
 # Experiment results
 outputs/
 outputs/**
+!outputs/experiments/
+!outputs/experiments/**
 runs/
 runs/**
 
