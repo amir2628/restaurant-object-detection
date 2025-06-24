@@ -25,25 +25,26 @@ data/raw/**
 *.wmv
 *.flv
 
-# Processed frames and images
+# Processed frames and images (only in data directories)
 data/processed/
 data/processed/**
-*.jpg
-*.jpeg
-*.png
-*.bmp
-*.tiff
-
-# Generated labels and annotations
 data/annotations/
 data/annotations/**
-*.txt
-labels/
-labels/**
-
-# Datasets
 data/datasets/
 data/datasets/**
+
+# Image files ONLY in data directories (allow experiment images)
+data/**/*.jpg
+data/**/*.jpeg
+data/**/*.png
+data/**/*.bmp
+data/**/*.tiff
+
+# Text files ONLY in data directories (allow other .txt files)
+data/**/*.txt
+data/**/labels/
+
+# Datasets
 dataset.yaml
 
 # ============================================================================

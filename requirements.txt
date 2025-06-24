@@ -1,0 +1,62 @@
+# Core ML and Computer Vision (please check your cuda version in here we have cu124 ===> 12.4)
+ultralytics>=8.0.0
+torch>=2.0.0 --index-url https://download.pytorch.org/whl/cu124
+torchvision>=0.15.0 --index-url https://download.pytorch.org/whl/cu124
+torchaudio>=2.0.0 --index-url https://download.pytorch.org/whl/cu124
+opencv-python>=4.8.0
+numpy>=1.24.0
+Pillow>=9.5.0
+
+# Data Processing
+pandas>=2.0.0
+scikit-learn>=1.3.0
+albumentations>=1.3.0
+imgaug>=0.4.0
+
+# Visualization and Plotting
+matplotlib>=3.7.0
+seaborn>=0.12.0
+plotly>=5.15.0
+wandb>=0.15.0
+
+# Hyperparameter Optimization
+optuna>=3.2.0
+hyperopt>=0.2.7
+
+# Utilities
+tqdm>=4.65.0
+pyyaml>=6.0
+click>=8.1.0
+colorlog>=6.7.0
+rich>=13.4.0
+
+# Annotation Tools Integration
+labelme>=5.2.0
+supervision>=0.12.0
+
+# Data Format Support
+pycocotools>=2.0.6
+xmltodict>=0.13.0
+
+# Development and Testing
+pytest>=7.4.0
+black>=23.0.0
+flake8>=6.0.0
+pre-commit>=3.3.0
+
+# Notebook Support
+jupyter>=1.0.0
+ipywidgets>=8.0.0
+
+# Video Processing
+moviepy>=1.0.3
+ffmpeg-python>=0.2.0
+
+# API and Web Interface (Optional)
+fastapi>=0.100.0
+uvicorn>=0.22.0
+streamlit>=1.25.0
+
+# Performance Monitoring
+psutil>=5.9.0
+GPUtil>=1.4.0
