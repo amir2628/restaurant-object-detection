@@ -101,17 +101,34 @@ cd restaurant-object-detection
 pip install -r requirements.txt
 ```
 
-### 2. Подготовка данных (если нужна аннотация)
+### 2. Подготовка исходных данных
+
+**⚠️ ВАЖНО: Поместите ваши видеофайлы в правильную директорию!**
+
+```bash
+# Создайте директорию для исходных видео (если не существует)
+mkdir -p data/raw
+
+# Поместите ваши видеофайлы ресторана в data/raw/
+# Поддерживаемые форматы: .mp4, .avi, .mov, .mkv, .wmv
+# Пример структуры:
+# data/raw/
+# ├── restaurant_video_1.mp4
+# ├── restaurant_video_2.mp4
+# └── restaurant_video_3.avi
+```
+
+### 3. Подготовка данных (если нужна аннотация)
 
 ```bash
 # Автоматическое исправление пустых аннотаций
 python scripts/fix_annotations.py --dataset "data/processed/dataset"
 
-# Полный пайплайн подготовки данных
+# Полный пайплайн подготовки данных (извлечение кадров + аннотация)
 python scripts/prepare_data.py --input "data/raw" --config "config/pipeline_config.json"
 ```
 
-### 3. Обучение модели
+### 4. Обучение модели
 
 ```bash
 # Обучение с готовым датасетом
@@ -304,17 +321,34 @@ cd restaurant-object-detection
 pip install -r requirements.txt
 ```
 
-### 2. Data Preparation (if annotation needed)
+### 2. Prepare Source Data
+
+**⚠️ IMPORTANT: Place your video files in the correct directory!**
+
+```bash
+# Create directory for source videos (if it doesn't exist)
+mkdir -p data/raw
+
+# Place your restaurant video files in data/raw/
+# Supported formats: .mp4, .avi, .mov, .mkv, .wmv
+# Example structure:
+# data/raw/
+# ├── restaurant_video_1.mp4
+# ├── restaurant_video_2.mp4
+# └── restaurant_video_3.avi
+```
+
+### 3. Data Preparation (if annotation needed)
 
 ```bash
 # Automatic fix for empty annotations
 python scripts/fix_annotations.py --dataset "data/processed/dataset"
 
-# Full data preparation pipeline
+# Full data preparation pipeline (frame extraction + annotation)
 python scripts/prepare_data.py --input "data/raw" --config "config/pipeline_config.json"
 ```
 
-### 3. Model Training
+### 4. Model Training
 
 ```bash
 # Training with ready dataset
