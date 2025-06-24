@@ -237,10 +237,6 @@ results = api.detect_batch(["img1.jpg", "img2.jpg"])
 - **GPU память:** 4GB+ (рекомендуется)
 - **Место на диске:** 10GB+
 
-## 📝 Лицензия
-
-MIT License - см. [LICENSE](LICENSE) файл.
-
 ## 👥 Автор
 
 **Amir** - [@amir2628](https://github.com/amir2628)
@@ -491,10 +487,6 @@ python src/api/main.py
 4. Push to branch (`git push origin feature/amazing-feature`)
 5. Open Pull Request
 
-## 📝 License
-
-MIT License - see [LICENSE](LICENSE) file.
-
 ## 👥 Author
 
 **Amir** - [@amir2628](https://github.com/amir2628)
@@ -502,16 +494,10 @@ MIT License - see [LICENSE](LICENSE) file.
 ## 🙏 Acknowledgments
 
 - [Ultralytics](https://github.com/ultralytics/ultralytics) for YOLOv11
-- Restaurant industry for inspiration
 - Open-source community for tools and libraries
 
 ---
 
 <div align="center">
-
 **🌟 If this project helped you, please give it a star! 🌟**
-
-[![GitHub stars](https://img.shields.io/github/stars/amir2628/restaurant-object-detection?style=social)](https://github.com/amir2628/restaurant-object-detection)
-[![GitHub forks](https://img.shields.io/github/forks/amir2628/restaurant-object-detection?style=social)](https://github.com/amir2628/restaurant-object-detection)
-
 </div>
