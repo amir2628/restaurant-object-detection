@@ -1,0 +1,155 @@
+# ============================================================================
+# YOLO Models (Downloaded automatically)
+# ============================================================================
+*.pt
+*.pth
+*.onnx
+*.engine
+yolo*.pt
+yolo*.yaml
+yolo11*.pt
+yolov8*.pt
+
+# ============================================================================
+# Data Files (Generated/Large files)
+# ============================================================================
+# Raw video files
+data/raw/
+data/raw/**
+*.mp4
+*.avi
+*.mov
+*.mkv
+*.wmv
+*.flv
+
+# Processed frames and images
+data/processed/
+data/processed/**
+*.jpg
+*.jpeg
+*.png
+*.bmp
+*.tiff
+
+# Generated labels and annotations
+data/annotations/
+data/annotations/**
+*.txt
+labels/
+labels/**
+
+# Datasets
+data/datasets/
+data/datasets/**
+dataset.yaml
+
+# ============================================================================
+# Training Outputs
+# ============================================================================
+# Experiment results
+outputs/
+outputs/**
+runs/
+runs/**
+
+# Training logs and checkpoints
+*.log
+logs/
+checkpoint_*.pt
+last.pt
+best.pt
+
+# TensorBoard logs
+events.out.tfevents.*
+
+# ============================================================================
+# Python
+# ============================================================================
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv/
+.env/
+
+# ============================================================================
+# IDE and Editor files
+# ============================================================================
+# VS Code
+.vscode/
+*.code-workspace
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# ============================================================================
+# Temporary Files
+# ============================================================================
+# Cache files
+*.cache
+.cache/
+__pycache__/
+
+# ============================================================================
+# Reports and Documentation
+# ============================================================================
+# Generated reports (keep templates, ignore generated)
+*_report.html
+*_report.json
+*.pdf
+
+# ============================================================================
+# Configuration (Keep templates, ignore local configs)
+# ============================================================================
+# Local configuration overrides
+config/local_*.json
+config/local_*.yaml
+*_local.json
+*_local.yaml
+
+# Secrets and API keys
+.env
+.env.local
+secrets.json
+api_keys.txt
+
+# ============================================================================
+# Weights & Biases
+# ============================================================================
+wandb/
+
+# ============================================================================
+# Misc
+# ============================================================================
+# Compressed files
+*.zip
+*.tar.gz
+*.rar
+*.7z
+
+# Performance profiling
+*.prof

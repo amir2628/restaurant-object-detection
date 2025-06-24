@@ -1,0 +1,156 @@
+# Конфигурация модели YOLOv11 для детекции объектов
+# Этот файл содержит все параметры для обучения и настройки модели
+
+# Основные параметры модели
+model:
+  size: "n"  # Размер модели: n(nano), s(small), m(medium), l(large), x(xlarge)
+  input_size: 640  # Размер входного изображения
+  classes: 80  # Количество классов (будет обновлено автоматически)
+  
+# Параметры обучения
+training:
+  epochs: 100
+  batch_size: 16
+  learning_rate: 0.01
+  patience: 10  # Ранняя остановка
+  
+  # Оптимизатор
+  optimizer: "AdamW"
+  weight_decay: 0.0005
+  momentum: 0.937
+  
+  # Scheduler
+  scheduler: "cosine"
+  warmup_epochs: 3
+  warmup_momentum: 0.8
+  warmup_bias_lr: 0.1
+  
+  # Регуляризация
+  dropout: 0.0
+  label_smoothing: 0.0
+  
+  # Функция потерь
+  box_loss_gain: 0.05
+  cls_loss_gain: 0.5
+  dfl_loss_gain: 1.5
+  
+# Аугментация данных
+augmentation:
+  # Геометрические преобразования
+  mosaic: 1.0
+  mixup: 0.0
+  copy_paste: 0.0
+  
+  # Пространственные аугментации
+  degrees: 0.0  # Поворот изображения
+  translate: 0.1  # Смещение
+  scale: 0.5  # Масштабирование
+  shear: 0.0  # Сдвиг
+  perspective: 0.0  # Перспектива
+  
+  # Цветовые аугментации
+  hsv_h: 0.015  # Оттенок
+  hsv_s: 0.7  # Насыщенность
+  hsv_v: 0.4  # Яркость
+  
+  # Геометрические операции
+  flipud: 0.0  # Вертикальный поворот
+  fliplr: 0.5  # Горизонтальный поворот
+  
+# Параметры валидации
+validation:
+  conf_threshold: 0.001  # Порог уверенности
+  iou_threshold: 0.6  # Порог IoU для NMS
+  max_det: 300  # Максимальное количество детекций
+  
+  # Метрики
+  iou_thresholds: [0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95]
+  
+# Настройки устройства
+device:
+  auto_device: true  # Автоматический выбор устройства
+  workers: 4  # Количество рабочих процессов
+  pin_memory: true  # Закрепление памяти для GPU
+  
+# Сохранение модели
+save:
+  period: 10  # Сохранять каждые N эпох
+  best_only: true  # Сохранять только лучшую модель
+  
+# Логирование
+logging:
+  log_metrics: true
+  log_images: true
+  log_period: 10  # Логировать каждые N батчей
+  wandb: false  # Weights & Biases интеграция
+  tensorboard: true  # TensorBoard логирование
+  
+# Специфические настройки для задачи
+task_specific:
+  # Классы для ресторанной сцены
+  target_classes:
+    - "person"
+    - "chair" 
+    - "dining table"
+    - "cup"
+    - "fork"
+    - "knife"
+    - "spoon"
+    - "bowl"
+    - "bottle"
+    - "wine glass"
+    - "sandwich"
+    - "pizza"
+    - "cake"
+    - "apple"
+    - "banana"
+    - "orange"
+    - "cell phone"
+    - "laptop"
+    - "book"
+  
+  # Специальные настройки для улучшения детекции в ресторане
+  small_object_detection: true
+  multi_scale_training: true
+  anchor_optimization: true
+
+# Постобработка
+postprocessing:
+  nms:
+    iou_threshold: 0.45
+    confidence_threshold: 0.25
+    max_detections: 300
+    agnostic: false
+    multi_label: false
+  
+  # Фильтрация результатов
+  min_bbox_area: 100
+  max_bbox_ratio: 0.8
+  
+# Эксперименты с гиперпараметрами
+hyperparameter_tuning:
+  enabled: false
+  
+  # Параметры для оптимизации
+  search_space:
+    learning_rate: [0.001, 0.01, 0.1]
+    batch_size: [8, 16, 32]
+    weight_decay: [0.0001, 0.0005, 0.001]
+    mosaic: [0.0, 0.5, 1.0]
+  
+  # Стратегия поиска
+  search_strategy: "random"  # random, grid, bayesian
+  n_trials: 20
+  
+# Дополнительные настройки
+extras:
+  # Профилирование
+  profile: false
+  
+  # Отладка
+  debug: false
+  verbose: true
+  
+  # Воспроизводимость
+  seed: 42
+  deterministic: true
