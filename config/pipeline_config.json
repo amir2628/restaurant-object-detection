@@ -1,171 +1,59 @@
 {
-  "description": "Профессиональная конфигурация для пайплайна подготовки данных YOLO11",
-  "version": "2.0",
-  
   "video_processing": {
-    "fps_extraction": 1.5,
-    "min_frame_interval": 0.7,
-    "quality_threshold": 0.75,
-    "max_frames_per_video": 800,
-    "frame_formats": [".jpg", ".png"],
-    "video_formats": [".mp4", ".avi", ".mov", ".mkv", ".wmv", ".flv"],
-    "enable_deduplication": true,
-    "similarity_threshold": 0.95,
-    "enable_quality_filtering": true,
-    "min_resolution": [640, 480],
-    "blur_threshold": 100
+    "fps_extraction": 2.0,
+    "max_frames_per_video": 1000,
+    "resize_frames": true,
+    "target_size": [640, 640],
+    "supported_formats": [".mp4", ".avi", ".mov", ".mkv", ".wmv", ".flv", ".webm"]
   },
-  
   "annotation": {
-    "batch_size": 8,
-    "num_workers": 4,
-    "confidence_threshold": 0.20,
-    "enable_quality_check": true,
-    "auto_validation": true,
-    "models": {
-      "yolo11n": {
-        "weight": 0.25,
-        "confidence": 0.15,
-        "enabled": true
-      },
-      "yolo11s": {
-        "weight": 0.35,
-        "confidence": 0.18,
-        "enabled": true
-      },
-      "yolo11m": {
-        "weight": 0.40,
-        "confidence": 0.22,
-        "enabled": true
-      }
-    },
-    "ensemble": {
-      "consensus_threshold": 0.5,
-      "confidence_boost": 0.12,
-      "iou_threshold": 0.6,
-      "weighted_voting": true
-    },
-    "filtering": {
-      "min_confidence": 0.25,
-      "min_area": 150,
-      "max_area_ratio": 0.85,
-      "min_aspect_ratio": 0.1,
-      "max_aspect_ratio": 15.0,
-      "edge_threshold": 8,
-      "remove_duplicates": true,
-      "duplicate_iou_threshold": 0.8
-    },
-    "restaurant_classes": [
+    "confidence_threshold": 0.25,
+    "create_empty_annotations": true,
+    "use_ensemble_models": true,
+    "ensemble_models": ["yolo11n.pt", "yolo11s.pt", "yolov8n.pt"],
+    "max_models_in_ensemble": 3,
+    "iou_threshold": 0.6,
+    "tta_enabled": false
+  },
+  "dataset": {
+    "train_ratio": 0.7,
+    "val_ratio": 0.2,
+    "test_ratio": 0.1,
+    "class_names": [
       "person",
       "chair", 
-      "dining table",
+      "dining_table",
       "cup",
+      "bowl",
+      "bottle",
+      "wine_glass",
       "fork",
       "knife",
       "spoon",
-      "bowl",
-      "bottle",
-      "wine glass",
-      "sandwich",
-      "pizza",
-      "cake",
-      "apple",
-      "banana",
-      "orange",
-      "cell phone",
-      "laptop",
-      "book",
       "plate",
-      "glass"
+      "food",
+      "phone",
+      "book",
+      "laptop"
     ],
-    "augmentation": {
-      "enable_tta": true,
-      "tta_transforms": ["flip", "rotate"],
-      "tta_confidence_multiplier": 0.9
-    }
+    "min_images_per_split": 10
   },
-  
-  "dataset": {
-    "train_ratio": 0.70,
-    "val_ratio": 0.20,
-    "test_ratio": 0.10,
-    "min_images_per_split": 15,
-    "max_images_per_split": 10000,
-    "enable_augmentation": true,
-    "stratify_by_class": true,
-    "ensure_class_balance": true,
-    "augmentation": {
-      "enabled": true,
-      "factor": 2,
-      "techniques": [
-        "horizontal_flip",
-        "rotation",
-        "brightness",
-        "contrast",
-        "saturation",
-        "blur",
-        "noise"
-      ],
-      "rotation_range": 15,
-      "brightness_range": 0.2,
-      "contrast_range": 0.2
-    }
-  },
-  
   "quality_control": {
-    "min_detections_per_image": 0,
-    "max_detections_per_image": 30,
-    "validate_annotations": true,
-    "generate_reports": true,
-    "enable_visual_validation": true,
-    "sample_validation_count": 50,
-    "quality_metrics": [
-      "bbox_distribution",
-      "class_balance",
-      "image_quality",
-      "annotation_consistency"
-    ],
-    "auto_fix_issues": true,
-    "backup_before_fix": true
+    "min_detection_size": 0.01,
+    "max_detection_size": 0.8,
+    "aspect_ratio_range": [0.2, 5.0],
+    "duplicate_removal_enabled": true
   },
-  
-  "performance": {
-    "use_gpu": true,
-    "gpu_memory_limit": 0.8,
-    "batch_processing": true,
-    "parallel_workers": 4,
-    "cache_annotations": true,
-    "optimize_memory": true
-  },
-  
   "output": {
-    "save_intermediate_results": true,
-    "create_visualization": true,
-    "generate_statistics": true,
-    "export_formats": ["yolo", "coco"],
-    "create_backup": false,
-    "compression": {
-      "enabled": false,
-      "format": "zip",
-      "level": 6
-    }
+    "save_visualizations": false,
+    "create_reports": true,
+    "log_level": "INFO",
+    "cleanup_temp_files": true
   },
-  
-  "logging": {
-    "level": "INFO",
-    "save_logs": true,
-    "log_file": "outputs/logs/pipeline.log",
-    "rotation": true,
-    "max_size": "10MB",
-    "backup_count": 5
-  },
-  
-  "advanced": {
-    "enable_smart_sampling": true,
-    "diversity_threshold": 0.8,
-    "enable_active_learning": false,
-    "uncertainty_threshold": 0.3,
-    "enable_pseudo_labeling": false,
-    "pseudo_confidence_threshold": 0.9
+  "performance": {
+    "batch_size": 1,
+    "num_workers": 1,
+    "use_gpu": true,
+    "memory_limit_gb": 8
   }
 }

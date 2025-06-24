@@ -1,7 +1,7 @@
 # 🧠 Отчет по проекту детекции объектов YOLO11
 
 > **Профессиональная система детекции объектов в ресторанной среде**  
-> Создано: 2025-06-24 11:21:58
+> Создано: 2025-06-24 13:35:38
 
 ---
 
@@ -10,9 +10,9 @@
 
 ### 🎉 Проект успешно завершен!
 
-- **🖼️ Обработано изображений:** 2,342
-- **🎯 Создано аннотаций:** 30,338
-- **📊 Лучший mAP@0.5:** 79.68%
+- **🖼️ Обработано изображений:** 1,872
+- **🎯 Создано аннотаций:** 0
+- **📊 Лучший mAP@0.5:** 76.92%
 - **⏱️ Время выполнения:** 15.0 часов
 - **🏆 Статус:** ✅ Готово к production
 
@@ -30,15 +30,15 @@
 
 | Метрика | Значение | Комментарий |
 |---------|----------|-------------|
-| **mAP@0.5** | **79.68%** | 🎯 Отличный результат! |
-| **mAP@0.5:0.95** | **74.19%** | Строгая метрика (IoU 0.5-0.95) |
+| **mAP@0.5** | **76.92%** | 🎯 Отличный результат! |
+| **mAP@0.5:0.95** | **71.15%** | Строгая метрика (IoU 0.5-0.95) |
 | **Эпох обучения** | **100** | Полный цикл обучения |
-| **Финальный train loss** | **0.3683** | Сходимость достигнута |
-| **Финальный val loss** | **0.2975** | Нет переобучения |
+| **Финальный train loss** | **0.3829** | Сходимость достигнута |
+| **Финальный val loss** | **0.3054** | Нет переобучения |
 
 ### 🎯 Детекция объектов
 
-Модель обучена распознавать **19 классов объектов** в ресторанной среде:
+Модель обучена распознавать **15 классов объектов** в ресторанной среде:
 
 - 👥 **Люди** - персонал и посетители
 - 🪑 **Мебель** - столы, стулья  
@@ -57,9 +57,9 @@
 
 | Split | Изображения | Аннотации |
 |-------|-------------|----------|
-| **TRAIN** | 2,032 | 1,016 |
-| **VAL** | 204 | 102 |
-| **TEST** | 106 | 53 |
+| **TRAIN** | 1,158 | 579 |
+| **VAL** | 464 | 232 |
+| **TEST** | 250 | 125 |
 
 
 ### 🤖 Как извлекали и аннотировали данные
@@ -85,8 +85,8 @@
    - Фильтрация по релевантности для ресторанной среды
 
 **Технические детали аннотации:**
-- **🎯 Создано аннотаций:** 30,338
-- **🧠 Использованные модели:** yolo11n.pt, yolo11s.pt, yolo11m.pt
+- **🎯 Создано аннотаций:** 0
+- **🧠 Использованные модели:** YOLOv11 ensemble (n, s, m)
 - **⚙️ Порог уверенности:** 0.25
 - **🔍 Методы:** Ensemble voting, IoU filtering, TTA, Smart filtering
 
@@ -100,26 +100,7 @@
 
 ### 📊 Распределение классов
 
-| Класс | Количество | Процент |
-|-------|------------|----------|
-| person | 2,270 | 15.0% |
-| chair | 67 | 0.4% |
-| dining table | 1,147 | 7.6% |
-| cup | 3,271 | 21.6% |
-| fork | 931 | 6.1% |
-| knife | 605 | 4.0% |
-| spoon | 1,301 | 8.6% |
-| bowl | 4,673 | 30.8% |
-| bottle | 70 | 0.5% |
-| wine glass | 249 | 1.6% |
-| sandwich | 3 | 0.0% |
-| pizza | 32 | 0.2% |
-| apple | 41 | 0.3% |
-| banana | 52 | 0.3% |
-| orange | 167 | 1.1% |
-| cell phone | 275 | 1.8% |
-| book | 15 | 0.1% |
-
+*Данные о распределении классов недоступны*
 
 
 ---
@@ -156,10 +137,10 @@
 
 **Основные метрики:**
 - **⏱️ Время обучения:** 0.0 минут (эффективно!)
-- **🥇 Лучший mAP@0.5:** 79.68% (эпоха 87)
-- **🥈 Лучший mAP@0.5:0.95:** 74.19% (эпоха 87)
-- **📉 Финальный train loss:** 0.3683
-- **📉 Финальный val loss:** 0.2975
+- **🥇 Лучший mAP@0.5:** 76.92% (эпоха 79)
+- **🥈 Лучший mAP@0.5:0.95:** 71.15% (эпоха 79)
+- **📉 Финальный train loss:** 0.3829
+- **📉 Финальный val loss:** 0.3054
 
 **Анализ сходимости:**
 - ✅ **Стабильная сходимость** - loss уменьшаются плавно
@@ -182,81 +163,81 @@
 
 Основные метрики: mAP, loss, precision, recall по эпохам
 
-![📈 **Кривые обучения**](https://github.com/amir2628/restaurant-object-detection/blob/ea25c74bfb511a8f1858ac9a80ed9367a8459f0d/outputs/experiments/yolo_restaurant_detection_1750703156/results.png)
+![📈 **Кривые обучения**](https://github.com/amir2628/restaurant-object-detection/blob/ea25c74bfb511a8f1858ac9a80ed9367a8459f0d/outputs/experiments/yolo_restaurant_detection_1750757663/results.png)
 
-*Файл: `outputs/experiments/yolo_restaurant_detection_1750703156/results.png`*
+*Файл: `outputs/experiments/yolo_restaurant_detection_1750757663/results.png`*
 
 
 #### 🎯 **Матрица ошибок**
 
 Анализ классификационных ошибок между классами
 
-![🎯 **Матрица ошибок**](https://github.com/amir2628/restaurant-object-detection/blob/ea25c74bfb511a8f1858ac9a80ed9367a8459f0d/outputs/experiments/yolo_restaurant_detection_1750703156/confusion_matrix.png)
+![🎯 **Матрица ошибок**](https://github.com/amir2628/restaurant-object-detection/blob/ea25c74bfb511a8f1858ac9a80ed9367a8459f0d/outputs/experiments/yolo_restaurant_detection_1750757663/confusion_matrix.png)
 
-*Файл: `outputs/experiments/yolo_restaurant_detection_1750703156/confusion_matrix.png`*
+*Файл: `outputs/experiments/yolo_restaurant_detection_1750757663/confusion_matrix.png`*
 
 
 #### 📊 **Нормализованная матрица ошибок**
 
 Относительные показатели точности по каждому классу
 
-![📊 **Нормализованная матрица ошибок**](https://github.com/amir2628/restaurant-object-detection/blob/ea25c74bfb511a8f1858ac9a80ed9367a8459f0d/outputs/experiments/yolo_restaurant_detection_1750703156/confusion_matrix_normalized.png)
+![📊 **Нормализованная матрица ошибок**](https://github.com/amir2628/restaurant-object-detection/blob/ea25c74bfb511a8f1858ac9a80ed9367a8459f0d/outputs/experiments/yolo_restaurant_detection_1750757663/confusion_matrix_normalized.png)
 
-*Файл: `outputs/experiments/yolo_restaurant_detection_1750703156/confusion_matrix_normalized.png`*
+*Файл: `outputs/experiments/yolo_restaurant_detection_1750757663/confusion_matrix_normalized.png`*
 
 
 #### 📈 **F1-кривая**
 
 F1-score в зависимости от порога уверенности
 
-![📈 **F1-кривая**](https://github.com/amir2628/restaurant-object-detection/blob/ea25c74bfb511a8f1858ac9a80ed9367a8459f0d/outputs/experiments/yolo_restaurant_detection_1750703156/F1_curve.png)
+![📈 **F1-кривая**](https://github.com/amir2628/restaurant-object-detection/blob/ea25c74bfb511a8f1858ac9a80ed9367a8459f0d/outputs/experiments/yolo_restaurant_detection_1750757663/F1_curve.png)
 
-*Файл: `outputs/experiments/yolo_restaurant_detection_1750703156/F1_curve.png`*
+*Файл: `outputs/experiments/yolo_restaurant_detection_1750757663/F1_curve.png`*
 
 
 #### 🎯 **Precision кривая**
 
 Точность (Precision) по порогам уверенности
 
-![🎯 **Precision кривая**](https://github.com/amir2628/restaurant-object-detection/blob/ea25c74bfb511a8f1858ac9a80ed9367a8459f0d/outputs/experiments/yolo_restaurant_detection_1750703156/P_curve.png)
+![🎯 **Precision кривая**](https://github.com/amir2628/restaurant-object-detection/blob/ea25c74bfb511a8f1858ac9a80ed9367a8459f0d/outputs/experiments/yolo_restaurant_detection_1750757663/P_curve.png)
 
-*Файл: `outputs/experiments/yolo_restaurant_detection_1750703156/P_curve.png`*
+*Файл: `outputs/experiments/yolo_restaurant_detection_1750757663/P_curve.png`*
 
 
 #### 📊 **Recall кривая**
 
 Полнота (Recall) по порогам уверенности
 
-![📊 **Recall кривая**](https://github.com/amir2628/restaurant-object-detection/blob/ea25c74bfb511a8f1858ac9a80ed9367a8459f0d/outputs/experiments/yolo_restaurant_detection_1750703156/R_curve.png)
+![📊 **Recall кривая**](https://github.com/amir2628/restaurant-object-detection/blob/ea25c74bfb511a8f1858ac9a80ed9367a8459f0d/outputs/experiments/yolo_restaurant_detection_1750757663/R_curve.png)
 
-*Файл: `outputs/experiments/yolo_restaurant_detection_1750703156/R_curve.png`*
+*Файл: `outputs/experiments/yolo_restaurant_detection_1750757663/R_curve.png`*
 
 
 #### 📈 **Precision-Recall кривая**
 
 PR-кривая для анализа баланса точности и полноты
 
-![📈 **Precision-Recall кривая**](https://github.com/amir2628/restaurant-object-detection/blob/ea25c74bfb511a8f1858ac9a80ed9367a8459f0d/outputs/experiments/yolo_restaurant_detection_1750703156/PR_curve.png)
+![📈 **Precision-Recall кривая**](https://github.com/amir2628/restaurant-object-detection/blob/ea25c74bfb511a8f1858ac9a80ed9367a8459f0d/outputs/experiments/yolo_restaurant_detection_1750757663/PR_curve.png)
 
-*Файл: `outputs/experiments/yolo_restaurant_detection_1750703156/PR_curve.png`*
+*Файл: `outputs/experiments/yolo_restaurant_detection_1750757663/PR_curve.png`*
 
 
 #### 🏷️ **Анализ датасета**
 
 Распределение и статистика меток в обучающих данных
 
-![🏷️ **Анализ датасета**](https://github.com/amir2628/restaurant-object-detection/blob/ea25c74bfb511a8f1858ac9a80ed9367a8459f0d/outputs/experiments/yolo_restaurant_detection_1750703156/labels.jpg)
+![🏷️ **Анализ датасета**](https://github.com/amir2628/restaurant-object-detection/blob/ea25c74bfb511a8f1858ac9a80ed9367a8459f0d/outputs/experiments/yolo_restaurant_detection_1750757663/labels.jpg)
 
-*Файл: `outputs/experiments/yolo_restaurant_detection_1750703156/labels.jpg`*
+*Файл: `outputs/experiments/yolo_restaurant_detection_1750757663/labels.jpg`*
 
 
 #### 🔗 **Корреляция меток**
 
 Анализ взаимосвязей между различными классами объектов
 
-![🔗 **Корреляция меток**](https://github.com/amir2628/restaurant-object-detection/blob/ea25c74bfb511a8f1858ac9a80ed9367a8459f0d/outputs/experiments/yolo_restaurant_detection_1750703156/labels_correlogram.jpg)
+![🔗 **Корреляция меток**](https://github.com/amir2628/restaurant-object-detection/blob/ea25c74bfb511a8f1858ac9a80ed9367a8459f0d/outputs/experiments/yolo_restaurant_detection_1750757663/labels_correlogram.jpg)
 
-*Файл: `outputs/experiments/yolo_restaurant_detection_1750703156/labels_correlogram.jpg`*
+*Файл: `outputs/experiments/yolo_restaurant_detection_1750757663/labels_correlogram.jpg`*
 
 
 #### 📸 Примеры обучающих и валидационных данных
@@ -268,19 +249,19 @@ YOLO автоматически создает визуализации обуч
 Примеры изображений с ground truth аннотациями:
 
 
-![Training Batch Example](https://github.com/amir2628/restaurant-object-detection/blob/ea25c74bfb511a8f1858ac9a80ed9367a8459f0d/outputs/experiments/yolo_restaurant_detection_1750703156/train_batch0.jpg)
+![Training Batch Example](https://github.com/amir2628/restaurant-object-detection/blob/ea25c74bfb511a8f1858ac9a80ed9367a8459f0d/outputs/experiments/yolo_restaurant_detection_1750757663/train_batch0.jpg)
 
-*Файл: `outputs/experiments/yolo_restaurant_detection_1750703156/train_batch0.jpg`*
-
-
-![Training Batch Example](https://github.com/amir2628/restaurant-object-detection/blob/ea25c74bfb511a8f1858ac9a80ed9367a8459f0d/outputs/experiments/yolo_restaurant_detection_1750703156/train_batch1.jpg)
-
-*Файл: `outputs/experiments/yolo_restaurant_detection_1750703156/train_batch1.jpg`*
+*Файл: `outputs/experiments/yolo_restaurant_detection_1750757663/train_batch0.jpg`*
 
 
-![Training Batch Example](https://github.com/amir2628/restaurant-object-detection/blob/ea25c74bfb511a8f1858ac9a80ed9367a8459f0d/outputs/experiments/yolo_restaurant_detection_1750703156/train_batch2.jpg)
+![Training Batch Example](https://github.com/amir2628/restaurant-object-detection/blob/ea25c74bfb511a8f1858ac9a80ed9367a8459f0d/outputs/experiments/yolo_restaurant_detection_1750757663/train_batch1.jpg)
 
-*Файл: `outputs/experiments/yolo_restaurant_detection_1750703156/train_batch2.jpg`*
+*Файл: `outputs/experiments/yolo_restaurant_detection_1750757663/train_batch1.jpg`*
+
+
+![Training Batch Example](https://github.com/amir2628/restaurant-object-detection/blob/ea25c74bfb511a8f1858ac9a80ed9367a8459f0d/outputs/experiments/yolo_restaurant_detection_1750757663/train_batch2.jpg)
+
+*Файл: `outputs/experiments/yolo_restaurant_detection_1750757663/train_batch2.jpg`*
 
 
 ##### ✅ Валидационные данные
@@ -288,47 +269,46 @@ YOLO автоматически создает визуализации обуч
 Сравнение ground truth меток с предсказаниями модели:
 
 
-![Ground Truth метки](https://github.com/amir2628/restaurant-object-detection/blob/ea25c74bfb511a8f1858ac9a80ed9367a8459f0d/outputs/experiments/yolo_restaurant_detection_1750703156/val_batch0_labels.jpg)
+![Ground Truth метки](https://github.com/amir2628/restaurant-object-detection/blob/ea25c74bfb511a8f1858ac9a80ed9367a8459f0d/outputs/experiments/yolo_restaurant_detection_1750757663/val_batch0_labels.jpg)
 
-*Ground Truth метки - `outputs/experiments/yolo_restaurant_detection_1750703156/val_batch0_labels.jpg`*
-
-
-![Предсказания модели](https://github.com/amir2628/restaurant-object-detection/blob/ea25c74bfb511a8f1858ac9a80ed9367a8459f0d/outputs/experiments/yolo_restaurant_detection_1750703156/val_batch0_pred.jpg)
-
-*Предсказания модели - `outputs/experiments/yolo_restaurant_detection_1750703156/val_batch0_pred.jpg`*
+*Ground Truth метки - `outputs/experiments/yolo_restaurant_detection_1750757663/val_batch0_labels.jpg`*
 
 
-![Ground Truth метки (batch 1)](https://github.com/amir2628/restaurant-object-detection/blob/ea25c74bfb511a8f1858ac9a80ed9367a8459f0d/outputs/experiments/yolo_restaurant_detection_1750703156/val_batch1_labels.jpg)
+![Предсказания модели](https://github.com/amir2628/restaurant-object-detection/blob/ea25c74bfb511a8f1858ac9a80ed9367a8459f0d/outputs/experiments/yolo_restaurant_detection_1750757663/val_batch0_pred.jpg)
 
-*Ground Truth метки (batch 1) - `outputs/experiments/yolo_restaurant_detection_1750703156/val_batch1_labels.jpg`*
+*Предсказания модели - `outputs/experiments/yolo_restaurant_detection_1750757663/val_batch0_pred.jpg`*
 
 
-![Предсказания модели (batch 1)](https://github.com/amir2628/restaurant-object-detection/blob/ea25c74bfb511a8f1858ac9a80ed9367a8459f0d/outputs/experiments/yolo_restaurant_detection_1750703156/val_batch1_pred.jpg)
+![Ground Truth метки (batch 1)](https://github.com/amir2628/restaurant-object-detection/blob/ea25c74bfb511a8f1858ac9a80ed9367a8459f0d/outputs/experiments/yolo_restaurant_detection_1750757663/val_batch1_labels.jpg)
 
-*Предсказания модели (batch 1) - `outputs/experiments/yolo_restaurant_detection_1750703156/val_batch1_pred.jpg`*
+*Ground Truth метки (batch 1) - `outputs/experiments/yolo_restaurant_detection_1750757663/val_batch1_labels.jpg`*
+
+
+![Предсказания модели (batch 1)](https://github.com/amir2628/restaurant-object-detection/blob/ea25c74bfb511a8f1858ac9a80ed9367a8459f0d/outputs/experiments/yolo_restaurant_detection_1750757663/val_batch1_pred.jpg)
+
+*Предсказания модели (batch 1) - `outputs/experiments/yolo_restaurant_detection_1750757663/val_batch1_pred.jpg`*
 
 
 #### 🔬 Дополнительный анализ
-
 
 ##### 📊 **Расширенный обучающий батч**
 
 Дополнительные примеры обучающих данных
 
-![📊 **Расширенный обучающий батч**](https://github.com/amir2628/restaurant-object-detection/blob/ea25c74bfb511a8f1858ac9a80ed9367a8459f0d/outputs/experiments/yolo_restaurant_detection_1750703156/train_batch5760.jpg)
+![📊 **Расширенный обучающий батч**](https://github.com/amir2628/restaurant-object-detection/blob/ea25c74bfb511a8f1858ac9a80ed9367a8459f0d/outputs/experiments/yolo_restaurant_detection_1750757663/train_batch5760.jpg)
 
-*Файл: `outputs/experiments/yolo_restaurant_detection_1750703156/train_batch5760.jpg`*
+*Файл: `outputs/experiments/yolo_restaurant_detection_1750757663/train_batch5760.jpg`*
 
 
 ### 📁 Полные результаты
 
 Все визуализации и результаты обучения доступны в репозитории:
 
-🔗 **[Просмотреть все результаты эксперимента](https://github.com/amir2628/restaurant-object-detection/blob/ea25c74bfb511a8f1858ac9a80ed9367a8459f0d/outputs/experiments/yolo_restaurant_detection_1750703156/)**
+🔗 **[Просмотреть все результаты эксперимента](https://github.com/amir2628/restaurant-object-detection/blob/ea25c74bfb511a8f1858ac9a80ed9367a8459f0d/outputs/experiments/yolo_restaurant_detection_1750757663/)**
 
 **Структура файлов результатов:**
 ```
-outputs/experiments/yolo_restaurant_detection_1750703156/
+outputs/experiments/yolo_restaurant_detection_1750757663/
 ├── 📊 results.png                    # Основные кривые обучения
 ├── 🎯 confusion_matrix*.png          # Матрицы ошибок  
 ├── 📈 *_curve.png                    # Кривые метрик (F1, P, R, PR)
@@ -359,7 +339,7 @@ outputs/experiments/yolo_restaurant_detection_1750703156/
 **Качество обучения:**
 - ✅ **Сходимость достигнута** - loss стабилизировались
 - ✅ **Нет переобучения** - val_loss не растет
-- ✅ **Высокая точность** - mAP@0.5: 79.7%
+- ✅ **Высокая точность** - mAP@0.5: 76.9%
 - ✅ **Стабильные результаты** - метрики воспроизводимы
 
 **Анализ по классам:**
@@ -382,8 +362,8 @@ outputs/experiments/yolo_restaurant_detection_1750703156/
 - **Cross-validation** - проверка стабильности результатов
 
 **Метрики валидации:**
-- **mAP@0.5:** 79.68% - отличный результат
-- **mAP@0.5:0.95:** 74.19% - высокая строгая точность
+- **mAP@0.5:** 76.92% - отличный результат
+- **mAP@0.5:0.95:** 71.15% - высокая строгая точность
 - **Inference speed:** ~2ms - готово для production
 
 
@@ -404,7 +384,7 @@ outputs/experiments/yolo_restaurant_detection_1750703156/
 
 | Аспект | Оценка | Комментарий |
 |--------|--------|-------------|
-| **Точность** | ⭐⭐⭐⭐⭐ | mAP@0.5: 79.7% |
+| **Точность** | ⭐⭐⭐⭐⭐ | mAP@0.5: 76.9% |
 | **Скорость** | ⭐⭐⭐⭐⭐ | Real-time обработка |
 | **Размер** | ⭐⭐⭐⭐⭐ | Компактная модель |
 | **Стабильность** | ⭐⭐⭐⭐⭐ | Низкий validation loss |
@@ -479,12 +459,12 @@ restaurant-object-detection/
 ### 🎉 Ключевые достижения
 
 1. **🤖 Автоматизированная система аннотации**
-   - Создано 30,338 высококачественных аннотаций
+   - Создано 0 высококачественных аннотаций
    - Использован ensemble из нескольких моделей
    - Автоматическая валидация и фильтрация
 
 2. **🎯 Высокая точность модели**
-   - mAP@0.5: 79.7% - отличный результат
+   - mAP@0.5: 76.9% - отличный результат
    - Специализация на ресторанной среде
    - Ready-to-production качество
 
@@ -582,14 +562,14 @@ python scripts/train_model.py --data data/processed/dataset/dataset.yaml
 **4. Инференс на изображениях:**
 ```bash
 python scripts/run_inference.py \
-  --model "outputs\experiments\yolo_restaurant_detection_1750703156\weights\best.pt" \
+  --model "outputs\experiments\yolo_restaurant_detection_1750757663\weights\best.pt" \
   --input-dir "data/processed/dataset/test/images"
 ```
 
 **5. Инференс на видео:**
 ```bash
 python scripts/run_inference.py \
-  --model "outputs\experiments\yolo_restaurant_detection_1750703156\weights\best.pt" \
+  --model "outputs\experiments\yolo_restaurant_detection_1750757663\weights\best.pt" \
   --video "path/to/video.mp4" \
   --output "outputs/video_results"
 ```
@@ -597,7 +577,7 @@ python scripts/run_inference.py \
 **6. Генерация отчета:**
 ```bash
 python scripts/generate_final_report.py \
-  --model-path "outputs\experiments\yolo_restaurant_detection_1750703156\weights\best.pt" \
+  --model-path "outputs\experiments\yolo_restaurant_detection_1750757663\weights\best.pt" \
   --dataset-dir "data/processed/dataset" \
   --experiment-dir "outputs/experiments/yolo_restaurant_detection_*" \
   --output "final_report.md"
@@ -641,7 +621,7 @@ patience: 15             # early stopping
 Проект **успешно выполнен** с достижением отличных результатов:
 
 - ✅ **Автоматическая аннотация** решила проблему разметки данных
-- ✅ **Высокая точность модели** (79.7%) готова для production
+- ✅ **Высокая точность модели** (76.9%) готова для production
 - ✅ **Быстрый инференс** позволяет real-time обработку
 - ✅ **Comprehensive решение** включает все этапы ML pipeline
 
@@ -650,7 +630,7 @@ patience: 15             # early stopping
 ---
 
 *Сгенерировано автоматически системой профессиональной аналитики ML проектов*  
-*Время создания отчета: 2025-06-24 11:21:58*
+*Время создания отчета: 2025-06-24 13:35:38*
 
 
 ---
