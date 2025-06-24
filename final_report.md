@@ -1,7 +1,7 @@
 # 🧠 Отчет по проекту детекции объектов YOLO11
 
 > **Профессиональная система детекции объектов в ресторанной среде**  
-> Создано: 2025-06-24 10:24:08
+> Создано: 2025-06-24 11:21:58
 
 ---
 
@@ -182,7 +182,7 @@
 
 Основные метрики: mAP, loss, precision, recall по эпохам
 
-![📈 **Кривые обучения**](https://github.com/amir2628/restaurant-object-detection/blob/main/outputs/experiments/yolo_restaurant_detection_1750703156/results.png)
+![📈 **Кривые обучения**](https://github.com/amir2628/restaurant-object-detection/blob/ea25c74bfb511a8f1858ac9a80ed9367a8459f0d/outputs/experiments/yolo_restaurant_detection_1750703156/results.png)
 
 *Файл: `outputs/experiments/yolo_restaurant_detection_1750703156/results.png`*
 
@@ -191,7 +191,7 @@
 
 Анализ классификационных ошибок между классами
 
-![🎯 **Матрица ошибок**](https://github.com/amir2628/restaurant-object-detection/blob/main/outputs/experiments/yolo_restaurant_detection_1750703156/confusion_matrix.png)
+![🎯 **Матрица ошибок**](https://github.com/amir2628/restaurant-object-detection/blob/ea25c74bfb511a8f1858ac9a80ed9367a8459f0d/outputs/experiments/yolo_restaurant_detection_1750703156/confusion_matrix.png)
 
 *Файл: `outputs/experiments/yolo_restaurant_detection_1750703156/confusion_matrix.png`*
 
@@ -200,7 +200,7 @@
 
 Относительные показатели точности по каждому классу
 
-![📊 **Нормализованная матрица ошибок**](https://github.com/amir2628/restaurant-object-detection/blob/main/outputs/experiments/yolo_restaurant_detection_1750703156/confusion_matrix_normalized.png)
+![📊 **Нормализованная матрица ошибок**](https://github.com/amir2628/restaurant-object-detection/blob/ea25c74bfb511a8f1858ac9a80ed9367a8459f0d/outputs/experiments/yolo_restaurant_detection_1750703156/confusion_matrix_normalized.png)
 
 *Файл: `outputs/experiments/yolo_restaurant_detection_1750703156/confusion_matrix_normalized.png`*
 
@@ -209,7 +209,7 @@
 
 F1-score в зависимости от порога уверенности
 
-![📈 **F1-кривая**](https://github.com/amir2628/restaurant-object-detection/blob/main/outputs/experiments/yolo_restaurant_detection_1750703156/F1_curve.png)
+![📈 **F1-кривая**](https://github.com/amir2628/restaurant-object-detection/blob/ea25c74bfb511a8f1858ac9a80ed9367a8459f0d/outputs/experiments/yolo_restaurant_detection_1750703156/F1_curve.png)
 
 *Файл: `outputs/experiments/yolo_restaurant_detection_1750703156/F1_curve.png`*
 
@@ -218,7 +218,7 @@ F1-score в зависимости от порога уверенности
 
 Точность (Precision) по порогам уверенности
 
-![🎯 **Precision кривая**](https://github.com/amir2628/restaurant-object-detection/blob/main/outputs/experiments/yolo_restaurant_detection_1750703156/P_curve.png)
+![🎯 **Precision кривая**](https://github.com/amir2628/restaurant-object-detection/blob/ea25c74bfb511a8f1858ac9a80ed9367a8459f0d/outputs/experiments/yolo_restaurant_detection_1750703156/P_curve.png)
 
 *Файл: `outputs/experiments/yolo_restaurant_detection_1750703156/P_curve.png`*
 
@@ -227,7 +227,7 @@ F1-score в зависимости от порога уверенности
 
 Полнота (Recall) по порогам уверенности
 
-![📊 **Recall кривая**](https://github.com/amir2628/restaurant-object-detection/blob/main/outputs/experiments/yolo_restaurant_detection_1750703156/R_curve.png)
+![📊 **Recall кривая**](https://github.com/amir2628/restaurant-object-detection/blob/ea25c74bfb511a8f1858ac9a80ed9367a8459f0d/outputs/experiments/yolo_restaurant_detection_1750703156/R_curve.png)
 
 *Файл: `outputs/experiments/yolo_restaurant_detection_1750703156/R_curve.png`*
 
@@ -236,7 +236,7 @@ F1-score в зависимости от порога уверенности
 
 PR-кривая для анализа баланса точности и полноты
 
-![📈 **Precision-Recall кривая**](https://github.com/amir2628/restaurant-object-detection/blob/main/outputs/experiments/yolo_restaurant_detection_1750703156/PR_curve.png)
+![📈 **Precision-Recall кривая**](https://github.com/amir2628/restaurant-object-detection/blob/ea25c74bfb511a8f1858ac9a80ed9367a8459f0d/outputs/experiments/yolo_restaurant_detection_1750703156/PR_curve.png)
 
 *Файл: `outputs/experiments/yolo_restaurant_detection_1750703156/PR_curve.png`*
 
@@ -245,7 +245,7 @@ PR-кривая для анализа баланса точности и пол�
 
 Распределение и статистика меток в обучающих данных
 
-![🏷️ **Анализ датасета**](https://github.com/amir2628/restaurant-object-detection/blob/main/outputs/experiments/yolo_restaurant_detection_1750703156/labels.jpg)
+![🏷️ **Анализ датасета**](https://github.com/amir2628/restaurant-object-detection/blob/ea25c74bfb511a8f1858ac9a80ed9367a8459f0d/outputs/experiments/yolo_restaurant_detection_1750703156/labels.jpg)
 
 *Файл: `outputs/experiments/yolo_restaurant_detection_1750703156/labels.jpg`*
 
@@ -254,7 +254,7 @@ PR-кривая для анализа баланса точности и пол�
 
 Анализ взаимосвязей между различными классами объектов
 
-![🔗 **Корреляция меток**](https://github.com/amir2628/restaurant-object-detection/blob/main/outputs/experiments/yolo_restaurant_detection_1750703156/labels_correlogram.jpg)
+![🔗 **Корреляция меток**](https://github.com/amir2628/restaurant-object-detection/blob/ea25c74bfb511a8f1858ac9a80ed9367a8459f0d/outputs/experiments/yolo_restaurant_detection_1750703156/labels_correlogram.jpg)
 
 *Файл: `outputs/experiments/yolo_restaurant_detection_1750703156/labels_correlogram.jpg`*
 
@@ -268,17 +268,17 @@ YOLO автоматически создает визуализации обуч
 Примеры изображений с ground truth аннотациями:
 
 
-![Training Batch Example](https://github.com/amir2628/restaurant-object-detection/blob/main/outputs/experiments/yolo_restaurant_detection_1750703156/train_batch0.jpg)
+![Training Batch Example](https://github.com/amir2628/restaurant-object-detection/blob/ea25c74bfb511a8f1858ac9a80ed9367a8459f0d/outputs/experiments/yolo_restaurant_detection_1750703156/train_batch0.jpg)
 
 *Файл: `outputs/experiments/yolo_restaurant_detection_1750703156/train_batch0.jpg`*
 
 
-![Training Batch Example](https://github.com/amir2628/restaurant-object-detection/blob/main/outputs/experiments/yolo_restaurant_detection_1750703156/train_batch1.jpg)
+![Training Batch Example](https://github.com/amir2628/restaurant-object-detection/blob/ea25c74bfb511a8f1858ac9a80ed9367a8459f0d/outputs/experiments/yolo_restaurant_detection_1750703156/train_batch1.jpg)
 
 *Файл: `outputs/experiments/yolo_restaurant_detection_1750703156/train_batch1.jpg`*
 
 
-![Training Batch Example](https://github.com/amir2628/restaurant-object-detection/blob/main/outputs/experiments/yolo_restaurant_detection_1750703156/train_batch2.jpg)
+![Training Batch Example](https://github.com/amir2628/restaurant-object-detection/blob/ea25c74bfb511a8f1858ac9a80ed9367a8459f0d/outputs/experiments/yolo_restaurant_detection_1750703156/train_batch2.jpg)
 
 *Файл: `outputs/experiments/yolo_restaurant_detection_1750703156/train_batch2.jpg`*
 
@@ -288,22 +288,22 @@ YOLO автоматически создает визуализации обуч
 Сравнение ground truth меток с предсказаниями модели:
 
 
-![Ground Truth метки](https://github.com/amir2628/restaurant-object-detection/blob/main/outputs/experiments/yolo_restaurant_detection_1750703156/val_batch0_labels.jpg)
+![Ground Truth метки](https://github.com/amir2628/restaurant-object-detection/blob/ea25c74bfb511a8f1858ac9a80ed9367a8459f0d/outputs/experiments/yolo_restaurant_detection_1750703156/val_batch0_labels.jpg)
 
 *Ground Truth метки - `outputs/experiments/yolo_restaurant_detection_1750703156/val_batch0_labels.jpg`*
 
 
-![Предсказания модели](https://github.com/amir2628/restaurant-object-detection/blob/main/outputs/experiments/yolo_restaurant_detection_1750703156/val_batch0_pred.jpg)
+![Предсказания модели](https://github.com/amir2628/restaurant-object-detection/blob/ea25c74bfb511a8f1858ac9a80ed9367a8459f0d/outputs/experiments/yolo_restaurant_detection_1750703156/val_batch0_pred.jpg)
 
 *Предсказания модели - `outputs/experiments/yolo_restaurant_detection_1750703156/val_batch0_pred.jpg`*
 
 
-![Ground Truth метки (batch 1)](https://github.com/amir2628/restaurant-object-detection/blob/main/outputs/experiments/yolo_restaurant_detection_1750703156/val_batch1_labels.jpg)
+![Ground Truth метки (batch 1)](https://github.com/amir2628/restaurant-object-detection/blob/ea25c74bfb511a8f1858ac9a80ed9367a8459f0d/outputs/experiments/yolo_restaurant_detection_1750703156/val_batch1_labels.jpg)
 
 *Ground Truth метки (batch 1) - `outputs/experiments/yolo_restaurant_detection_1750703156/val_batch1_labels.jpg`*
 
 
-![Предсказания модели (batch 1)](https://github.com/amir2628/restaurant-object-detection/blob/main/outputs/experiments/yolo_restaurant_detection_1750703156/val_batch1_pred.jpg)
+![Предсказания модели (batch 1)](https://github.com/amir2628/restaurant-object-detection/blob/ea25c74bfb511a8f1858ac9a80ed9367a8459f0d/outputs/experiments/yolo_restaurant_detection_1750703156/val_batch1_pred.jpg)
 
 *Предсказания модели (batch 1) - `outputs/experiments/yolo_restaurant_detection_1750703156/val_batch1_pred.jpg`*
 
@@ -315,25 +315,16 @@ YOLO автоматически создает визуализации обуч
 
 F1-score для bounding box детекции
 
-![📦 **Box F1 кривая**](https://github.com/amir2628/restaurant-object-detection/blob/main/outputs/experiments/yolo_restaurant_detection_1750703156/BoxF1_curve.png)
+![📦 **Box F1 кривая**](https://github.com/amir2628/restaurant-object-detection/blob/ea25c74bfb511a8f1858ac9a80ed9367a8459f0d/outputs/experiments/yolo_restaurant_detection_1750703156/BoxF1_curve.png)
 
 *Файл: `outputs/experiments/yolo_restaurant_detection_1750703156/BoxF1_curve.png`*
-
-
-##### 🎭 **Mask F1 кривая**
-
-F1-score для сегментации (если применимо)
-
-![🎭 **Mask F1 кривая**](https://github.com/amir2628/restaurant-object-detection/blob/main/outputs/experiments/yolo_restaurant_detection_1750703156/MaskF1_curve.png)
-
-*Файл: `outputs/experiments/yolo_restaurant_detection_1750703156/MaskF1_curve.png`*
 
 
 ##### 📊 **Расширенный обучающий батч**
 
 Дополнительные примеры обучающих данных
 
-![📊 **Расширенный обучающий батч**](https://github.com/amir2628/restaurant-object-detection/blob/main/outputs/experiments/yolo_restaurant_detection_1750703156/train_batch5760.jpg)
+![📊 **Расширенный обучающий батч**](https://github.com/amir2628/restaurant-object-detection/blob/ea25c74bfb511a8f1858ac9a80ed9367a8459f0d/outputs/experiments/yolo_restaurant_detection_1750703156/train_batch5760.jpg)
 
 *Файл: `outputs/experiments/yolo_restaurant_detection_1750703156/train_batch5760.jpg`*
 
@@ -342,7 +333,7 @@ F1-score для сегментации (если применимо)
 
 Все визуализации и результаты обучения доступны в репозитории:
 
-🔗 **[Просмотреть все результаты эксперимента](https://github.com/amir2628/restaurant-object-detection/blob/main/outputs/experiments/yolo_restaurant_detection_1750703156/)**
+🔗 **[Просмотреть все результаты эксперимента](https://github.com/amir2628/restaurant-object-detection/blob/ea25c74bfb511a8f1858ac9a80ed9367a8459f0d/outputs/experiments/yolo_restaurant_detection_1750703156/)**
 
 **Структура файлов результатов:**
 ```
@@ -668,7 +659,7 @@ patience: 15             # early stopping
 ---
 
 *Сгенерировано автоматически системой профессиональной аналитики ML проектов*  
-*Время создания отчета: 2025-06-24 10:24:08*
+*Время создания отчета: 2025-06-24 11:21:58*
 
 
 ---
