@@ -184,6 +184,8 @@ python scripts/generate_final_report.py \
 | **Размер модели** | **~6MB** | 📦 Компактная |
 | **Время обучения** | **17.5 мин** | 🚀 Быстрое обучение |
 
+<img width="1280" alt="Image" src="https://github.com/user-attachments/assets/66c2826a-59ff-4134-9a34-aec64a3c271b" />
+
 ### 📈 Особенности реализации
 
 - **🤖 Ensemble аннотация** - Использование 3 моделей (YOLOv11n, s, m)
@@ -399,6 +401,8 @@ python scripts/generate_final_report.py \
 | **Inference Speed** | **~2ms** | ⚡ Real-time processing |
 | **Model Size** | **~6MB** | 📦 Compact |
 | **Training Time** | **17.5 min** | 🚀 Fast training |
+
+<img width="1280" alt="Image" src="https://github.com/user-attachments/assets/66c2826a-59ff-4134-9a34-aec64a3c271b" />
 
 ### 📈 Implementation Features
 
