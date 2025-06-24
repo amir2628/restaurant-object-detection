@@ -1,3 +1,5 @@
+# Restaurant Object Detection - .gitignore
+
 # ============================================================================
 # YOLO Models (Downloaded automatically)
 # ============================================================================
@@ -47,14 +49,14 @@ dataset.yaml
 # ============================================================================
 # Training Outputs
 # ============================================================================
-# Experiment results
-outputs/
-!outputs/experiments/
-!outputs/experiments/**
+# Experiment results (ALLOW outputs/experiments to be tracked for GitHub)
+outputs/logs/
+outputs/inference/
+outputs/reports/
 runs/
 runs/**
 
-# Training logs and checkpoints
+# Training logs and checkpoints (keep images, ignore heavy models)
 *.log
 logs/
 checkpoint_*.pt
@@ -104,8 +106,30 @@ ENV/
 .vscode/
 *.code-workspace
 
+# PyCharm
+.idea/
+*.iws
+*.iml
+*.ipr
+
 # Jupyter Notebook
 .ipynb_checkpoints
+
+# ============================================================================
+# System Files
+# ============================================================================
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Linux
+*~
 
 # ============================================================================
 # Temporary Files
@@ -115,10 +139,17 @@ ENV/
 .cache/
 __pycache__/
 
+# Temporary files
+*.tmp
+*.temp
+.tmp/
+.temp/
+
 # ============================================================================
 # Reports and Documentation
 # ============================================================================
 # Generated reports (keep templates, ignore generated)
+final_report.md
 *_report.html
 *_report.json
 *.pdf
