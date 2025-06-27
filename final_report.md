@@ -484,7 +484,7 @@ inference_config = {
 
 **YOLOv11 Large результаты:**
 
-![Large Inference Results](outputs/final_demo/L/Large inference.png)
+![Large Inference Results](outputs/final_demo/L/Large_inference.png)
 
 *Large модель показывает плохое качество и с большими вычислительными затратами*
 
@@ -1295,7 +1295,7 @@ To select the optimal architecture, a comparative study was conducted between tw
 
 **YOLOv11 Large Results:**
 
-![Large Inference Results](outputs/final_demo/L/Large inference.png)
+![Large Inference Results](outputs/final_demo/L/Large_inference.png)
 
 *Large model shows poor quality and with higher computational costs*
 
