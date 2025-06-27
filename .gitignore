@@ -186,3 +186,5 @@ wandb/
 
 # Performance profiling
 *.prof
+
+GroundingDINO/
