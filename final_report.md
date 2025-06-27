@@ -288,8 +288,8 @@ height = (y_max - y_min) / image_height
 **Основные гиперпараметры:**
 ```yaml
 epochs: 500
-batch_size: 16
-learning_rate: 0.01
+batch_size: 64
+learning_rate: 0.001
 weight_decay: 0.0005
 momentum: 0.937
 device: cuda
@@ -300,8 +300,8 @@ device: cuda
 | Параметр | Значение | Обоснование |
 |----------|----------|-------------|
 | **Epochs** | 500 | Полная конвергенция с early stopping |
-| **Batch Size** | 16 | Баланс стабильности и GPU памяти |
-| **Learning Rate** | 0.01 | Cosine annealing scheduler |
+| **Batch Size** | 64 | Баланс стабильности и GPU памяти |
+| **Learning Rate** | 0.001 | Cosine annealing scheduler |
 | **Weight Decay** | 0.0005 | Регуляризация |
 | **Momentum** | 0.937 | Стабилизация оптимизации |
 
@@ -1074,8 +1074,8 @@ height = (y_max - y_min) / image_height
 **Main hyperparameters:**
 ```yaml
 epochs: 500
-batch_size: 16
-learning_rate: 0.01
+batch_size: 64
+learning_rate: 0.001
 weight_decay: 0.0005
 momentum: 0.937
 device: cuda
@@ -1086,8 +1086,8 @@ device: cuda
 | Parameter | Value | Justification |
 |-----------|-------|---------------|
 | **Epochs** | 500 | Complete convergence with early stopping |
-| **Batch Size** | 16 | Balance of stability and GPU memory |
-| **Learning Rate** | 0.01 | Cosine annealing scheduler |
+| **Batch Size** | 64 | Balance of stability and GPU memory |
+| **Learning Rate** | 0.001 | Cosine annealing scheduler |
 | **Weight Decay** | 0.0005 | Regularization |
 | **Momentum** | 0.937 | Optimization stabilization |
 
