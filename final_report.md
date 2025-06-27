@@ -292,6 +292,7 @@ batch_size: 64
 learning_rate: 0.001
 weight_decay: 0.0005
 momentum: 0.937
+cos_lr: True
 device: cuda
 ```
 
@@ -304,6 +305,7 @@ device: cuda
 | **Learning Rate** | 0.001 | Cosine annealing scheduler |
 | **Weight Decay** | 0.0005 | Регуляризация |
 | **Momentum** | 0.937 | Стабилизация оптимизации |
+| **Cosine Learning Rate Scheduling** | True | Помогает модели быстро сходиться в ранние эпохи |
 
 </div>
 
@@ -1078,6 +1080,7 @@ batch_size: 64
 learning_rate: 0.001
 weight_decay: 0.0005
 momentum: 0.937
+cos_lr: True
 device: cuda
 ```
 
@@ -1090,6 +1093,7 @@ device: cuda
 | **Learning Rate** | 0.001 | Cosine annealing scheduler |
 | **Weight Decay** | 0.0005 | Regularization |
 | **Momentum** | 0.937 | Optimization stabilization |
+| **Cosine Learning Rate Scheduling** | True | Helps the model converge quickly in early epochs |
 
 </div>
 
@@ -1195,7 +1199,6 @@ To select the optimal architecture, a comparative study was conducted between tw
 | **🎯 mAP@0.5** | **74.8%** | 72.5% | 🟢 Nano +2.3% |
 | **🎯 mAP@0.5:0.95** | **70.6%** | 68.9% | 🟢 Nano +1.7% |
 | **⏱️ Training Time** | **87.3 min** | 302.3 min | 🟢 Nano 3.5× faster |
-| **🔄 Epochs Completed** | 500 | 200 | 🟢 Nano more epochs |
 | **📦 Model Size** | ~6 MB | ~50 MB | 🟢 Nano 8× more compact |
 | **🚀 Inference Speed** | ~2ms | ~5ms | 🟢 Nano 2.5× faster |
 | **💻 Memory Requirements** | Low | High | 🟢 Nano less demanding |
