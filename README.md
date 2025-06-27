@@ -32,6 +32,8 @@
 
 **Высокопроизводительная система детекции объектов с использованием YOLOv11 и автоматической аннотации GroundingDINO для ресторанной среды**
 
+**Найдите отчет [здесь](/final_report.md)**
+
 [![GitHub](https://img.shields.io/badge/GitHub-amir2628-181717?style=flat-square&logo=github)](https://github.com/amir2628/restaurant-object-detection)
 [![Python](https://img.shields.io/badge/Python-3.8+-3776AB?style=flat-square&logo=python&logoColor=white)](https://python.org)
 [![YOLOv11](https://img.shields.io/badge/YOLOv11-Ultralytics-00FFFF?style=flat-square)](https://github.com/ultralytics/ultralytics)
@@ -297,6 +299,8 @@ MIT License - см. [LICENSE](LICENSE) файл.
 ## 🧠 Professional Restaurant Object Detection System
 
 **High-performance object detection system using YOLOv11 with automated GroundingDINO annotation for restaurant environments**
+
+**Find the report [here](/final_report.md)**
 
 [![GitHub](https://img.shields.io/badge/GitHub-amir2628-181717?style=flat-square&logo=github)](https://github.com/amir2628/restaurant-object-detection)
 [![Python](https://img.shields.io/badge/Python-3.8+-3776AB?style=flat-square&logo=python&logoColor=white)](https://python.org)
