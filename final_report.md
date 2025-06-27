@@ -501,6 +501,10 @@ inference_config = {
 
 #### 🔍 Анализ Confusion Matrix
 
+![Confusion Matrix](outputs/experiments/yolo_restaurant_detection_1750973996/confusion_matrix.png)
+
+![Confusion Matrix Normalized](outputs/experiments/yolo_restaurant_detection_1750973996/confusion_matrix_normalized.png)
+
 **Файл изображения:** `confusion_matrix.png` и `confusion_matrix_normalized.png`
 
 **Лучшие классы:**
@@ -528,6 +532,8 @@ inference_config = {
 
 #### 📈 Анализ F1-Confidence кривой
 
+![F1 Confidence Curve](outputs/experiments/yolo_restaurant_detection_1750973996/f1_curve.png)
+
 **Файл изображения:** `f1_confidence_curve.png`
 
 **Ключевые наблюдения:**
@@ -536,6 +542,12 @@ inference_config = {
 - **⚠️ Нестабильные классы**: Chicken, Knife
 
 #### 📊 Precision-Recall Analysis
+
+![Precision Recall Curve](outputs/experiments/yolo_restaurant_detection_1750973996/PR_curve.png)
+
+![Precision Confidence Curve](outputs/experiments/yolo_restaurant_detection_1750973996/P_curve.png)
+
+![Recall Confidence Curve](outputs/experiments/yolo_restaurant_detection_1750973996/R_curve.png)
 
 **Файл изображения:** `precision_recall_curve.png`
 
@@ -547,6 +559,8 @@ inference_config = {
 ### 📊 Анализ распределения данных
 
 #### 📈 Class Distribution
+
+![Class Distribution Histogram](outputs/experiments/yolo_restaurant_detection_1750973996/labels.jpg)
 
 **Файл изображения:** `class_distribution_histogram.png`
 
@@ -563,8 +577,6 @@ inference_config = {
 
 #### 🗺️ Spatial Distribution Analysis
 
-**Файл изображения:** `spatial_distribution_analysis.png`
-
 **Паттерны координат:**
 - **📍 Central concentration**: Объекты преимущественно в центре
 - **📏 Size consistency**: Большинство объектов в диапазоне 0.1-0.3
@@ -573,6 +585,14 @@ inference_config = {
 ### 📈 Training Dynamics
 
 #### 📉 Loss Evolution
+
+![Training Curves](outputs/experiments/yolo_restaurant_detection_1750973996/results.png)
+
+![Train Batch 1](outputs/experiments/yolo_restaurant_detection_1750973996/train_batch1.jpg)
+
+![Validation Batch 1: Labels](outputs/experiments/yolo_restaurant_detection_1750973996/val_batch1_labels.jpg)
+
+![Validation Batch 1: Prediction](outputs/experiments/yolo_restaurant_detection_1750973996/val_batch1_pred.jpg)
 
 **Файл изображения:** `training_curves.png`
 
@@ -1290,6 +1310,8 @@ To select the optimal architecture, a comparative study was conducted between tw
 
 ![Confusion Matrix](outputs/experiments/yolo_restaurant_detection_1750973996/confusion_matrix.png)
 
+![Confusion Matrix Normalized](outputs/experiments/yolo_restaurant_detection_1750973996/confusion_matrix_normalized.png)
+
 **Image file:** `confusion_matrix.png` and `confusion_matrix_normalized.png`
 
 **Best classes:**
@@ -1317,6 +1339,8 @@ To select the optimal architecture, a comparative study was conducted between tw
 
 #### 📈 F1-Confidence Curve Analysis
 
+![F1 Confidence Curve](outputs/experiments/yolo_restaurant_detection_1750973996/F1_curve.png)
+
 **Image file:** `f1_confidence_curve.png`
 
 **Key observations:**
@@ -1325,6 +1349,12 @@ To select the optimal architecture, a comparative study was conducted between tw
 - **⚠️ Unstable classes**: Chicken, Knife
 
 #### 📊 Precision-Recall Analysis
+
+![Precision Recall Curve](outputs/experiments/yolo_restaurant_detection_1750973996/PR_curve.png)
+
+![Precision Confidence Curve](outputs/experiments/yolo_restaurant_detection_1750973996/P_curve.png)
+
+![Recall Confidence Curve](outputs/experiments/yolo_restaurant_detection_1750973996/R_curve.png)
 
 **Image file:** `precision_recall_curve.png`
 
@@ -1336,6 +1366,8 @@ To select the optimal architecture, a comparative study was conducted between tw
 ### 📊 Data Distribution Analysis
 
 #### 📈 Class Distribution
+
+![Class Distribution Histogram](outputs/experiments/yolo_restaurant_detection_1750973996/labels.jpg)
 
 **Image file:** `class_distribution_histogram.png`
 
@@ -1352,8 +1384,6 @@ To select the optimal architecture, a comparative study was conducted between tw
 
 #### 🗺️ Spatial Distribution Analysis
 
-**Image file:** `spatial_distribution_analysis.png`
-
 **Coordinate patterns:**
 - **📍 Central concentration**: Objects predominantly in center
 - **📏 Size consistency**: Most objects within 0.1-0.3 range
@@ -1362,6 +1392,14 @@ To select the optimal architecture, a comparative study was conducted between tw
 ### 📈 Training Dynamics
 
 #### 📉 Loss Evolution
+
+![Training Curves](outputs/experiments/yolo_restaurant_detection_1750973996/results.png)
+
+![Train Batch 1](outputs/experiments/yolo_restaurant_detection_1750973996/train_batch1.jpg)
+
+![Validation Batch 1: Labels](outputs/experiments/yolo_restaurant_detection_1750973996/val_batch1_labels.jpg)
+
+![Validation Batch 1: Prediction](outputs/experiments/yolo_restaurant_detection_1750973996/val_batch1_pred.jpg)
 
 **Image file:** `training_curves.png`
 
