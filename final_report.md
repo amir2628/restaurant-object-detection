@@ -101,12 +101,9 @@
 
 <div align="center">
 
-| Критерий | Характеристики |
-|----------|----------------|
-| 🏪 **Типы заведений** | Кафе, рестораны, фастфуд |
-| 📐 **Ракурсы** | Вид сверху, сбоку, под углом |
-| 💡 **Освещение** | Дневное, вечернее, искусственное |
-| 📱 **Качество** | От мобильных до профессиональных камер |
+```Bash
+https://disk.yandex.ru/d/-VhiX2BOWdw-rg
+```
 
 </div>
 
@@ -890,12 +887,9 @@ This allows **completely eliminating manual labeling** while maintaining high de
 
 <div align="center">
 
-| Criterion | Characteristics |
-|-----------|----------------|
-| 🏪 **Establishment Types** | Cafes, restaurants, fast food |
-| 📐 **Viewing Angles** | Top view, side view, angled |
-| 💡 **Lighting** | Daylight, evening, artificial |
-| 📱 **Quality** | From mobile to professional cameras |
+```Bash
+https://disk.yandex.ru/d/-VhiX2BOWdw-rg
+```
 
 </div>
 
