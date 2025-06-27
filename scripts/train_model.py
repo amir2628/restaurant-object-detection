@@ -117,14 +117,14 @@ class ProfessionalYOLOTrainer:
         """Загрузка конфигурации обучения"""
         default_config = {
             'model': {
-                'size': 'n',  # n, s, m, l, x
+                'size': 'n',  # n, s, m, l, x 
                 'input_size': 640,
                 'pretrained': True
             },
             'training': {
-                'epochs': 100,
-                'batch_size': 16,
-                'learning_rate': 0.01,
+                'epochs': 500,
+                'batch_size': 64,
+                'learning_rate': 0.001,
                 'weight_decay': 0.0005,
                 'momentum': 0.937,
                 'warmup_epochs': 3,
@@ -134,6 +134,8 @@ class ProfessionalYOLOTrainer:
                 'patience': 50,
                 'save_period': 10,
                 'val_period': 1,
+                "cos_lr": True,
+                # "label_smoothing": 0.1,
                 'amp': True,  # Automatic Mixed Precision
                 'workers': 8
             },

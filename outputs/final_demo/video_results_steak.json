@@ -1,0 +1,3166 @@
+{
+  "video_path": "steak.mp4",
+  "output_path": "outputs\\final_demo\\processed_steak.mp4",
+  "video_info": {
+    "fps": 30.0,
+    "width": 720,
+    "height": 1280,
+    "total_frames": 261,
+    "processed_frames": 261
+  },
+  "detection_summary": {
+    "total_detections": 89,
+    "average_detections_per_frame": 0.34099616858237547,
+    "average_inference_time": 0.014258869763078361
+  },
+  "frame_results": [
+    {
+      "frame_number": 0,
+      "timestamp": 0.0,
+      "detections": [],
+      "inference_time": 1.603632926940918
+    },
+    {
+      "frame_number": 1,
+      "timestamp": 0.03333333333333333,
+      "detections": [],
+      "inference_time": 0.007881641387939453
+    },
+    {
+      "frame_number": 2,
+      "timestamp": 0.06666666666666667,
+      "detections": [],
+      "inference_time": 0.006858110427856445
+    },
+    {
+      "frame_number": 3,
+      "timestamp": 0.1,
+      "detections": [],
+      "inference_time": 0.00815272331237793
+    },
+    {
+      "frame_number": 4,
+      "timestamp": 0.13333333333333333,
+      "detections": [],
+      "inference_time": 0.007653713226318359
+    },
+    {
+      "frame_number": 5,
+      "timestamp": 0.16666666666666666,
+      "detections": [],
+      "inference_time": 0.007567644119262695
+    },
+    {
+      "frame_number": 6,
+      "timestamp": 0.2,
+      "detections": [],
+      "inference_time": 0.007881402969360352
+    },
+    {
+      "frame_number": 7,
+      "timestamp": 0.23333333333333334,
+      "detections": [],
+      "inference_time": 0.009534358978271484
+    },
+    {
+      "frame_number": 8,
+      "timestamp": 0.26666666666666666,
+      "detections": [],
+      "inference_time": 0.007337331771850586
+    },
+    {
+      "frame_number": 9,
+      "timestamp": 0.3,
+      "detections": [],
+      "inference_time": 0.00757145881652832
+    },
+    {
+      "frame_number": 10,
+      "timestamp": 0.3333333333333333,
+      "detections": [],
+      "inference_time": 0.007098197937011719
+    },
+    {
+      "frame_number": 11,
+      "timestamp": 0.36666666666666664,
+      "detections": [
+        {
+          "class_id": 2,
+          "class_name": "salad",
+          "confidence": 0.26936596632003784,
+          "bbox": [
+            "0.0",
+            "1060.1914",
+            "590.7637",
+            "1279.543"
+          ],
+          "bbox_normalized": [
+            "0.0",
+            "0.82827455",
+            "0.8205051",
+            "0.99964297"
+          ]
+        }
+      ],
+      "inference_time": 0.04552268981933594
+    },
+    {
+      "frame_number": 12,
+      "timestamp": 0.4,
+      "detections": [
+        {
+          "class_id": 2,
+          "class_name": "salad",
+          "confidence": 0.2731965482234955,
+          "bbox": [
+            "0.0",
+            "1055.81",
+            "594.43024",
+            "1279.5298"
+          ],
+          "bbox_normalized": [
+            "0.0",
+            "0.82485163",
+            "0.8255975",
+            "0.99963266"
+          ]
+        }
+      ],
+      "inference_time": 0.01703476905822754
+    },
+    {
+      "frame_number": 13,
+      "timestamp": 0.43333333333333335,
+      "detections": [],
+      "inference_time": 0.00795292854309082
+    },
+    {
+      "frame_number": 14,
+      "timestamp": 0.4666666666666667,
+      "detections": [],
+      "inference_time": 0.007071256637573242
+    },
+    {
+      "frame_number": 15,
+      "timestamp": 0.5,
+      "detections": [],
+      "inference_time": 0.007158517837524414
+    },
+    {
+      "frame_number": 16,
+      "timestamp": 0.5333333333333333,
+      "detections": [],
+      "inference_time": 0.0075147151947021484
+    },
+    {
+      "frame_number": 17,
+      "timestamp": 0.5666666666666667,
+      "detections": [],
+      "inference_time": 0.01007080078125
+    },
+    {
+      "frame_number": 18,
+      "timestamp": 0.6,
+      "detections": [],
+      "inference_time": 0.0073089599609375
+    },
+    {
+      "frame_number": 19,
+      "timestamp": 0.6333333333333333,
+      "detections": [],
+      "inference_time": 0.00681757926940918
+    },
+    {
+      "frame_number": 20,
+      "timestamp": 0.6666666666666666,
+      "detections": [],
+      "inference_time": 0.00681304931640625
+    },
+    {
+      "frame_number": 21,
+      "timestamp": 0.7,
+      "detections": [
+        {
+          "class_id": 5,
+          "class_name": "plate",
+          "confidence": 0.2650403082370758,
+          "bbox": [
+            "0.0",
+            "939.27734",
+            "561.6575",
+            "1280.0"
+          ],
+          "bbox_normalized": [
+            "0.0",
+            "0.7338104",
+            "0.78007984",
+            "1.0"
+          ]
+        }
+      ],
+      "inference_time": 0.00782918930053711
+    },
+    {
+      "frame_number": 22,
+      "timestamp": 0.7333333333333333,
+      "detections": [
+        {
+          "class_id": 5,
+          "class_name": "plate",
+          "confidence": 0.28562942147254944,
+          "bbox": [
+            "0.0",
+            "938.9132",
+            "563.7097",
+            "1280.0"
+          ],
+          "bbox_normalized": [
+            "0.0",
+            "0.73352593",
+            "0.78293014",
+            "1.0"
+          ]
+        }
+      ],
+      "inference_time": 0.007733345031738281
+    },
+    {
+      "frame_number": 23,
+      "timestamp": 0.7666666666666667,
+      "detections": [
+        {
+          "class_id": 5,
+          "class_name": "plate",
+          "confidence": 0.30641260743141174,
+          "bbox": [
+            "0.0",
+            "937.22925",
+            "562.24927",
+            "1280.0"
+          ],
+          "bbox_normalized": [
+            "0.0",
+            "0.73221034",
+            "0.7809018",
+            "1.0"
+          ]
+        }
+      ],
+      "inference_time": 0.007064342498779297
+    },
+    {
+      "frame_number": 24,
+      "timestamp": 0.8,
+      "detections": [
+        {
+          "class_id": 5,
+          "class_name": "plate",
+          "confidence": 0.2861599028110504,
+          "bbox": [
+            "0.0",
+            "939.7322",
+            "528.4845",
+            "1280.0"
+          ],
+          "bbox_normalized": [
+            "0.0",
+            "0.7341658",
+            "0.7340062",
+            "1.0"
+          ]
+        },
+        {
+          "class_id": 2,
+          "class_name": "salad",
+          "confidence": 0.2798977792263031,
+          "bbox": [
+            "0.0",
+            "1058.0425",
+            "602.6995",
+            "1280.0"
+          ],
+          "bbox_normalized": [
+            "0.0",
+            "0.82659566",
+            "0.8370827",
+            "1.0"
+          ]
+        }
+      ],
+      "inference_time": 0.007983922958374023
+    },
+    {
+      "frame_number": 25,
+      "timestamp": 0.8333333333333334,
+      "detections": [
+        {
+          "class_id": 5,
+          "class_name": "plate",
+          "confidence": 0.27753952145576477,
+          "bbox": [
+            "0.0",
+            "943.501",
+            "527.625",
+            "1280.0"
+          ],
+          "bbox_normalized": [
+            "0.0",
+            "0.73711014",
+            "0.7328125",
+            "1.0"
+          ]
+        },
+        {
+          "class_id": 2,
+          "class_name": "salad",
+          "confidence": 0.26966166496276855,
+          "bbox": [
+            "0.0",
+            "1058.5085",
+            "602.908",
+            "1280.0"
+          ],
+          "bbox_normalized": [
+            "0.0",
+            "0.8269598",
+            "0.83737224",
+            "1.0"
+          ]
+        }
+      ],
+      "inference_time": 0.007643938064575195
+    },
+    {
+      "frame_number": 26,
+      "timestamp": 0.8666666666666667,
+      "detections": [
+        {
+          "class_id": 5,
+          "class_name": "plate",
+          "confidence": 0.31502044200897217,
+          "bbox": [
+            "0.0",
+            "936.31464",
+            "531.4355",
+            "1280.0"
+          ],
+          "bbox_normalized": [
+            "0.0",
+            "0.7314958",
+            "0.7381048",
+            "1.0"
+          ]
+        },
+        {
+          "class_id": 2,
+          "class_name": "salad",
+          "confidence": 0.27525222301483154,
+          "bbox": [
+            "0.0",
+            "1058.1577",
+            "602.38696",
+            "1280.0"
+          ],
+          "bbox_normalized": [
+            "0.0",
+            "0.8266857",
+            "0.8366486",
+            "1.0"
+          ]
+        }
+      ],
+      "inference_time": 0.007482767105102539
+    },
+    {
+      "frame_number": 27,
+      "timestamp": 0.9,
+      "detections": [
+        {
+          "class_id": 5,
+          "class_name": "plate",
+          "confidence": 0.3886270821094513,
+          "bbox": [
+            "0.0",
+            "943.1123",
+            "556.7172",
+            "1280.0"
+          ],
+          "bbox_normalized": [
+            "0.0",
+            "0.7368065",
+            "0.7732184",
+            "1.0"
+          ]
+        },
+        {
+          "class_id": 2,
+          "class_name": "salad",
+          "confidence": 0.29369235038757324,
+          "bbox": [
+            "0.0",
+            "1048.2742",
+            "598.6791",
+            "1280.0"
+          ],
+          "bbox_normalized": [
+            "0.0",
+            "0.8189642",
+            "0.83149874",
+            "1.0"
+          ]
+        },
+        {
+          "class_id": 9,
+          "class_name": "knife",
+          "confidence": 0.26959535479545593,
+          "bbox": [
+            "452.63397",
+            "0.0",
+            "687.4476",
+            "127.51677"
+          ],
+          "bbox_normalized": [
+            "0.6286583",
+            "0.0",
+            "0.95478827",
+            "0.09962247"
+          ]
+        }
+      ],
+      "inference_time": 0.007283449172973633
+    },
+    {
+      "frame_number": 28,
+      "timestamp": 0.9333333333333333,
+      "detections": [
+        {
+          "class_id": 5,
+          "class_name": "plate",
+          "confidence": 0.394787073135376,
+          "bbox": [
+            "0.0",
+            "939.71893",
+            "544.0201",
+            "1280.0"
+          ],
+          "bbox_normalized": [
+            "0.0",
+            "0.7341554",
+            "0.75558347",
+            "1.0"
+          ]
+        },
+        {
+          "class_id": 9,
+          "class_name": "knife",
+          "confidence": 0.2914154827594757,
+          "bbox": [
+            "462.12445",
+            "0.0",
+            "681.82196",
+            "127.30228"
+          ],
+          "bbox_normalized": [
+            "0.6418395",
+            "0.0",
+            "0.94697493",
+            "0.0994549"
+          ]
+        },
+        {
+          "class_id": 2,
+          "class_name": "salad",
+          "confidence": 0.2786741256713867,
+          "bbox": [
+            "0.0",
+            "1058.9832",
+            "491.74426",
+            "1279.4221"
+          ],
+          "bbox_normalized": [
+            "0.0",
+            "0.8273306",
+            "0.68297815",
+            "0.99954855"
+          ]
+        }
+      ],
+      "inference_time": 0.0074176788330078125
+    },
+    {
+      "frame_number": 29,
+      "timestamp": 0.9666666666666667,
+      "detections": [
+        {
+          "class_id": 5,
+          "class_name": "plate",
+          "confidence": 0.463134765625,
+          "bbox": [
+            "0.0",
+            "919.23505",
+            "547.34595",
+            "1280.0"
+          ],
+          "bbox_normalized": [
+            "0.0",
+            "0.7181524",
+            "0.7602027",
+            "1.0"
+          ]
+        },
+        {
+          "class_id": 2,
+          "class_name": "salad",
+          "confidence": 0.3492138385772705,
+          "bbox": [
+            "0.0",
+            "1057.4458",
+            "510.08167",
+            "1279.375"
+          ],
+          "bbox_normalized": [
+            "0.0",
+            "0.82612956",
+            "0.70844674",
+            "0.9995117"
+          ]
+        }
+      ],
+      "inference_time": 0.008581876754760742
+    },
+    {
+      "frame_number": 30,
+      "timestamp": 1.0,
+      "detections": [
+        {
+          "class_id": 5,
+          "class_name": "plate",
+          "confidence": 0.4619862735271454,
+          "bbox": [
+            "0.0",
+            "908.1348",
+            "554.256",
+            "1280.0"
+          ],
+          "bbox_normalized": [
+            "0.0",
+            "0.70948035",
+            "0.76979995",
+            "1.0"
+          ]
+        },
+        {
+          "class_id": 2,
+          "class_name": "salad",
+          "confidence": 0.36962276697158813,
+          "bbox": [
+            "0.0",
+            "1050.8672",
+            "514.3827",
+            "1279.3765"
+          ],
+          "bbox_normalized": [
+            "0.0",
+            "0.82098997",
+            "0.7144204",
+            "0.99951285"
+          ]
+        }
+      ],
+      "inference_time": 0.008311986923217773
+    },
+    {
+      "frame_number": 31,
+      "timestamp": 1.0333333333333334,
+      "detections": [
+        {
+          "class_id": 5,
+          "class_name": "plate",
+          "confidence": 0.4809795320034027,
+          "bbox": [
+            "0.0",
+            "914.34937",
+            "524.3329",
+            "1280.0"
+          ],
+          "bbox_normalized": [
+            "0.0",
+            "0.71433544",
+            "0.72824013",
+            "1.0"
+          ]
+        },
+        {
+          "class_id": 2,
+          "class_name": "salad",
+          "confidence": 0.4103599786758423,
+          "bbox": [
+            "0.0",
+            "1046.551",
+            "478.77975",
+            "1279.4539"
+          ],
+          "bbox_normalized": [
+            "0.0",
+            "0.817618",
+            "0.6649719",
+            "0.99957335"
+          ]
+        }
+      ],
+      "inference_time": 0.007658720016479492
+    },
+    {
+      "frame_number": 32,
+      "timestamp": 1.0666666666666667,
+      "detections": [
+        {
+          "class_id": 5,
+          "class_name": "plate",
+          "confidence": 0.4364246428012848,
+          "bbox": [
+            "0.0",
+            "897.83545",
+            "513.19543",
+            "1280.0"
+          ],
+          "bbox_normalized": [
+            "0.0",
+            "0.70143396",
+            "0.7127714",
+            "1.0"
+          ]
+        },
+        {
+          "class_id": 2,
+          "class_name": "salad",
+          "confidence": 0.32999005913734436,
+          "bbox": [
+            "0.0",
+            "1052.5688",
+            "455.2337",
+            "1279.5483"
+          ],
+          "bbox_normalized": [
+            "0.0",
+            "0.8223194",
+            "0.632269",
+            "0.99964714"
+          ]
+        },
+        {
+          "class_id": 9,
+          "class_name": "knife",
+          "confidence": 0.2516378164291382,
+          "bbox": [
+            "472.75488",
+            "0.0",
+            "671.8981",
+            "128.39044"
+          ],
+          "bbox_normalized": [
+            "0.656604",
+            "0.0",
+            "0.9331918",
+            "0.100305036"
+          ]
+        }
+      ],
+      "inference_time": 0.007741451263427734
+    },
+    {
+      "frame_number": 33,
+      "timestamp": 1.1,
+      "detections": [
+        {
+          "class_id": 5,
+          "class_name": "plate",
+          "confidence": 0.3443288803100586,
+          "bbox": [
+            "0.0",
+            "910.7803",
+            "499.88898",
+            "1280.0"
+          ],
+          "bbox_normalized": [
+            "0.0",
+            "0.7115471",
+            "0.6942902",
+            "1.0"
+          ]
+        },
+        {
+          "class_id": 9,
+          "class_name": "knife",
+          "confidence": 0.3247281014919281,
+          "bbox": [
+            "448.27417",
+            "0.0",
+            "673.7362",
+            "144.49304"
+          ],
+          "bbox_normalized": [
+            "0.622603",
+            "0.0",
+            "0.9357447",
+            "0.11288519"
+          ]
+        },
+        {
+          "class_id": 2,
+          "class_name": "salad",
+          "confidence": 0.252422571182251,
+          "bbox": [
+            "0.0",
+            "1049.8542",
+            "446.3791",
+            "1279.5969"
+          ],
+          "bbox_normalized": [
+            "0.0",
+            "0.82019866",
+            "0.619971",
+            "0.9996851"
+          ]
+        }
+      ],
+      "inference_time": 0.007651090621948242
+    },
+    {
+      "frame_number": 34,
+      "timestamp": 1.1333333333333333,
+      "detections": [
+        {
+          "class_id": 9,
+          "class_name": "knife",
+          "confidence": 0.3575837314128876,
+          "bbox": [
+            "465.64725",
+            "0.0",
+            "671.1023",
+            "143.28955"
+          ],
+          "bbox_normalized": [
+            "0.6467323",
+            "0.0",
+            "0.9320865",
+            "0.11194496"
+          ]
+        },
+        {
+          "class_id": 5,
+          "class_name": "plate",
+          "confidence": 0.3518378436565399,
+          "bbox": [
+            "0.0",
+            "889.4985",
+            "498.58557",
+            "1280.0"
+          ],
+          "bbox_normalized": [
+            "0.0",
+            "0.69492066",
+            "0.69247997",
+            "1.0"
+          ]
+        }
+      ],
+      "inference_time": 0.007520437240600586
+    },
+    {
+      "frame_number": 35,
+      "timestamp": 1.1666666666666667,
+      "detections": [
+        {
+          "class_id": 9,
+          "class_name": "knife",
+          "confidence": 0.3441177010536194,
+          "bbox": [
+            "451.14194",
+            "0.0",
+            "669.42615",
+            "145.51471"
+          ],
+          "bbox_normalized": [
+            "0.626586",
+            "0.0",
+            "0.92975855",
+            "0.113683365"
+          ]
+        },
+        {
+          "class_id": 2,
+          "class_name": "salad",
+          "confidence": 0.2536296546459198,
+          "bbox": [
+            "0.0",
+            "1057.7136",
+            "425.5219",
+            "1279.596"
+          ],
+          "bbox_normalized": [
+            "0.0",
+            "0.82633877",
+            "0.59100264",
+            "0.99968433"
+          ]
+        }
+      ],
+      "inference_time": 0.007494211196899414
+    },
+    {
+      "frame_number": 36,
+      "timestamp": 1.2,
+      "detections": [
+        {
+          "class_id": 2,
+          "class_name": "salad",
+          "confidence": 0.37677180767059326,
+          "bbox": [
+            "0.0",
+            "1052.5728",
+            "419.76874",
+            "1279.6094"
+          ],
+          "bbox_normalized": [
+            "0.0",
+            "0.8223225",
+            "0.58301216",
+            "0.9996948"
+          ]
+        },
+        {
+          "class_id": 9,
+          "class_name": "knife",
+          "confidence": 0.37136125564575195,
+          "bbox": [
+            "447.90955",
+            "0.0",
+            "669.7239",
+            "147.65265"
+          ],
+          "bbox_normalized": [
+            "0.6220966",
+            "0.0",
+            "0.930172",
+            "0.11535363"
+          ]
+        },
+        {
+          "class_id": 5,
+          "class_name": "plate",
+          "confidence": 0.2986814081668854,
+          "bbox": [
+            "0.0",
+            "908.27795",
+            "489.12134",
+            "1280.0"
+          ],
+          "bbox_normalized": [
+            "0.0",
+            "0.70959216",
+            "0.6793352",
+            "1.0"
+          ]
+        }
+      ],
+      "inference_time": 0.007571220397949219
+    },
+    {
+      "frame_number": 37,
+      "timestamp": 1.2333333333333334,
+      "detections": [
+        {
+          "class_id": 2,
+          "class_name": "salad",
+          "confidence": 0.4073972702026367,
+          "bbox": [
+            "0.0",
+            "1042.5493",
+            "421.3429",
+            "1279.6406"
+          ],
+          "bbox_normalized": [
+            "0.0",
+            "0.8144916",
+            "0.58519846",
+            "0.99971926"
+          ]
+        },
+        {
+          "class_id": 5,
+          "class_name": "plate",
+          "confidence": 0.3222920000553131,
+          "bbox": [
+            "0.0",
+            "902.3568",
+            "485.53726",
+            "1280.0"
+          ],
+          "bbox_normalized": [
+            "0.0",
+            "0.70496625",
+            "0.6743573",
+            "1.0"
+          ]
+        },
+        {
+          "class_id": 9,
+          "class_name": "knife",
+          "confidence": 0.3179436922073364,
+          "bbox": [
+            "451.76324",
+            "0.0",
+            "665.3415",
+            "143.55432"
+          ],
+          "bbox_normalized": [
+            "0.627449",
+            "0.0",
+            "0.9240854",
+            "0.11215182"
+          ]
+        }
+      ],
+      "inference_time": 0.007987737655639648
+    },
+    {
+      "frame_number": 38,
+      "timestamp": 1.2666666666666666,
+      "detections": [],
+      "inference_time": 0.006833553314208984
+    },
+    {
+      "frame_number": 39,
+      "timestamp": 1.3,
+      "detections": [],
+      "inference_time": 0.007540702819824219
+    },
+    {
+      "frame_number": 40,
+      "timestamp": 1.3333333333333333,
+      "detections": [],
+      "inference_time": 0.0067539215087890625
+    },
+    {
+      "frame_number": 41,
+      "timestamp": 1.3666666666666667,
+      "detections": [],
+      "inference_time": 0.006574869155883789
+    },
+    {
+      "frame_number": 42,
+      "timestamp": 1.4,
+      "detections": [],
+      "inference_time": 0.007717132568359375
+    },
+    {
+      "frame_number": 43,
+      "timestamp": 1.4333333333333333,
+      "detections": [],
+      "inference_time": 0.007616758346557617
+    },
+    {
+      "frame_number": 44,
+      "timestamp": 1.4666666666666666,
+      "detections": [],
+      "inference_time": 0.0067522525787353516
+    },
+    {
+      "frame_number": 45,
+      "timestamp": 1.5,
+      "detections": [],
+      "inference_time": 0.00787973403930664
+    },
+    {
+      "frame_number": 46,
+      "timestamp": 1.5333333333333334,
+      "detections": [
+        {
+          "class_id": 5,
+          "class_name": "plate",
+          "confidence": 0.2921718657016754,
+          "bbox": [
+            "0.0",
+            "945.5467",
+            "553.58295",
+            "1280.0"
+          ],
+          "bbox_normalized": [
+            "0.0",
+            "0.7387084",
+            "0.7688652",
+            "1.0"
+          ]
+        }
+      ],
+      "inference_time": 0.007447004318237305
+    },
+    {
+      "frame_number": 47,
+      "timestamp": 1.5666666666666667,
+      "detections": [
+        {
+          "class_id": 5,
+          "class_name": "plate",
+          "confidence": 0.2670120894908905,
+          "bbox": [
+            "0.0",
+            "937.6476",
+            "546.5846",
+            "1280.0"
+          ],
+          "bbox_normalized": [
+            "0.0",
+            "0.73253715",
+            "0.75914526",
+            "1.0"
+          ]
+        }
+      ],
+      "inference_time": 0.0074443817138671875
+    },
+    {
+      "frame_number": 48,
+      "timestamp": 1.6,
+      "detections": [
+        {
+          "class_id": 5,
+          "class_name": "plate",
+          "confidence": 0.3833695948123932,
+          "bbox": [
+            "0.0",
+            "932.3179",
+            "509.5658",
+            "1280.0"
+          ],
+          "bbox_normalized": [
+            "0.0",
+            "0.72837335",
+            "0.7077303",
+            "1.0"
+          ]
+        }
+      ],
+      "inference_time": 0.007061481475830078
+    },
+    {
+      "frame_number": 49,
+      "timestamp": 1.6333333333333333,
+      "detections": [
+        {
+          "class_id": 5,
+          "class_name": "plate",
+          "confidence": 0.3176835775375366,
+          "bbox": [
+            "0.0",
+            "924.5673",
+            "492.69135",
+            "1280.0"
+          ],
+          "bbox_normalized": [
+            "0.0",
+            "0.72231823",
+            "0.6842935",
+            "1.0"
+          ]
+        }
+      ],
+      "inference_time": 0.0075495243072509766
+    },
+    {
+      "frame_number": 50,
+      "timestamp": 1.6666666666666667,
+      "detections": [],
+      "inference_time": 0.007024288177490234
+    },
+    {
+      "frame_number": 51,
+      "timestamp": 1.7,
+      "detections": [
+        {
+          "class_id": 5,
+          "class_name": "plate",
+          "confidence": 0.2911112308502197,
+          "bbox": [
+            "0.0",
+            "841.18445",
+            "480.18167",
+            "1279.3512"
+          ],
+          "bbox_normalized": [
+            "0.0",
+            "0.65717536",
+            "0.666919",
+            "0.9994931"
+          ]
+        }
+      ],
+      "inference_time": 0.007305145263671875
+    },
+    {
+      "frame_number": 52,
+      "timestamp": 1.7333333333333334,
+      "detections": [
+        {
+          "class_id": 5,
+          "class_name": "plate",
+          "confidence": 0.31502556800842285,
+          "bbox": [
+            "0.0",
+            "858.2583",
+            "479.6622",
+            "1279.2861"
+          ],
+          "bbox_normalized": [
+            "0.0",
+            "0.6705143",
+            "0.6661975",
+            "0.9994423"
+          ]
+        }
+      ],
+      "inference_time": 0.007844686508178711
+    },
+    {
+      "frame_number": 53,
+      "timestamp": 1.7666666666666666,
+      "detections": [
+        {
+          "class_id": 5,
+          "class_name": "plate",
+          "confidence": 0.2970726788043976,
+          "bbox": [
+            "0.0",
+            "871.27356",
+            "480.19116",
+            "1279.223"
+          ],
+          "bbox_normalized": [
+            "0.0",
+            "0.6806825",
+            "0.66693217",
+            "0.999393"
+          ]
+        }
+      ],
+      "inference_time": 0.010166168212890625
+    },
+    {
+      "frame_number": 54,
+      "timestamp": 1.8,
+      "detections": [
+        {
+          "class_id": 5,
+          "class_name": "plate",
+          "confidence": 0.2510789930820465,
+          "bbox": [
+            "0.0",
+            "892.24725",
+            "497.78442",
+            "1280.0"
+          ],
+          "bbox_normalized": [
+            "0.0",
+            "0.69706815",
+            "0.69136727",
+            "1.0"
+          ]
+        }
+      ],
+      "inference_time": 0.008048295974731445
+    },
+    {
+      "frame_number": 55,
+      "timestamp": 1.8333333333333333,
+      "detections": [
+        {
+          "class_id": 5,
+          "class_name": "plate",
+          "confidence": 0.26207709312438965,
+          "bbox": [
+            "0.0",
+            "888.03766",
+            "500.31738",
+            "1280.0"
+          ],
+          "bbox_normalized": [
+            "0.0",
+            "0.6937794",
+            "0.69488525",
+            "1.0"
+          ]
+        }
+      ],
+      "inference_time": 0.007354736328125
+    },
+    {
+      "frame_number": 56,
+      "timestamp": 1.8666666666666667,
+      "detections": [
+        {
+          "class_id": 5,
+          "class_name": "plate",
+          "confidence": 0.2532075345516205,
+          "bbox": [
+            "0.0",
+            "887.84534",
+            "491.86694",
+            "1279.9569"
+          ],
+          "bbox_normalized": [
+            "0.0",
+            "0.69362915",
+            "0.6831485",
+            "0.9999663"
+          ]
+        }
+      ],
+      "inference_time": 0.008314371109008789
+    },
+    {
+      "frame_number": 57,
+      "timestamp": 1.9,
+      "detections": [],
+      "inference_time": 0.007537126541137695
+    },
+    {
+      "frame_number": 58,
+      "timestamp": 1.9333333333333333,
+      "detections": [],
+      "inference_time": 0.0074710845947265625
+    },
+    {
+      "frame_number": 59,
+      "timestamp": 1.9666666666666666,
+      "detections": [],
+      "inference_time": 0.006811857223510742
+    },
+    {
+      "frame_number": 60,
+      "timestamp": 2.0,
+      "detections": [],
+      "inference_time": 0.007826805114746094
+    },
+    {
+      "frame_number": 61,
+      "timestamp": 2.033333333333333,
+      "detections": [],
+      "inference_time": 0.00772857666015625
+    },
+    {
+      "frame_number": 62,
+      "timestamp": 2.066666666666667,
+      "detections": [],
+      "inference_time": 0.007208585739135742
+    },
+    {
+      "frame_number": 63,
+      "timestamp": 2.1,
+      "detections": [],
+      "inference_time": 0.0067768096923828125
+    },
+    {
+      "frame_number": 64,
+      "timestamp": 2.1333333333333333,
+      "detections": [],
+      "inference_time": 0.007439136505126953
+    },
+    {
+      "frame_number": 65,
+      "timestamp": 2.1666666666666665,
+      "detections": [],
+      "inference_time": 0.0072400569915771484
+    },
+    {
+      "frame_number": 66,
+      "timestamp": 2.2,
+      "detections": [],
+      "inference_time": 0.007122039794921875
+    },
+    {
+      "frame_number": 67,
+      "timestamp": 2.2333333333333334,
+      "detections": [],
+      "inference_time": 0.006825447082519531
+    },
+    {
+      "frame_number": 68,
+      "timestamp": 2.2666666666666666,
+      "detections": [],
+      "inference_time": 0.0072252750396728516
+    },
+    {
+      "frame_number": 69,
+      "timestamp": 2.3,
+      "detections": [],
+      "inference_time": 0.007311344146728516
+    },
+    {
+      "frame_number": 70,
+      "timestamp": 2.3333333333333335,
+      "detections": [],
+      "inference_time": 0.007601499557495117
+    },
+    {
+      "frame_number": 71,
+      "timestamp": 2.3666666666666667,
+      "detections": [],
+      "inference_time": 0.007308006286621094
+    },
+    {
+      "frame_number": 72,
+      "timestamp": 2.4,
+      "detections": [],
+      "inference_time": 0.006900310516357422
+    },
+    {
+      "frame_number": 73,
+      "timestamp": 2.433333333333333,
+      "detections": [],
+      "inference_time": 0.007405757904052734
+    },
+    {
+      "frame_number": 74,
+      "timestamp": 2.466666666666667,
+      "detections": [],
+      "inference_time": 0.007294893264770508
+    },
+    {
+      "frame_number": 75,
+      "timestamp": 2.5,
+      "detections": [],
+      "inference_time": 0.006548643112182617
+    },
+    {
+      "frame_number": 76,
+      "timestamp": 2.533333333333333,
+      "detections": [],
+      "inference_time": 0.006948947906494141
+    },
+    {
+      "frame_number": 77,
+      "timestamp": 2.566666666666667,
+      "detections": [],
+      "inference_time": 0.0071566104888916016
+    },
+    {
+      "frame_number": 78,
+      "timestamp": 2.6,
+      "detections": [],
+      "inference_time": 0.007313966751098633
+    },
+    {
+      "frame_number": 79,
+      "timestamp": 2.6333333333333333,
+      "detections": [],
+      "inference_time": 0.007428407669067383
+    },
+    {
+      "frame_number": 80,
+      "timestamp": 2.6666666666666665,
+      "detections": [],
+      "inference_time": 0.007181644439697266
+    },
+    {
+      "frame_number": 81,
+      "timestamp": 2.7,
+      "detections": [],
+      "inference_time": 0.008245229721069336
+    },
+    {
+      "frame_number": 82,
+      "timestamp": 2.7333333333333334,
+      "detections": [],
+      "inference_time": 0.006701469421386719
+    },
+    {
+      "frame_number": 83,
+      "timestamp": 2.7666666666666666,
+      "detections": [],
+      "inference_time": 0.007315874099731445
+    },
+    {
+      "frame_number": 84,
+      "timestamp": 2.8,
+      "detections": [],
+      "inference_time": 0.00929880142211914
+    },
+    {
+      "frame_number": 85,
+      "timestamp": 2.8333333333333335,
+      "detections": [
+        {
+          "class_id": 5,
+          "class_name": "plate",
+          "confidence": 0.2659294307231903,
+          "bbox": [
+            "0.0",
+            "0.09390259",
+            "267.70813",
+            "110.74164"
+          ],
+          "bbox_normalized": [
+            "0.0",
+            "7.33614e-05",
+            "0.37181684",
+            "0.0865169"
+          ]
+        }
+      ],
+      "inference_time": 0.007486104965209961
+    },
+    {
+      "frame_number": 86,
+      "timestamp": 2.8666666666666667,
+      "detections": [
+        {
+          "class_id": 5,
+          "class_name": "plate",
+          "confidence": 0.2805904746055603,
+          "bbox": [
+            "0.0",
+            "0.08584595",
+            "269.01593",
+            "117.0641"
+          ],
+          "bbox_normalized": [
+            "0.0",
+            "6.706714e-05",
+            "0.37363324",
+            "0.09145633"
+          ]
+        }
+      ],
+      "inference_time": 0.008392572402954102
+    },
+    {
+      "frame_number": 87,
+      "timestamp": 2.9,
+      "detections": [
+        {
+          "class_id": 5,
+          "class_name": "plate",
+          "confidence": 0.28364893794059753,
+          "bbox": [
+            "0.0",
+            "0.07499695",
+            "274.45367",
+            "120.164825"
+          ],
+          "bbox_normalized": [
+            "0.0",
+            "5.8591366e-05",
+            "0.38118565",
+            "0.09387877"
+          ]
+        }
+      ],
+      "inference_time": 0.007979869842529297
+    },
+    {
+      "frame_number": 88,
+      "timestamp": 2.933333333333333,
+      "detections": [
+        {
+          "class_id": 5,
+          "class_name": "plate",
+          "confidence": 0.30930420756340027,
+          "bbox": [
+            "0.0",
+            "0.15320587",
+            "277.14728",
+            "114.04767"
+          ],
+          "bbox_normalized": [
+            "0.0",
+            "0.000119692086",
+            "0.38492677",
+            "0.08909974"
+          ]
+        }
+      ],
+      "inference_time": 0.009453535079956055
+    },
+    {
+      "frame_number": 89,
+      "timestamp": 2.966666666666667,
+      "detections": [
+        {
+          "class_id": 5,
+          "class_name": "plate",
+          "confidence": 0.3677963614463806,
+          "bbox": [
+            "0.0",
+            "0.14929199",
+            "283.88354",
+            "120.84636"
+          ],
+          "bbox_normalized": [
+            "0.0",
+            "0.00011663437",
+            "0.3942827",
+            "0.09441122"
+          ]
+        }
+      ],
+      "inference_time": 0.008055448532104492
+    },
+    {
+      "frame_number": 90,
+      "timestamp": 3.0,
+      "detections": [
+        {
+          "class_id": 5,
+          "class_name": "plate",
+          "confidence": 0.43456849455833435,
+          "bbox": [
+            "0.0",
+            "0.14486694",
+            "279.01624",
+            "120.06619"
+          ],
+          "bbox_normalized": [
+            "0.0",
+            "0.0001131773",
+            "0.38752255",
+            "0.093801714"
+          ]
+        }
+      ],
+      "inference_time": 0.008354902267456055
+    },
+    {
+      "frame_number": 91,
+      "timestamp": 3.033333333333333,
+      "detections": [
+        {
+          "class_id": 5,
+          "class_name": "plate",
+          "confidence": 0.38353756070137024,
+          "bbox": [
+            "0.0",
+            "0.13924408",
+            "267.36566",
+            "120.24821"
+          ],
+          "bbox_normalized": [
+            "0.0",
+            "0.000108784436",
+            "0.3713412",
+            "0.09394391"
+          ]
+        }
+      ],
+      "inference_time": 0.0073773860931396484
+    },
+    {
+      "frame_number": 92,
+      "timestamp": 3.066666666666667,
+      "detections": [
+        {
+          "class_id": 5,
+          "class_name": "plate",
+          "confidence": 0.33780616521835327,
+          "bbox": [
+            "0.0",
+            "0.08270264",
+            "260.02325",
+            "128.39417"
+          ],
+          "bbox_normalized": [
+            "0.0",
+            "6.4611435e-05",
+            "0.3611434",
+            "0.10030794"
+          ]
+        }
+      ],
+      "inference_time": 0.011595010757446289
+    },
+    {
+      "frame_number": 93,
+      "timestamp": 3.1,
+      "detections": [
+        {
+          "class_id": 5,
+          "class_name": "plate",
+          "confidence": 0.3779953718185425,
+          "bbox": [
+            "0.0",
+            "0.102645874",
+            "259.23016",
+            "127.748955"
+          ],
+          "bbox_normalized": [
+            "0.0",
+            "8.019209e-05",
+            "0.3600419",
+            "0.09980387"
+          ]
+        }
+      ],
+      "inference_time": 0.00806427001953125
+    },
+    {
+      "frame_number": 94,
+      "timestamp": 3.1333333333333333,
+      "detections": [
+        {
+          "class_id": 5,
+          "class_name": "plate",
+          "confidence": 0.3693065345287323,
+          "bbox": [
+            "0.0",
+            "0.11089325",
+            "254.44116",
+            "126.712715"
+          ],
+          "bbox_normalized": [
+            "0.0",
+            "8.663535e-05",
+            "0.3533905",
+            "0.09899431"
+          ]
+        }
+      ],
+      "inference_time": 0.008563518524169922
+    },
+    {
+      "frame_number": 95,
+      "timestamp": 3.1666666666666665,
+      "detections": [
+        {
+          "class_id": 5,
+          "class_name": "plate",
+          "confidence": 0.38896113634109497,
+          "bbox": [
+            "0.0",
+            "0.09812927",
+            "249.9049",
+            "128.02823"
+          ],
+          "bbox_normalized": [
+            "0.0",
+            "7.666349e-05",
+            "0.34709015",
+            "0.100022055"
+          ]
+        }
+      ],
+      "inference_time": 0.01022958755493164
+    },
+    {
+      "frame_number": 96,
+      "timestamp": 3.2,
+      "detections": [
+        {
+          "class_id": 5,
+          "class_name": "plate",
+          "confidence": 0.4061809480190277,
+          "bbox": [
+            "0.0",
+            "0.09601593",
+            "251.1225",
+            "127.207634"
+          ],
+          "bbox_normalized": [
+            "0.0",
+            "7.5012445e-05",
+            "0.34878126",
+            "0.09938096"
+          ]
+        }
+      ],
+      "inference_time": 0.007485389709472656
+    },
+    {
+      "frame_number": 97,
+      "timestamp": 3.2333333333333334,
+      "detections": [
+        {
+          "class_id": 5,
+          "class_name": "plate",
+          "confidence": 0.432105153799057,
+          "bbox": [
+            "0.0",
+            "0.12390137",
+            "252.61884",
+            "127.21942"
+          ],
+          "bbox_normalized": [
+            "0.0",
+            "9.679794e-05",
+            "0.3508595",
+            "0.09939017"
+          ]
+        }
+      ],
+      "inference_time": 0.007218599319458008
+    },
+    {
+      "frame_number": 98,
+      "timestamp": 3.2666666666666666,
+      "detections": [
+        {
+          "class_id": 5,
+          "class_name": "plate",
+          "confidence": 0.4363968074321747,
+          "bbox": [
+            "0.0",
+            "0.1290741",
+            "257.22583",
+            "128.64401"
+          ],
+          "bbox_normalized": [
+            "0.0",
+            "0.00010083914",
+            "0.3572581",
+            "0.10050313"
+          ]
+        }
+      ],
+      "inference_time": 0.008485078811645508
+    },
+    {
+      "frame_number": 99,
+      "timestamp": 3.3,
+      "detections": [
+        {
+          "class_id": 5,
+          "class_name": "plate",
+          "confidence": 0.4285656213760376,
+          "bbox": [
+            "0.0",
+            "0.13452148",
+            "259.25827",
+            "128.60052"
+          ],
+          "bbox_normalized": [
+            "0.0",
+            "0.00010509491",
+            "0.36008093",
+            "0.10046916"
+          ]
+        }
+      ],
+      "inference_time": 0.007344722747802734
+    },
+    {
+      "frame_number": 100,
+      "timestamp": 3.3333333333333335,
+      "detections": [
+        {
+          "class_id": 5,
+          "class_name": "plate",
+          "confidence": 0.421874076128006,
+          "bbox": [
+            "0.0",
+            "0.11534119",
+            "248.57153",
+            "126.972664"
+          ],
+          "bbox_normalized": [
+            "0.0",
+            "9.0110305e-05",
+            "0.34523824",
+            "0.099197395"
+          ]
+        }
+      ],
+      "inference_time": 0.008008718490600586
+    },
+    {
+      "frame_number": 101,
+      "timestamp": 3.3666666666666667,
+      "detections": [
+        {
+          "class_id": 5,
+          "class_name": "plate",
+          "confidence": 0.4136548638343811,
+          "bbox": [
+            "0.0",
+            "0.10707855",
+            "245.67053",
+            "126.38687"
+          ],
+          "bbox_normalized": [
+            "0.0",
+            "8.365512e-05",
+            "0.34120908",
+            "0.09873974"
+          ]
+        }
+      ],
+      "inference_time": 0.0095977783203125
+    },
+    {
+      "frame_number": 102,
+      "timestamp": 3.4,
+      "detections": [],
+      "inference_time": 0.017954111099243164
+    },
+    {
+      "frame_number": 103,
+      "timestamp": 3.433333333333333,
+      "detections": [],
+      "inference_time": 0.012581348419189453
+    },
+    {
+      "frame_number": 104,
+      "timestamp": 3.466666666666667,
+      "detections": [],
+      "inference_time": 0.012241840362548828
+    },
+    {
+      "frame_number": 105,
+      "timestamp": 3.5,
+      "detections": [],
+      "inference_time": 0.012736082077026367
+    },
+    {
+      "frame_number": 106,
+      "timestamp": 3.533333333333333,
+      "detections": [],
+      "inference_time": 0.0070400238037109375
+    },
+    {
+      "frame_number": 107,
+      "timestamp": 3.566666666666667,
+      "detections": [],
+      "inference_time": 0.012902498245239258
+    },
+    {
+      "frame_number": 108,
+      "timestamp": 3.6,
+      "detections": [],
+      "inference_time": 0.010628223419189453
+    },
+    {
+      "frame_number": 109,
+      "timestamp": 3.6333333333333333,
+      "detections": [],
+      "inference_time": 0.007359743118286133
+    },
+    {
+      "frame_number": 110,
+      "timestamp": 3.6666666666666665,
+      "detections": [],
+      "inference_time": 0.008900642395019531
+    },
+    {
+      "frame_number": 111,
+      "timestamp": 3.7,
+      "detections": [],
+      "inference_time": 0.007128715515136719
+    },
+    {
+      "frame_number": 112,
+      "timestamp": 3.7333333333333334,
+      "detections": [],
+      "inference_time": 0.007478475570678711
+    },
+    {
+      "frame_number": 113,
+      "timestamp": 3.7666666666666666,
+      "detections": [],
+      "inference_time": 0.006828784942626953
+    },
+    {
+      "frame_number": 114,
+      "timestamp": 3.8,
+      "detections": [],
+      "inference_time": 0.007019996643066406
+    },
+    {
+      "frame_number": 115,
+      "timestamp": 3.8333333333333335,
+      "detections": [],
+      "inference_time": 0.006922006607055664
+    },
+    {
+      "frame_number": 116,
+      "timestamp": 3.8666666666666667,
+      "detections": [],
+      "inference_time": 0.007294654846191406
+    },
+    {
+      "frame_number": 117,
+      "timestamp": 3.9,
+      "detections": [],
+      "inference_time": 0.008037805557250977
+    },
+    {
+      "frame_number": 118,
+      "timestamp": 3.933333333333333,
+      "detections": [],
+      "inference_time": 0.007670164108276367
+    },
+    {
+      "frame_number": 119,
+      "timestamp": 3.966666666666667,
+      "detections": [],
+      "inference_time": 0.007794618606567383
+    },
+    {
+      "frame_number": 120,
+      "timestamp": 4.0,
+      "detections": [],
+      "inference_time": 0.007632255554199219
+    },
+    {
+      "frame_number": 121,
+      "timestamp": 4.033333333333333,
+      "detections": [],
+      "inference_time": 0.006774187088012695
+    },
+    {
+      "frame_number": 122,
+      "timestamp": 4.066666666666666,
+      "detections": [],
+      "inference_time": 0.007050037384033203
+    },
+    {
+      "frame_number": 123,
+      "timestamp": 4.1,
+      "detections": [],
+      "inference_time": 0.009406805038452148
+    },
+    {
+      "frame_number": 124,
+      "timestamp": 4.133333333333334,
+      "detections": [],
+      "inference_time": 0.007273197174072266
+    },
+    {
+      "frame_number": 125,
+      "timestamp": 4.166666666666667,
+      "detections": [],
+      "inference_time": 0.008346080780029297
+    },
+    {
+      "frame_number": 126,
+      "timestamp": 4.2,
+      "detections": [],
+      "inference_time": 0.009130239486694336
+    },
+    {
+      "frame_number": 127,
+      "timestamp": 4.233333333333333,
+      "detections": [
+        {
+          "class_id": 5,
+          "class_name": "plate",
+          "confidence": 0.2813880443572998,
+          "bbox": [
+            "0.0",
+            "0.115753174",
+            "249.21478",
+            "120.877815"
+          ],
+          "bbox_normalized": [
+            "0.0",
+            "9.0432164e-05",
+            "0.34613165",
+            "0.094435796"
+          ]
+        }
+      ],
+      "inference_time": 0.008440971374511719
+    },
+    {
+      "frame_number": 128,
+      "timestamp": 4.266666666666667,
+      "detections": [
+        {
+          "class_id": 5,
+          "class_name": "plate",
+          "confidence": 0.2819664478302002,
+          "bbox": [
+            "0.0",
+            "0.11262512",
+            "257.57397",
+            "126.16609"
+          ],
+          "bbox_normalized": [
+            "0.0",
+            "8.7988374e-05",
+            "0.35774162",
+            "0.09856726"
+          ]
+        }
+      ],
+      "inference_time": 0.010353565216064453
+    },
+    {
+      "frame_number": 129,
+      "timestamp": 4.3,
+      "detections": [
+        {
+          "class_id": 5,
+          "class_name": "plate",
+          "confidence": 0.3463321626186371,
+          "bbox": [
+            "0.0",
+            "0.1342926",
+            "252.80328",
+            "122.566505"
+          ],
+          "bbox_normalized": [
+            "0.0",
+            "0.00010491609",
+            "0.35111567",
+            "0.095755085"
+          ]
+        }
+      ],
+      "inference_time": 0.008468389511108398
+    },
+    {
+      "frame_number": 130,
+      "timestamp": 4.333333333333333,
+      "detections": [
+        {
+          "class_id": 5,
+          "class_name": "plate",
+          "confidence": 0.3520614802837372,
+          "bbox": [
+            "0.0",
+            "0.13627625",
+            "254.91357",
+            "123.40182"
+          ],
+          "bbox_normalized": [
+            "0.0",
+            "0.00010646581",
+            "0.35404664",
+            "0.09640767"
+          ]
+        }
+      ],
+      "inference_time": 0.007825374603271484
+    },
+    {
+      "frame_number": 131,
+      "timestamp": 4.366666666666666,
+      "detections": [
+        {
+          "class_id": 5,
+          "class_name": "plate",
+          "confidence": 0.3509621024131775,
+          "bbox": [
+            "0.0",
+            "0.13217163",
+            "260.84833",
+            "123.5966"
+          ],
+          "bbox_normalized": [
+            "0.0",
+            "0.00010325909",
+            "0.36228934",
+            "0.096559845"
+          ]
+        }
+      ],
+      "inference_time": 0.0073850154876708984
+    },
+    {
+      "frame_number": 132,
+      "timestamp": 4.4,
+      "detections": [
+        {
+          "class_id": 5,
+          "class_name": "plate",
+          "confidence": 0.35941082239151,
+          "bbox": [
+            "0.0",
+            "0.13186646",
+            "252.15399",
+            "123.11826"
+          ],
+          "bbox_normalized": [
+            "0.0",
+            "0.00010302067",
+            "0.3502139",
+            "0.096186146"
+          ]
+        }
+      ],
+      "inference_time": 0.007838010787963867
+    },
+    {
+      "frame_number": 133,
+      "timestamp": 4.433333333333334,
+      "detections": [
+        {
+          "class_id": 5,
+          "class_name": "plate",
+          "confidence": 0.36574965715408325,
+          "bbox": [
+            "0.0",
+            "0.12870026",
+            "255.11026",
+            "120.59302"
+          ],
+          "bbox_normalized": [
+            "0.0",
+            "0.00010054708",
+            "0.3543198",
+            "0.09421329"
+          ]
+        }
+      ],
+      "inference_time": 0.007376194000244141
+    },
+    {
+      "frame_number": 134,
+      "timestamp": 4.466666666666667,
+      "detections": [
+        {
+          "class_id": 5,
+          "class_name": "plate",
+          "confidence": 0.3907696008682251,
+          "bbox": [
+            "0.0",
+            "0.12797546",
+            "260.52307",
+            "123.45137"
+          ],
+          "bbox_normalized": [
+            "0.0",
+            "9.998083e-05",
+            "0.3618376",
+            "0.09644638"
+          ]
+        }
+      ],
+      "inference_time": 0.0074634552001953125
+    },
+    {
+      "frame_number": 135,
+      "timestamp": 4.5,
+      "detections": [
+        {
+          "class_id": 5,
+          "class_name": "plate",
+          "confidence": 0.4144400358200073,
+          "bbox": [
+            "0.0",
+            "0.12313843",
+            "268.62903",
+            "123.099365"
+          ],
+          "bbox_normalized": [
+            "0.0",
+            "9.62019e-05",
+            "0.37309587",
+            "0.09617138"
+          ]
+        }
+      ],
+      "inference_time": 0.009822368621826172
+    },
+    {
+      "frame_number": 136,
+      "timestamp": 4.533333333333333,
+      "detections": [
+        {
+          "class_id": 5,
+          "class_name": "plate",
+          "confidence": 0.41485530138015747,
+          "bbox": [
+            "0.0",
+            "0.12644958",
+            "265.95932",
+            "124.39317"
+          ],
+          "bbox_normalized": [
+            "0.0",
+            "9.878874e-05",
+            "0.36938795",
+            "0.09718217"
+          ]
+        }
+      ],
+      "inference_time": 0.010171890258789062
+    },
+    {
+      "frame_number": 137,
+      "timestamp": 4.566666666666666,
+      "detections": [
+        {
+          "class_id": 5,
+          "class_name": "plate",
+          "confidence": 0.3905583322048187,
+          "bbox": [
+            "0.0",
+            "0.12924194",
+            "259.22333",
+            "122.95807"
+          ],
+          "bbox_normalized": [
+            "0.0",
+            "0.00010097027",
+            "0.3600324",
+            "0.09606099"
+          ]
+        }
+      ],
+      "inference_time": 0.007748842239379883
+    },
+    {
+      "frame_number": 138,
+      "timestamp": 4.6,
+      "detections": [
+        {
+          "class_id": 5,
+          "class_name": "plate",
+          "confidence": 0.3871139585971832,
+          "bbox": [
+            "0.0",
+            "0.11529541",
+            "246.07562",
+            "122.96386"
+          ],
+          "bbox_normalized": [
+            "0.0",
+            "9.0074536e-05",
+            "0.3417717",
+            "0.096065514"
+          ]
+        }
+      ],
+      "inference_time": 0.009589910507202148
+    },
+    {
+      "frame_number": 139,
+      "timestamp": 4.633333333333334,
+      "detections": [
+        {
+          "class_id": 5,
+          "class_name": "plate",
+          "confidence": 0.40661171078681946,
+          "bbox": [
+            "0.0",
+            "0.11666107",
+            "245.3493",
+            "123.80194"
+          ],
+          "bbox_normalized": [
+            "0.0",
+            "9.114146e-05",
+            "0.3407629",
+            "0.09672026"
+          ]
+        }
+      ],
+      "inference_time": 0.008070230484008789
+    },
+    {
+      "frame_number": 140,
+      "timestamp": 4.666666666666667,
+      "detections": [
+        {
+          "class_id": 5,
+          "class_name": "plate",
+          "confidence": 0.3899075388908386,
+          "bbox": [
+            "0.0",
+            "0.12007141",
+            "247.17584",
+            "124.06879"
+          ],
+          "bbox_normalized": [
+            "0.0",
+            "9.380579e-05",
+            "0.34329978",
+            "0.09692874"
+          ]
+        }
+      ],
+      "inference_time": 0.009839296340942383
+    },
+    {
+      "frame_number": 141,
+      "timestamp": 4.7,
+      "detections": [
+        {
+          "class_id": 5,
+          "class_name": "plate",
+          "confidence": 0.39594119787216187,
+          "bbox": [
+            "0.0",
+            "0.118621826",
+            "244.55746",
+            "124.398926"
+          ],
+          "bbox_normalized": [
+            "0.0",
+            "9.2673305e-05",
+            "0.33966315",
+            "0.09718666"
+          ]
+        }
+      ],
+      "inference_time": 0.00790095329284668
+    },
+    {
+      "frame_number": 142,
+      "timestamp": 4.733333333333333,
+      "detections": [
+        {
+          "class_id": 5,
+          "class_name": "plate",
+          "confidence": 0.3791505992412567,
+          "bbox": [
+            "0.0",
+            "0.11921692",
+            "244.52893",
+            "125.143326"
+          ],
+          "bbox_normalized": [
+            "0.0",
+            "9.313822e-05",
+            "0.3396235",
+            "0.097768225"
+          ]
+        }
+      ],
+      "inference_time": 0.007826089859008789
+    },
+    {
+      "frame_number": 143,
+      "timestamp": 4.766666666666667,
+      "detections": [
+        {
+          "class_id": 5,
+          "class_name": "plate",
+          "confidence": 0.404281884431839,
+          "bbox": [
+            "0.0",
+            "0.12441254",
+            "248.18854",
+            "125.670555"
+          ],
+          "bbox_normalized": [
+            "0.0",
+            "9.719729e-05",
+            "0.3447063",
+            "0.09818012"
+          ]
+        }
+      ],
+      "inference_time": 0.00722050666809082
+    },
+    {
+      "frame_number": 144,
+      "timestamp": 4.8,
+      "detections": [],
+      "inference_time": 0.007570505142211914
+    },
+    {
+      "frame_number": 145,
+      "timestamp": 4.833333333333333,
+      "detections": [],
+      "inference_time": 0.006582498550415039
+    },
+    {
+      "frame_number": 146,
+      "timestamp": 4.866666666666666,
+      "detections": [],
+      "inference_time": 0.007980585098266602
+    },
+    {
+      "frame_number": 147,
+      "timestamp": 4.9,
+      "detections": [],
+      "inference_time": 0.010829687118530273
+    },
+    {
+      "frame_number": 148,
+      "timestamp": 4.933333333333334,
+      "detections": [],
+      "inference_time": 0.007148027420043945
+    },
+    {
+      "frame_number": 149,
+      "timestamp": 4.966666666666667,
+      "detections": [],
+      "inference_time": 0.006741523742675781
+    },
+    {
+      "frame_number": 150,
+      "timestamp": 5.0,
+      "detections": [],
+      "inference_time": 0.007476806640625
+    },
+    {
+      "frame_number": 151,
+      "timestamp": 5.033333333333333,
+      "detections": [],
+      "inference_time": 0.006824016571044922
+    },
+    {
+      "frame_number": 152,
+      "timestamp": 5.066666666666666,
+      "detections": [],
+      "inference_time": 0.007339954376220703
+    },
+    {
+      "frame_number": 153,
+      "timestamp": 5.1,
+      "detections": [],
+      "inference_time": 0.0068476200103759766
+    },
+    {
+      "frame_number": 154,
+      "timestamp": 5.133333333333334,
+      "detections": [
+        {
+          "class_id": 5,
+          "class_name": "plate",
+          "confidence": 0.26226240396499634,
+          "bbox": [
+            "0.0",
+            "0.12339783",
+            "300.87292",
+            "117.51902"
+          ],
+          "bbox_normalized": [
+            "0.0",
+            "9.6404554e-05",
+            "0.41787907",
+            "0.09181173"
+          ]
+        }
+      ],
+      "inference_time": 0.007143735885620117
+    },
+    {
+      "frame_number": 155,
+      "timestamp": 5.166666666666667,
+      "detections": [
+        {
+          "class_id": 5,
+          "class_name": "plate",
+          "confidence": 0.2787926197052002,
+          "bbox": [
+            "0.0",
+            "0.127182",
+            "285.3051",
+            "117.77618"
+          ],
+          "bbox_normalized": [
+            "0.0",
+            "9.936094e-05",
+            "0.3962571",
+            "0.09201264"
+          ]
+        }
+      ],
+      "inference_time": 0.0074503421783447266
+    },
+    {
+      "frame_number": 156,
+      "timestamp": 5.2,
+      "detections": [
+        {
+          "class_id": 5,
+          "class_name": "plate",
+          "confidence": 0.27508360147476196,
+          "bbox": [
+            "0.0",
+            "0.12902832",
+            "284.3222",
+            "112.44592"
+          ],
+          "bbox_normalized": [
+            "0.0",
+            "0.00010080337",
+            "0.39489195",
+            "0.08784838"
+          ]
+        }
+      ],
+      "inference_time": 0.007397651672363281
+    },
+    {
+      "frame_number": 157,
+      "timestamp": 5.233333333333333,
+      "detections": [
+        {
+          "class_id": 5,
+          "class_name": "plate",
+          "confidence": 0.29781174659729004,
+          "bbox": [
+            "0.0",
+            "0.12246704",
+            "277.8954",
+            "109.59224"
+          ],
+          "bbox_normalized": [
+            "0.0",
+            "9.567737e-05",
+            "0.38596582",
+            "0.085618936"
+          ]
+        }
+      ],
+      "inference_time": 0.009856462478637695
+    },
+    {
+      "frame_number": 158,
+      "timestamp": 5.266666666666667,
+      "detections": [
+        {
+          "class_id": 5,
+          "class_name": "plate",
+          "confidence": 0.32032299041748047,
+          "bbox": [
+            "0.0",
+            "0.12436676",
+            "276.677",
+            "111.325554"
+          ],
+          "bbox_normalized": [
+            "0.0",
+            "9.716153e-05",
+            "0.38427362",
+            "0.086973086"
+          ]
+        }
+      ],
+      "inference_time": 0.007389545440673828
+    },
+    {
+      "frame_number": 159,
+      "timestamp": 5.3,
+      "detections": [
+        {
+          "class_id": 5,
+          "class_name": "plate",
+          "confidence": 0.32548391819000244,
+          "bbox": [
+            "0.0",
+            "0.12578583",
+            "272.40082",
+            "117.2956"
+          ],
+          "bbox_normalized": [
+            "0.0",
+            "9.8270175e-05",
+            "0.37833446",
+            "0.09163719"
+          ]
+        }
+      ],
+      "inference_time": 0.007995128631591797
+    },
+    {
+      "frame_number": 160,
+      "timestamp": 5.333333333333333,
+      "detections": [],
+      "inference_time": 0.0070993900299072266
+    },
+    {
+      "frame_number": 161,
+      "timestamp": 5.366666666666666,
+      "detections": [],
+      "inference_time": 0.007151126861572266
+    },
+    {
+      "frame_number": 162,
+      "timestamp": 5.4,
+      "detections": [],
+      "inference_time": 0.007688283920288086
+    },
+    {
+      "frame_number": 163,
+      "timestamp": 5.433333333333334,
+      "detections": [],
+      "inference_time": 0.007199525833129883
+    },
+    {
+      "frame_number": 164,
+      "timestamp": 5.466666666666667,
+      "detections": [],
+      "inference_time": 0.007051706314086914
+    },
+    {
+      "frame_number": 165,
+      "timestamp": 5.5,
+      "detections": [],
+      "inference_time": 0.007205963134765625
+    },
+    {
+      "frame_number": 166,
+      "timestamp": 5.533333333333333,
+      "detections": [],
+      "inference_time": 0.0071010589599609375
+    },
+    {
+      "frame_number": 167,
+      "timestamp": 5.566666666666666,
+      "detections": [],
+      "inference_time": 0.009674549102783203
+    },
+    {
+      "frame_number": 168,
+      "timestamp": 5.6,
+      "detections": [],
+      "inference_time": 0.007101297378540039
+    },
+    {
+      "frame_number": 169,
+      "timestamp": 5.633333333333334,
+      "detections": [],
+      "inference_time": 0.011916637420654297
+    },
+    {
+      "frame_number": 170,
+      "timestamp": 5.666666666666667,
+      "detections": [],
+      "inference_time": 0.007192850112915039
+    },
+    {
+      "frame_number": 171,
+      "timestamp": 5.7,
+      "detections": [],
+      "inference_time": 0.007083892822265625
+    },
+    {
+      "frame_number": 172,
+      "timestamp": 5.733333333333333,
+      "detections": [],
+      "inference_time": 0.011110544204711914
+    },
+    {
+      "frame_number": 173,
+      "timestamp": 5.766666666666667,
+      "detections": [],
+      "inference_time": 0.006868839263916016
+    },
+    {
+      "frame_number": 174,
+      "timestamp": 5.8,
+      "detections": [],
+      "inference_time": 0.007086038589477539
+    },
+    {
+      "frame_number": 175,
+      "timestamp": 5.833333333333333,
+      "detections": [],
+      "inference_time": 0.00705409049987793
+    },
+    {
+      "frame_number": 176,
+      "timestamp": 5.866666666666666,
+      "detections": [],
+      "inference_time": 0.006596088409423828
+    },
+    {
+      "frame_number": 177,
+      "timestamp": 5.9,
+      "detections": [],
+      "inference_time": 0.00667572021484375
+    },
+    {
+      "frame_number": 178,
+      "timestamp": 5.933333333333334,
+      "detections": [],
+      "inference_time": 0.006632089614868164
+    },
+    {
+      "frame_number": 179,
+      "timestamp": 5.966666666666667,
+      "detections": [],
+      "inference_time": 0.007456302642822266
+    },
+    {
+      "frame_number": 180,
+      "timestamp": 6.0,
+      "detections": [],
+      "inference_time": 0.007221221923828125
+    },
+    {
+      "frame_number": 181,
+      "timestamp": 6.033333333333333,
+      "detections": [],
+      "inference_time": 0.008026123046875
+    },
+    {
+      "frame_number": 182,
+      "timestamp": 6.066666666666666,
+      "detections": [],
+      "inference_time": 0.008468389511108398
+    },
+    {
+      "frame_number": 183,
+      "timestamp": 6.1,
+      "detections": [],
+      "inference_time": 0.007010698318481445
+    },
+    {
+      "frame_number": 184,
+      "timestamp": 6.133333333333334,
+      "detections": [],
+      "inference_time": 0.006930112838745117
+    },
+    {
+      "frame_number": 185,
+      "timestamp": 6.166666666666667,
+      "detections": [],
+      "inference_time": 0.006914615631103516
+    },
+    {
+      "frame_number": 186,
+      "timestamp": 6.2,
+      "detections": [],
+      "inference_time": 0.007077932357788086
+    },
+    {
+      "frame_number": 187,
+      "timestamp": 6.233333333333333,
+      "detections": [],
+      "inference_time": 0.009427785873413086
+    },
+    {
+      "frame_number": 188,
+      "timestamp": 6.266666666666667,
+      "detections": [],
+      "inference_time": 0.0075414180755615234
+    },
+    {
+      "frame_number": 189,
+      "timestamp": 6.3,
+      "detections": [],
+      "inference_time": 0.009061336517333984
+    },
+    {
+      "frame_number": 190,
+      "timestamp": 6.333333333333333,
+      "detections": [],
+      "inference_time": 0.007447242736816406
+    },
+    {
+      "frame_number": 191,
+      "timestamp": 6.366666666666666,
+      "detections": [],
+      "inference_time": 0.008495330810546875
+    },
+    {
+      "frame_number": 192,
+      "timestamp": 6.4,
+      "detections": [],
+      "inference_time": 0.006913661956787109
+    },
+    {
+      "frame_number": 193,
+      "timestamp": 6.433333333333334,
+      "detections": [],
+      "inference_time": 0.007325887680053711
+    },
+    {
+      "frame_number": 194,
+      "timestamp": 6.466666666666667,
+      "detections": [],
+      "inference_time": 0.007098197937011719
+    },
+    {
+      "frame_number": 195,
+      "timestamp": 6.5,
+      "detections": [],
+      "inference_time": 0.007356166839599609
+    },
+    {
+      "frame_number": 196,
+      "timestamp": 6.533333333333333,
+      "detections": [],
+      "inference_time": 0.009363412857055664
+    },
+    {
+      "frame_number": 197,
+      "timestamp": 6.566666666666666,
+      "detections": [],
+      "inference_time": 0.006864309310913086
+    },
+    {
+      "frame_number": 198,
+      "timestamp": 6.6,
+      "detections": [],
+      "inference_time": 0.007031440734863281
+    },
+    {
+      "frame_number": 199,
+      "timestamp": 6.633333333333334,
+      "detections": [],
+      "inference_time": 0.0068781375885009766
+    },
+    {
+      "frame_number": 200,
+      "timestamp": 6.666666666666667,
+      "detections": [],
+      "inference_time": 0.009626626968383789
+    },
+    {
+      "frame_number": 201,
+      "timestamp": 6.7,
+      "detections": [],
+      "inference_time": 0.007356166839599609
+    },
+    {
+      "frame_number": 202,
+      "timestamp": 6.733333333333333,
+      "detections": [],
+      "inference_time": 0.007505893707275391
+    },
+    {
+      "frame_number": 203,
+      "timestamp": 6.766666666666667,
+      "detections": [],
+      "inference_time": 0.009125947952270508
+    },
+    {
+      "frame_number": 204,
+      "timestamp": 6.8,
+      "detections": [],
+      "inference_time": 0.008006572723388672
+    },
+    {
+      "frame_number": 205,
+      "timestamp": 6.833333333333333,
+      "detections": [],
+      "inference_time": 0.00760650634765625
+    },
+    {
+      "frame_number": 206,
+      "timestamp": 6.866666666666666,
+      "detections": [],
+      "inference_time": 0.00789332389831543
+    },
+    {
+      "frame_number": 207,
+      "timestamp": 6.9,
+      "detections": [],
+      "inference_time": 0.007622718811035156
+    },
+    {
+      "frame_number": 208,
+      "timestamp": 6.933333333333334,
+      "detections": [],
+      "inference_time": 0.006922245025634766
+    },
+    {
+      "frame_number": 209,
+      "timestamp": 6.966666666666667,
+      "detections": [],
+      "inference_time": 0.007208824157714844
+    },
+    {
+      "frame_number": 210,
+      "timestamp": 7.0,
+      "detections": [],
+      "inference_time": 0.008455991744995117
+    },
+    {
+      "frame_number": 211,
+      "timestamp": 7.033333333333333,
+      "detections": [],
+      "inference_time": 0.007306575775146484
+    },
+    {
+      "frame_number": 212,
+      "timestamp": 7.066666666666666,
+      "detections": [],
+      "inference_time": 0.007115602493286133
+    },
+    {
+      "frame_number": 213,
+      "timestamp": 7.1,
+      "detections": [],
+      "inference_time": 0.0076656341552734375
+    },
+    {
+      "frame_number": 214,
+      "timestamp": 7.133333333333334,
+      "detections": [],
+      "inference_time": 0.007668972015380859
+    },
+    {
+      "frame_number": 215,
+      "timestamp": 7.166666666666667,
+      "detections": [],
+      "inference_time": 0.009412050247192383
+    },
+    {
+      "frame_number": 216,
+      "timestamp": 7.2,
+      "detections": [],
+      "inference_time": 0.007242918014526367
+    },
+    {
+      "frame_number": 217,
+      "timestamp": 7.233333333333333,
+      "detections": [],
+      "inference_time": 0.006443023681640625
+    },
+    {
+      "frame_number": 218,
+      "timestamp": 7.266666666666667,
+      "detections": [],
+      "inference_time": 0.007182598114013672
+    },
+    {
+      "frame_number": 219,
+      "timestamp": 7.3,
+      "detections": [],
+      "inference_time": 0.007105827331542969
+    },
+    {
+      "frame_number": 220,
+      "timestamp": 7.333333333333333,
+      "detections": [],
+      "inference_time": 0.007193088531494141
+    },
+    {
+      "frame_number": 221,
+      "timestamp": 7.366666666666666,
+      "detections": [],
+      "inference_time": 0.007310152053833008
+    },
+    {
+      "frame_number": 222,
+      "timestamp": 7.4,
+      "detections": [],
+      "inference_time": 0.007242918014526367
+    },
+    {
+      "frame_number": 223,
+      "timestamp": 7.433333333333334,
+      "detections": [],
+      "inference_time": 0.009057760238647461
+    },
+    {
+      "frame_number": 224,
+      "timestamp": 7.466666666666667,
+      "detections": [],
+      "inference_time": 0.010821819305419922
+    },
+    {
+      "frame_number": 225,
+      "timestamp": 7.5,
+      "detections": [],
+      "inference_time": 0.009494781494140625
+    },
+    {
+      "frame_number": 226,
+      "timestamp": 7.533333333333333,
+      "detections": [],
+      "inference_time": 0.008295059204101562
+    },
+    {
+      "frame_number": 227,
+      "timestamp": 7.566666666666666,
+      "detections": [],
+      "inference_time": 0.007472038269042969
+    },
+    {
+      "frame_number": 228,
+      "timestamp": 7.6,
+      "detections": [],
+      "inference_time": 0.0070362091064453125
+    },
+    {
+      "frame_number": 229,
+      "timestamp": 7.633333333333334,
+      "detections": [],
+      "inference_time": 0.007311105728149414
+    },
+    {
+      "frame_number": 230,
+      "timestamp": 7.666666666666667,
+      "detections": [],
+      "inference_time": 0.0067980289459228516
+    },
+    {
+      "frame_number": 231,
+      "timestamp": 7.7,
+      "detections": [],
+      "inference_time": 0.013010025024414062
+    },
+    {
+      "frame_number": 232,
+      "timestamp": 7.733333333333333,
+      "detections": [],
+      "inference_time": 0.013053178787231445
+    },
+    {
+      "frame_number": 233,
+      "timestamp": 7.766666666666667,
+      "detections": [],
+      "inference_time": 0.0073184967041015625
+    },
+    {
+      "frame_number": 234,
+      "timestamp": 7.8,
+      "detections": [],
+      "inference_time": 0.0070171356201171875
+    },
+    {
+      "frame_number": 235,
+      "timestamp": 7.833333333333333,
+      "detections": [],
+      "inference_time": 0.00735783576965332
+    },
+    {
+      "frame_number": 236,
+      "timestamp": 7.866666666666666,
+      "detections": [],
+      "inference_time": 0.007829427719116211
+    },
+    {
+      "frame_number": 237,
+      "timestamp": 7.9,
+      "detections": [],
+      "inference_time": 0.010328054428100586
+    },
+    {
+      "frame_number": 238,
+      "timestamp": 7.933333333333334,
+      "detections": [],
+      "inference_time": 0.0072574615478515625
+    },
+    {
+      "frame_number": 239,
+      "timestamp": 7.966666666666667,
+      "detections": [],
+      "inference_time": 0.006846427917480469
+    },
+    {
+      "frame_number": 240,
+      "timestamp": 8.0,
+      "detections": [],
+      "inference_time": 0.006901979446411133
+    },
+    {
+      "frame_number": 241,
+      "timestamp": 8.033333333333333,
+      "detections": [],
+      "inference_time": 0.0075724124908447266
+    },
+    {
+      "frame_number": 242,
+      "timestamp": 8.066666666666666,
+      "detections": [],
+      "inference_time": 0.00946044921875
+    },
+    {
+      "frame_number": 243,
+      "timestamp": 8.1,
+      "detections": [],
+      "inference_time": 0.008449316024780273
+    },
+    {
+      "frame_number": 244,
+      "timestamp": 8.133333333333333,
+      "detections": [],
+      "inference_time": 0.008835315704345703
+    },
+    {
+      "frame_number": 245,
+      "timestamp": 8.166666666666666,
+      "detections": [],
+      "inference_time": 0.008209228515625
+    },
+    {
+      "frame_number": 246,
+      "timestamp": 8.2,
+      "detections": [],
+      "inference_time": 0.007015228271484375
+    },
+    {
+      "frame_number": 247,
+      "timestamp": 8.233333333333333,
+      "detections": [],
+      "inference_time": 0.007133007049560547
+    },
+    {
+      "frame_number": 248,
+      "timestamp": 8.266666666666667,
+      "detections": [],
+      "inference_time": 0.007063150405883789
+    },
+    {
+      "frame_number": 249,
+      "timestamp": 8.3,
+      "detections": [],
+      "inference_time": 0.007288217544555664
+    },
+    {
+      "frame_number": 250,
+      "timestamp": 8.333333333333334,
+      "detections": [],
+      "inference_time": 0.00709080696105957
+    },
+    {
+      "frame_number": 251,
+      "timestamp": 8.366666666666667,
+      "detections": [],
+      "inference_time": 0.0075914859771728516
+    },
+    {
+      "frame_number": 252,
+      "timestamp": 8.4,
+      "detections": [],
+      "inference_time": 0.007147312164306641
+    },
+    {
+      "frame_number": 253,
+      "timestamp": 8.433333333333334,
+      "detections": [],
+      "inference_time": 0.010359764099121094
+    },
+    {
+      "frame_number": 254,
+      "timestamp": 8.466666666666667,
+      "detections": [],
+      "inference_time": 0.007005929946899414
+    },
+    {
+      "frame_number": 255,
+      "timestamp": 8.5,
+      "detections": [],
+      "inference_time": 0.012529373168945312
+    },
+    {
+      "frame_number": 256,
+      "timestamp": 8.533333333333333,
+      "detections": [],
+      "inference_time": 0.00722813606262207
+    },
+    {
+      "frame_number": 257,
+      "timestamp": 8.566666666666666,
+      "detections": [],
+      "inference_time": 0.007220029830932617
+    },
+    {
+      "frame_number": 258,
+      "timestamp": 8.6,
+      "detections": [],
+      "inference_time": 0.011888265609741211
+    },
+    {
+      "frame_number": 259,
+      "timestamp": 8.633333333333333,
+      "detections": [],
+      "inference_time": 0.007358074188232422
+    },
+    {
+      "frame_number": 260,
+      "timestamp": 8.666666666666666,
+      "detections": [],
+      "inference_time": 0.012757539749145508
+    }
+  ]
+}

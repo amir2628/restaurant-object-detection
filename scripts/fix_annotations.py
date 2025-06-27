@@ -1,398 +1,84 @@
 """
-Быстрое решение проблемы с пустыми аннотациями
-Создает высококачественные аннотации для существующих изображений
+Скрипт для исправления и создания аннотаций с использованием GroundingDINO
+Автоматически создает высококачественные аннотации для объектов еды и посуды
 """
 
-import os
 import sys
-import logging
 import argparse
-from pathlib import Path
-from typing import List, Dict, Any, Tuple
-import cv2
-import numpy as np
-import json
-import yaml
 import time
-from tqdm import tqdm
+import yaml
+import shutil
+from pathlib import Path
+from typing import Dict, Any, List, Tuple, Optional
+import logging
 
-# Добавляем корневую директорию проекта в sys.path
-project_root = Path(__file__).parent.parent
-sys.path.insert(0, str(project_root))
+# Добавление корневой директории в путь
+sys.path.append(str(Path(__file__).parent.parent))
 
 from src.utils.logger import setup_logger
 
+
 def check_dataset_structure(dataset_dir: Path) -> bool:
-    """
-    Проверка структуры датасета YOLO
-    
-    Args:
-        dataset_dir: Путь к датасету
-        
-    Returns:
-        True если структура корректна
-    """
+    """Проверка корректности структуры датасета YOLO"""
     logger = setup_logger(__name__)
     
     required_dirs = [
-        'train/images',
-        'train/labels', 
-        'val/images',
-        'val/labels',
-        'test/images',
-        'test/labels'
+        dataset_dir / "train" / "images",
+        dataset_dir / "train" / "labels",
+        dataset_dir / "val" / "images", 
+        dataset_dir / "val" / "labels",
+        dataset_dir / "test" / "images",
+        dataset_dir / "test" / "labels"
     ]
     
     missing_dirs = []
     for dir_path in required_dirs:
-        full_path = dataset_dir / dir_path
-        if not full_path.exists():
-            missing_dirs.append(dir_path)
+        if not dir_path.exists():
+            missing_dirs.append(str(dir_path))
     
     if missing_dirs:
-        logger.error(f"❌ Не найдены директории с изображениями в {dataset_dir}")
-        logger.error("Ожидаемая структура:")
-        logger.error("  dataset/")
-        for req_dir in required_dirs:
-            status = "❌" if req_dir in missing_dirs else "✅"
-            logger.error(f"  {status} {req_dir}/")
+        logger.warning(f"Отсутствующие директории: {missing_dirs}")
         return False
     
+    logger.info("✅ Структура датасета корректна")
     return True
 
+
 def create_dataset_structure(dataset_dir: Path):
-    """
-    Создание структуры датасета если она не существует
-    
-    Args:
-        dataset_dir: Путь к датасету
-    """
+    """Создание структуры директорий датасета"""
     logger = setup_logger(__name__)
     
-    logger.info(f"🏗️ Создание структуры датасета в {dataset_dir}")
-    
-    required_dirs = [
-        'train/images',
-        'train/labels', 
-        'val/images',
-        'val/labels',
-        'test/images',
-        'test/labels'
+    directories = [
+        "train/images", "train/labels",
+        "val/images", "val/labels", 
+        "test/images", "test/labels"
     ]
     
-    for dir_path in required_dirs:
-        full_path = dataset_dir / dir_path
-        full_path.mkdir(parents=True, exist_ok=True)
-        logger.info(f"✅ Создана директория: {dir_path}")
+    for directory in directories:
+        dir_path = dataset_dir / directory
+        dir_path.mkdir(parents=True, exist_ok=True)
+        logger.info(f"📁 Создана директория: {dir_path}")
     
-    logger.info("🎯 Структура датасета создана успешно!")
+    logger.info("🏗️ Структура датасета создана")
 
-def get_available_yolo_models() -> List[str]:
-    """
-    Получение списка доступных YOLO моделей
+
+def create_dataset_yaml_with_groundingdino_classes(dataset_dir: Path):
+    """Создание dataset.yaml с классами GroundingDINO"""
+    logger = setup_logger(__name__)
     
-    Returns:
-        Список доступных моделей
-    """
-    # Стандартные модели YOLOv8/v11
-    standard_models = [
-        'yolo11n.pt', 'yolo11s.pt', 'yolo11m.pt', 'yolo11l.pt', 'yolo11x.pt',
-        'yolov8n.pt', 'yolov8s.pt', 'yolov8m.pt', 'yolov8l.pt', 'yolov8x.pt'
+    # Классы для GroundingDINO (специализированные для ресторанной среды)
+    restaurant_classes = [
+        'chicken',     # Курица
+        'meat',        # Мясо
+        'salad',       # Салат
+        'soup',        # Суп
+        'cup',         # Чашка
+        'plate',       # Тарелка
+        'bowl',        # Миска
+        'spoon',       # Ложка
+        'fork',        # Вилка
+        'knife'        # Нож
     ]
-    
-    available_models = []
-    
-    try:
-        from ultralytics import YOLO
-        
-        for model_name in standard_models:
-            try:
-                # Проверяем доступность модели
-                model = YOLO(model_name)
-                available_models.append(model_name)
-            except Exception:
-                continue
-                
-    except ImportError:
-        # Если ultralytics не установлен, возвращаем базовые модели
-        available_models = ['yolo11n.pt', 'yolov8n.pt']
-    
-    return available_models
-
-def detect_objects_with_yolo(image_path: Path, 
-                           model_names: List[str],
-                           restaurant_classes: List[str],
-                           confidence_threshold: float = 0.25) -> List[Dict]:
-    """
-    Профессиональная детекция объектов с использованием ансамбля YOLO моделей
-    
-    Args:
-        image_path: Путь к изображению
-        model_names: Список имен моделей для ансамбля
-        restaurant_classes: Целевые классы для ресторанной среды
-        confidence_threshold: Порог уверенности
-        
-    Returns:
-        Список детекций в формате YOLO
-    """
-    try:
-        from ultralytics import YOLO
-    except ImportError:
-        return []
-    
-    logger = setup_logger(__name__)
-    
-    image = cv2.imread(str(image_path))
-    if image is None:
-        return []
-    
-    height, width = image.shape[:2]
-    all_detections = []
-    
-    # Детекция каждой моделью из ансамбля
-    for model_name in model_names:
-        try:
-            model = YOLO(model_name)
-            results = model(image, conf=confidence_threshold, verbose=False)
-            
-            if results and len(results) > 0:
-                result = results[0]
-                
-                if result.boxes is not None and len(result.boxes) > 0:
-                    boxes = result.boxes.xyxy.cpu().numpy()
-                    confidences = result.boxes.conf.cpu().numpy()
-                    class_ids = result.boxes.cls.cpu().numpy().astype(int)
-                    
-                    for box, conf, class_id in zip(boxes, confidences, class_ids):
-                        if class_id < len(result.names):
-                            class_name = result.names[class_id]
-                            
-                            # Фильтрация по ресторанным классам
-                            if class_name in restaurant_classes:
-                                x1, y1, x2, y2 = box
-                                
-                                # Конвертация в формат YOLO (нормализованные координаты)
-                                x_center = (x1 + x2) / 2 / width
-                                y_center = (y1 + y2) / 2 / height
-                                w = (x2 - x1) / width
-                                h = (y2 - y1) / height
-                                
-                                # Валидация координат
-                                if (0 <= x_center <= 1 and 0 <= y_center <= 1 and
-                                    0 < w <= 1 and 0 < h <= 1):
-                                    
-                                    detection = {
-                                        'class_name': class_name,
-                                        'class_id': restaurant_classes.index(class_name) if class_name in restaurant_classes else 0,
-                                        'confidence': float(conf),
-                                        'bbox': [x_center, y_center, w, h]
-                                    }
-                                    all_detections.append(detection)
-        
-        except Exception as e:
-            logger.warning(f"⚠️ Ошибка детекции с моделью {model_name}: {e}")
-            continue
-    
-    # Удаление дубликатов
-    final_detections = remove_duplicate_detections(all_detections)
-    
-    return final_detections
-
-def remove_duplicate_detections(detections: List[Dict], iou_threshold: float = 0.6) -> List[Dict]:
-    """
-    Удаление дублирующихся детекций по IoU
-    
-    Args:
-        detections: Список детекций
-        iou_threshold: Порог IoU для удаления дубликатов
-        
-    Returns:
-        Фильтрованный список детекций
-    """
-    if not detections:
-        return []
-    
-    # Сортировка по уверенности (убывание)
-    detections = sorted(detections, key=lambda x: x['confidence'], reverse=True)
-    
-    filtered = []
-    for detection in detections:
-        is_duplicate = False
-        
-        for existing in filtered:
-            if (detection['class_name'] == existing['class_name'] and
-                calculate_iou(detection['bbox'], existing['bbox']) > iou_threshold):
-                is_duplicate = True
-                break
-        
-        if not is_duplicate:
-            filtered.append(detection)
-    
-    return filtered
-
-def calculate_iou(bbox1: List[float], bbox2: List[float]) -> float:
-    """
-    Вычисление IoU для bbox в формате YOLO (x_center, y_center, width, height)
-    
-    Args:
-        bbox1, bbox2: Bbox в формате [x_center, y_center, width, height]
-        
-    Returns:
-        IoU значение
-    """
-    # Конвертация в формат (x1, y1, x2, y2)
-    def yolo_to_xyxy(bbox):
-        x_center, y_center, width, height = bbox
-        x1 = x_center - width / 2
-        y1 = y_center - height / 2
-        x2 = x_center + width / 2
-        y2 = y_center + height / 2
-        return [x1, y1, x2, y2]
-    
-    box1 = yolo_to_xyxy(bbox1)
-    box2 = yolo_to_xyxy(bbox2)
-    
-    # Вычисление пересечения
-    x1 = max(box1[0], box2[0])
-    y1 = max(box1[1], box2[1])
-    x2 = min(box1[2], box2[2])
-    y2 = min(box1[3], box2[3])
-    
-    if x2 <= x1 or y2 <= y1:
-        return 0.0
-    
-    intersection = (x2 - x1) * (y2 - y1)
-    
-    # Вычисление площадей
-    area1 = (box1[2] - box1[0]) * (box1[3] - box1[1])
-    area2 = (box2[2] - box2[0]) * (box2[3] - box2[1])
-    
-    union = area1 + area2 - intersection
-    
-    return intersection / union if union > 0 else 0.0
-
-def save_yolo_annotation(detections: List[Dict], output_path: Path):
-    """
-    Сохранение аннотаций в формате YOLO
-    
-    Args:
-        detections: Список детекций
-        output_path: Путь для сохранения файла аннотации
-    """
-    output_path.parent.mkdir(parents=True, exist_ok=True)
-    
-    with open(output_path, 'w', encoding='utf-8') as f:
-        for detection in detections:
-            class_id = detection['class_id']
-            x_center, y_center, width, height = detection['bbox']
-            
-            # Формат YOLO: class_id x_center y_center width height
-            f.write(f"{class_id} {x_center:.6f} {y_center:.6f} {width:.6f} {height:.6f}\n")
-
-def process_dataset_split(split_dir: Path, 
-                         restaurant_classes: List[str],
-                         model_names: List[str],
-                         confidence_threshold: float = 0.25,
-                         use_auto_annotation: bool = False) -> Dict[str, int]:
-    """
-    Обработка одного split'а датасета (train/val/test)
-    
-    Args:
-        split_dir: Директория split'а
-        restaurant_classes: Список целевых классов
-        model_names: Модели для аннотации
-        confidence_threshold: Порог уверенности
-        use_auto_annotation: Использовать автоматическую аннотацию
-        
-    Returns:
-        Статистика обработки
-    """
-    logger = setup_logger(__name__)
-    
-    images_dir = split_dir / "images"
-    labels_dir = split_dir / "labels"
-    
-    if not images_dir.exists():
-        logger.warning(f"⚠️ Директория изображений не найдена: {images_dir}")
-        return {'processed': 0, 'annotated': 0, 'errors': 0}
-    
-    # Создание директории для аннотаций
-    labels_dir.mkdir(parents=True, exist_ok=True)
-    
-    # Поиск изображений
-    image_extensions = ['.jpg', '.jpeg', '.png', '.bmp', '.tiff']
-    images = []
-    for ext in image_extensions:
-        images.extend(list(images_dir.glob(f"*{ext}")))
-        images.extend(list(images_dir.glob(f"*{ext.upper()}")))
-    
-    if not images:
-        logger.warning(f"⚠️ Изображения не найдены в {images_dir}")
-        return {'processed': 0, 'annotated': 0, 'errors': 0}
-    
-    logger.info(f"📷 Найдено {len(images)} изображений в {split_dir.name}")
-    
-    stats = {'processed': 0, 'annotated': 0, 'errors': 0}
-    
-    for image_path in tqdm(images, desc=f"Обработка {split_dir.name}"):
-        try:
-            label_filename = image_path.stem + ".txt"
-            label_path = labels_dir / label_filename
-            
-            # Проверка существования аннотации
-            if label_path.exists():
-                # Проверка, пустая ли аннотация
-                with open(label_path, 'r', encoding='utf-8') as f:
-                    content = f.read().strip()
-                
-                if content and not use_auto_annotation:
-                    # Аннотация уже существует и не пустая
-                    stats['processed'] += 1
-                    continue
-            
-            # Создание аннотации
-            detections = []
-            
-            if use_auto_annotation and model_names:
-                # Автоматическая аннотация с помощью YOLO
-                detections = detect_objects_with_yolo(
-                    image_path=image_path,
-                    model_names=model_names,
-                    restaurant_classes=restaurant_classes,
-                    confidence_threshold=confidence_threshold
-                )
-            
-            # Сохранение аннотации (пустой или с детекциями)
-            save_yolo_annotation(detections, label_path)
-            
-            stats['processed'] += 1
-            if detections:
-                stats['annotated'] += 1
-                
-        except Exception as e:
-            logger.error(f"❌ Ошибка обработки {image_path}: {e}")
-            stats['errors'] += 1
-            
-            # Создание пустой аннотации в случае ошибки
-            try:
-                label_filename = image_path.stem + ".txt"
-                label_path = labels_dir / label_filename
-                with open(label_path, 'w', encoding='utf-8') as f:
-                    pass
-            except Exception:
-                pass
-    
-    return stats
-
-def create_or_update_dataset_yaml(dataset_dir: Path, restaurant_classes: List[str]):
-    """
-    Создание или обновление dataset.yaml файла
-    
-    Args:
-        dataset_dir: Директория датасета
-        restaurant_classes: Список классов для ресторанной среды
-    """
-    logger = setup_logger(__name__)
     
     yaml_config = {
         'path': str(dataset_dir.absolute()),
@@ -410,13 +96,204 @@ def create_or_update_dataset_yaml(dataset_dir: Path, restaurant_classes: List[st
             yaml.dump(yaml_config, f, default_flow_style=False, allow_unicode=True)
         
         logger.info(f"✅ Создан/обновлен dataset.yaml: {yaml_path}")
-        logger.info(f"📋 Классы ({len(restaurant_classes)}): {', '.join(restaurant_classes)}")
+        logger.info(f"📋 Классы GroundingDINO ({len(restaurant_classes)}): {', '.join(restaurant_classes)}")
         
     except Exception as e:
         logger.error(f"❌ Ошибка создания dataset.yaml: {e}")
 
+
+def auto_annotate_with_groundingdino(image_path: Path, restaurant_classes: List[str], 
+                                    confidence_threshold: float = 0.25) -> List[Dict]:
+    """
+    Автоматическая аннотация изображения с использованием GroundingDINO
+    
+    Args:
+        image_path: Путь к изображению
+        restaurant_classes: Список классов для детекции
+        confidence_threshold: Порог уверенности
+        
+    Returns:
+        Список детекций в формате YOLO
+    """
+    logger = setup_logger(__name__)
+    
+    try:
+        # Импорт GroundingDINO
+        from groundingdino.util.inference import load_model, predict, load_image
+        import torch
+        import os
+        
+        # Проверка наличия модели
+        checkpoint_path = "groundingdino_swinb_cogcoor.pth"
+        if not os.path.exists(checkpoint_path):
+            logger.warning(f"❌ Файл модели GroundingDINO не найден: {checkpoint_path}")
+            return []
+        
+        # Загрузка модели (кешируем глобально для производительности)
+        if not hasattr(auto_annotate_with_groundingdino, 'model'):
+            # Попытка загрузки с конфигурацией
+            config_paths = [
+                "GroundingDINO/groundingdino/config/GroundingDINO_SwinB_cfg.py",
+                "groundingdino_config.py"
+            ]
+            
+            model = None
+            for config_path in config_paths:
+                if os.path.exists(config_path):
+                    try:
+                        model = load_model(config_path, checkpoint_path)
+                        logger.info(f"✅ GroundingDINO загружен с конфигом: {config_path}")
+                        break
+                    except Exception as e:
+                        logger.warning(f"Ошибка загрузки с конфигом {config_path}: {e}")
+                        continue
+            
+            if model is None:
+                # Загрузка без конфигурации
+                try:
+                    model = load_model(checkpoint_path)
+                    logger.info("✅ GroundingDINO загружен без конфигурации")
+                except Exception as e:
+                    logger.error(f"❌ Не удалось загрузить GroundingDINO: {e}")
+                    return []
+            
+            auto_annotate_with_groundingdino.model = model
+        
+        model = auto_annotate_with_groundingdino.model
+        device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        
+        # Создание промпта
+        prompt = " . ".join(restaurant_classes) + " ."
+        
+        # Загрузка и обработка изображения
+        image_source, image = load_image(str(image_path))
+        
+        # Выполнение детекции
+        boxes, logits, phrases = predict(
+            model=model,
+            image=image,
+            caption=prompt,
+            box_threshold=confidence_threshold,
+            text_threshold=confidence_threshold,
+            device=device
+        )
+        
+        # Обработка результатов
+        detections = []
+        
+        if len(boxes) > 0:
+            # Конвертация тензоров
+            if hasattr(boxes, 'cpu'):
+                boxes = boxes.cpu().numpy()
+            if hasattr(logits, 'cpu'):
+                logits = logits.cpu().numpy()
+            
+            # Получение размеров изображения
+            from PIL import Image
+            img = Image.open(image_path)
+            img_width, img_height = img.size
+            img.close()
+            
+            for i, (box, confidence, phrase) in enumerate(zip(boxes, logits, phrases)):
+                # Маппинг фразы на класс
+                phrase_lower = str(phrase).lower().strip()
+                mapped_class = None
+                
+                for class_name in restaurant_classes:
+                    if class_name.lower() in phrase_lower:
+                        mapped_class = class_name
+                        break
+                
+                if mapped_class and confidence >= confidence_threshold:
+                    # Получение ID класса
+                    class_id = restaurant_classes.index(mapped_class)
+                    
+                    # Нормализация координат (GroundingDINO возвращает нормализованные координаты)
+                    x_center, y_center, width, height = box[:4]
+                    
+                    # Валидация координат
+                    if (0 <= x_center <= 1 and 0 <= y_center <= 1 and
+                        0 < width <= 1 and 0 < height <= 1):
+                        
+                        detection = {
+                            'class_name': mapped_class,
+                            'class_id': class_id,
+                            'confidence': float(confidence),
+                            'bbox': [x_center, y_center, width, height]
+                        }
+                        detections.append(detection)
+        
+        return detections
+        
+    except ImportError:
+        logger.error("❌ GroundingDINO не установлен. Установите: pip install groundingdino-py")
+        return []
+    except Exception as e:
+        logger.error(f"❌ Ошибка в автоматической аннотации: {e}")
+        return []
+
+
+def remove_duplicate_detections(detections: List[Dict], iou_threshold: float = 0.6) -> List[Dict]:
+    """Удаление дублирующихся детекций"""
+    if len(detections) <= 1:
+        return detections
+    
+    # Простой алгоритм удаления дубликатов по IoU
+    filtered_detections = []
+    
+    for i, detection in enumerate(detections):
+        is_duplicate = False
+        
+        for j, other_detection in enumerate(filtered_detections):
+            # Расчет IoU между боксами
+            box1 = detection['bbox']
+            box2 = other_detection['bbox']
+            
+            # Конвертация из центр + размер в углы
+            def center_to_corners(bbox):
+                x_center, y_center, width, height = bbox
+                x1 = x_center - width / 2
+                y1 = y_center - height / 2
+                x2 = x_center + width / 2
+                y2 = y_center + height / 2
+                return [x1, y1, x2, y2]
+            
+            corners1 = center_to_corners(box1)
+            corners2 = center_to_corners(box2)
+            
+            # Расчет пересечения
+            x1 = max(corners1[0], corners2[0])
+            y1 = max(corners1[1], corners2[1])
+            x2 = min(corners1[2], corners2[2])
+            y2 = min(corners1[3], corners2[3])
+            
+            if x2 > x1 and y2 > y1:
+                intersection = (x2 - x1) * (y2 - y1)
+                area1 = box1[2] * box1[3]
+                area2 = box2[2] * box2[3]
+                union = area1 + area2 - intersection
+                
+                iou = intersection / union if union > 0 else 0
+                
+                if iou > iou_threshold:
+                    # Оставляем детекцию с большей уверенностью
+                    if detection['confidence'] <= other_detection['confidence']:
+                        is_duplicate = True
+                        break
+                    else:
+                        # Заменяем старую детекцию новой
+                        filtered_detections[j] = detection
+                        is_duplicate = True
+                        break
+        
+        if not is_duplicate:
+            filtered_detections.append(detection)
+    
+    return filtered_detections
+
+
 class AnnotationFixer:
-    """Основной класс для исправления аннотаций"""
+    """Основной класс для исправления аннотаций с GroundingDINO"""
     
     def __init__(self, dataset_dir: Path, config: Dict[str, Any] = None):
         self.dataset_dir = Path(dataset_dir)
@@ -433,18 +310,17 @@ class AnnotationFixer:
         }
     
     def _get_default_config(self) -> Dict[str, Any]:
-        """Конфигурация по умолчанию"""
+        """Конфигурация по умолчанию с классами GroundingDINO"""
         return {
             'restaurant_classes': [
-                'person', 'chair', 'dining_table', 'cup', 'bowl',
-                'bottle', 'wine_glass', 'fork', 'knife', 'spoon',
-                'plate', 'food', 'phone', 'book', 'laptop'
+                'chicken', 'meat', 'salad', 'soup', 'cup',
+                'plate', 'bowl', 'spoon', 'fork', 'knife'
             ],
             'auto_annotation': {
                 'enabled': True,
                 'confidence_threshold': 0.25,
-                'models': ['yolo11n.pt', 'yolov8n.pt'],
-                'max_models': 2
+                'method': 'groundingdino',
+                'checkpoint_path': 'groundingdino_swinb_cogcoor.pth'
             },
             'processing': {
                 'create_structure_if_missing': True,
@@ -455,7 +331,7 @@ class AnnotationFixer:
     
     def run_fix_process(self):
         """Запуск процесса исправления аннотаций"""
-        self.logger.info("🔧 Запуск процесса исправления аннотаций")
+        self.logger.info("🔧 Запуск процесса исправления аннотаций с GroundingDINO")
         
         try:
             # 1. Проверка и создание структуры
@@ -465,166 +341,161 @@ class AnnotationFixer:
                 else:
                     raise ValueError("Структура датасета некорректна")
             
-            # 2. Подготовка моделей для аннотации
-            available_models = []
-            if self.config['auto_annotation']['enabled']:
-                available_models = self._prepare_annotation_models()
+            # 2. Создание/обновление dataset.yaml
+            create_dataset_yaml_with_groundingdino_classes(self.dataset_dir)
             
-            # 3. Обработка каждого split'а
-            splits_to_process = self.config['processing']['splits_to_process']
+            # 3. Обработка каждого split
+            for split in self.config['processing']['splits_to_process']:
+                self._process_split(split)
             
-            for split_name in splits_to_process:
-                split_dir = self.dataset_dir / split_name
-                
-                if not split_dir.exists():
-                    self.logger.warning(f"⚠️ Split '{split_name}' не найден, пропускаем")
-                    continue
-                
-                self.logger.info(f"🔄 Обработка {split_name} split...")
-                
-                split_stats = process_dataset_split(
-                    split_dir=split_dir,
-                    restaurant_classes=self.config['restaurant_classes'],
-                    model_names=available_models,
-                    confidence_threshold=self.config['auto_annotation']['confidence_threshold'],
-                    use_auto_annotation=self.config['auto_annotation']['enabled']
-                )
-                
-                # Обновление общей статистики
-                self.stats['total_processed'] += split_stats['processed']
-                self.stats['total_annotated'] += split_stats['annotated']
-                self.stats['total_errors'] += split_stats['errors']
-                self.stats['splits_processed'].append({
-                    'split': split_name,
-                    'stats': split_stats
-                })
-                
-                self.logger.info(f"✅ {split_name}: обработано {split_stats['processed']}, "
-                               f"аннотировано {split_stats['annotated']}, "
-                               f"ошибок {split_stats['errors']}")
+            # 4. Генерация финального отчета
+            self._generate_report()
             
-            # 4. Создание/обновление dataset.yaml
-            create_or_update_dataset_yaml(
-                dataset_dir=self.dataset_dir,
-                restaurant_classes=self.config['restaurant_classes']
-            )
-            
-            # 5. Генерация отчета
-            self._generate_completion_report()
-            
-            self.logger.info("🎉 Процесс исправления аннотаций завершен успешно!")
+            self.logger.info("✅ Процесс исправления аннотаций завершен успешно!")
             
         except Exception as e:
             self.logger.error(f"❌ Ошибка в процессе исправления: {e}")
-            self._generate_error_report(e)
             raise
     
-    def _prepare_annotation_models(self) -> List[str]:
-        """Подготовка моделей для автоматической аннотации"""
-        self.logger.info("🤖 Подготовка моделей для автоматической аннотации...")
+    def _process_split(self, split: str):
+        """Обработка одного split (train/val/test)"""
+        self.logger.info(f"📂 Обработка {split} набора...")
         
-        try:
-            available_models = get_available_yolo_models()
-            
-            if not available_models:
-                self.logger.warning("⚠️ YOLO модели недоступны, будут созданы пустые аннотации")
-                return []
-            
-            # Выбор моделей из конфигурации
-            target_models = self.config['auto_annotation']['models']
-            max_models = self.config['auto_annotation']['max_models']
-            
-            selected_models = []
-            for model_name in target_models:
-                if model_name in available_models and len(selected_models) < max_models:
-                    selected_models.append(model_name)
-            
-            # Если не нашли целевые модели, берем любые доступные
-            if not selected_models:
-                selected_models = available_models[:max_models]
-            
-            self.logger.info(f"🎯 Выбранные модели для аннотации: {selected_models}")
-            return selected_models
-            
-        except Exception as e:
-            self.logger.warning(f"⚠️ Ошибка подготовки моделей: {e}")
-            return []
+        images_dir = self.dataset_dir / split / "images"
+        labels_dir = self.dataset_dir / split / "labels"
+        
+        if not images_dir.exists():
+            self.logger.warning(f"Директория изображений не найдена: {images_dir}")
+            return
+        
+        # Поиск всех изображений
+        image_extensions = ['.jpg', '.jpeg', '.png', '.bmp', '.tiff']
+        image_files = []
+        
+        for ext in image_extensions:
+            image_files.extend(images_dir.glob(f"*{ext}"))
+            image_files.extend(images_dir.glob(f"*{ext.upper()}"))
+        
+        if not image_files:
+            self.logger.warning(f"Изображения не найдены в {images_dir}")
+            return
+        
+        self.logger.info(f"Найдено {len(image_files)} изображений в {split}")
+        
+        # Обработка каждого изображения
+        processed_count = 0
+        annotated_count = 0
+        
+        for image_path in image_files:
+            try:
+                annotation_path = labels_dir / f"{image_path.stem}.txt"
+                
+                # Проверка существования аннотации
+                needs_annotation = (
+                    not annotation_path.exists() or
+                    annotation_path.stat().st_size == 0 or
+                    self.config['processing']['overwrite_existing']
+                )
+                
+                if needs_annotation and self.config['auto_annotation']['enabled']:
+                    # Автоматическая аннотация с GroundingDINO
+                    detections = auto_annotate_with_groundingdino(
+                        image_path,
+                        self.config['restaurant_classes'],
+                        self.config['auto_annotation']['confidence_threshold']
+                    )
+                    
+                    # Удаление дубликатов
+                    detections = remove_duplicate_detections(detections)
+                    
+                    # Сохранение аннотации
+                    self._save_yolo_annotation(detections, annotation_path)
+                    
+                    if detections:
+                        annotated_count += 1
+                        self.logger.debug(f"✅ Аннотировано {len(detections)} объектов в {image_path.name}")
+                    else:
+                        # Создание пустого файла аннотации
+                        annotation_path.touch()
+                        self.logger.debug(f"📝 Создана пустая аннотация для {image_path.name}")
+                
+                elif not annotation_path.exists():
+                    # Создание пустого файла если автоаннотация отключена
+                    annotation_path.touch()
+                    self.logger.debug(f"📝 Создана пустая аннотация для {image_path.name}")
+                
+                processed_count += 1
+                
+            except Exception as e:
+                self.logger.error(f"❌ Ошибка обработки {image_path}: {e}")
+                self.stats['total_errors'] += 1
+                continue
+        
+        self.stats['total_processed'] += processed_count
+        self.stats['total_annotated'] += annotated_count
+        self.stats['splits_processed'].append(split)
+        
+        self.logger.info(f"✅ {split}: обработано {processed_count}, аннотировано {annotated_count}")
     
-    def _generate_completion_report(self):
-        """Генерация отчета о завершении"""
+    def _save_yolo_annotation(self, detections: List[Dict], annotation_path: Path):
+        """Сохранение аннотации в формате YOLO"""
+        try:
+            with open(annotation_path, 'w', encoding='utf-8') as f:
+                for detection in detections:
+                    bbox = detection['bbox']
+                    class_id = detection['class_id']
+                    
+                    # Формат YOLO: class_id x_center y_center width height
+                    line = f"{class_id} {bbox[0]:.6f} {bbox[1]:.6f} {bbox[2]:.6f} {bbox[3]:.6f}\n"
+                    f.write(line)
+                    
+        except Exception as e:
+            self.logger.error(f"❌ Ошибка сохранения аннотации {annotation_path}: {e}")
+            # Создание пустого файла в случае ошибки
+            annotation_path.touch()
+    
+    def _generate_report(self):
+        """Генерация отчета о работе"""
         total_time = time.time() - self.stats['start_time']
         
         report = {
             'timestamp': time.strftime('%Y-%m-%d %H:%M:%S'),
-            'status': 'completed',
+            'method': 'GroundingDINO',
             'execution_time_seconds': round(total_time, 2),
-            'dataset_directory': str(self.dataset_dir),
-            'configuration': self.config,
             'statistics': {
                 'total_processed': self.stats['total_processed'],
                 'total_annotated': self.stats['total_annotated'],
                 'total_errors': self.stats['total_errors'],
                 'splits_processed': self.stats['splits_processed']
             },
-            'output_files': {
-                'dataset_yaml': str(self.dataset_dir / 'dataset.yaml'),
-                'annotation_files_created': self.stats['total_processed']
+            'configuration': {
+                'classes_used': self.config['restaurant_classes'],
+                'confidence_threshold': self.config['auto_annotation']['confidence_threshold'],
+                'auto_annotation_enabled': self.config['auto_annotation']['enabled']
             },
-            'next_steps': [
-                "Датасет готов для обучения YOLO модели",
-                "Запустите train_model.py для начала обучения",
-                "При необходимости проверьте качество аннотаций вручную"
-            ]
+            'dataset_structure': {
+                'dataset_directory': str(self.dataset_dir),
+                'yaml_config': str(self.dataset_dir / "dataset.yaml")
+            }
         }
         
         # Сохранение отчета
         report_path = self.dataset_dir / "annotation_fix_report.json"
-        try:
-            with open(report_path, 'w', encoding='utf-8') as f:
-                json.dump(report, f, ensure_ascii=False, indent=2)
-            
-            self.logger.info(f"📋 Отчет сохранен: {report_path}")
-            
-        except Exception as e:
-            self.logger.error(f"❌ Ошибка сохранения отчета: {e}")
         
-        # Вывод краткой статистики
+        import json
+        with open(report_path, 'w', encoding='utf-8') as f:
+            json.dump(report, f, ensure_ascii=False, indent=2)
+        
+        self.logger.info(f"📋 Отчет сохранен: {report_path}")
         self.logger.info(f"⏱️ Время выполнения: {total_time:.2f} секунд")
-        self.logger.info(f"📊 Обработано файлов: {self.stats['total_processed']}")
-        self.logger.info(f"🎯 Создано аннотаций: {self.stats['total_annotated']}")
-    
-    def _generate_error_report(self, error: Exception):
-        """Генерация отчета об ошибке"""
-        total_time = time.time() - self.stats['start_time']
-        
-        error_report = {
-            'timestamp': time.strftime('%Y-%m-%d %H:%M:%S'),
-            'status': 'failed',
-            'execution_time_seconds': round(total_time, 2),
-            'error': {
-                'type': type(error).__name__,
-                'message': str(error)
-            },
-            'statistics': self.stats,
-            'troubleshooting': [
-                "Проверьте структуру датасета",
-                "Убедитесь в наличии изображений в папках",
-                "Проверьте доступность YOLO моделей",
-                "Убедитесь в корректности путей"
-            ]
-        }
-        
-        error_report_path = self.dataset_dir / "annotation_fix_error.json"
-        try:
-            with open(error_report_path, 'w', encoding='utf-8') as f:
-                json.dump(error_report, f, ensure_ascii=False, indent=2)
-        except Exception:
-            pass
+        self.logger.info(f"📊 Статистика: обработано {self.stats['total_processed']}, "
+                        f"аннотировано {self.stats['total_annotated']}")
+
 
 def main():
-    """Главная функция"""
+    """Основная функция"""
     parser = argparse.ArgumentParser(
-        description="Скрипт исправления аннотаций для YOLO датасета",
+        description="Исправление аннотаций с использованием GroundingDINO",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Примеры использования:
@@ -632,7 +503,7 @@ def main():
 1. Базовое исправление (создание пустых аннотаций):
    python scripts/fix_annotations.py --dataset "data/processed/dataset"
 
-2. С автоматической аннотацией:
+2. С автоматической аннотацией GroundingDINO:
    python scripts/fix_annotations.py --dataset "data/processed/dataset" --auto-annotate
 
 3. Создание структуры и аннотаций:
@@ -641,12 +512,22 @@ def main():
 4. Только для train split:
    python scripts/fix_annotations.py --dataset "data/processed/dataset" --splits train
 
+5. С настройкой порога уверенности:
+   python scripts/fix_annotations.py --dataset "data/processed/dataset" --auto-annotate --confidence 0.3
+
+Требования для автоаннотации:
+- Файл groundingdino_swinb_cogcoor.pth в корне проекта
+- Установленный groundingdino-py: pip install groundingdino-py
+
 Что делает скрипт:
 - Проверяет структуру датасета YOLO
 - Создает отсутствующие директории
-- Генерирует аннотации для всех изображений
-- Создает dataset.yaml конфигурацию
+- Генерирует аннотации для всех изображений с GroundingDINO
+- Создает dataset.yaml с классами еды и посуды
 - Предоставляет детальные отчеты
+
+Классы для GroundingDINO:
+chicken, meat, salad, soup, cup, plate, bowl, spoon, fork, knife
         """
     )
     
@@ -660,7 +541,7 @@ def main():
     parser.add_argument(
         '--auto-annotate',
         action='store_true',
-        help='Включить автоматическую аннотацию с помощью YOLO моделей'
+        help='Включить автоматическую аннотацию с помощью GroundingDINO'
     )
     
     parser.add_argument(
@@ -673,7 +554,7 @@ def main():
         '--confidence',
         type=float,
         default=0.25,
-        help='Порог уверенности для автоматической аннотации (по умолчанию: 0.25)'
+        help='Порог уверенности для GroundingDINO (по умолчанию: 0.25)'
     )
     
     parser.add_argument(
@@ -684,31 +565,39 @@ def main():
     )
     
     parser.add_argument(
-        '--models',
-        nargs='+',
-        default=['yolo11n.pt', 'yolov8n.pt'],
-        help='YOLO модели для автоматической аннотации'
+        '--overwrite',
+        action='store_true',
+        help='Перезаписать существующие аннотации'
     )
     
     args = parser.parse_args()
     
     try:
+        # Проверка наличия модели GroundingDINO если требуется автоаннотация
+        if args.auto_annotate:
+            groundingdino_path = Path("groundingdino_swinb_cogcoor.pth")
+            if not groundingdino_path.exists():
+                print("\n❌ ОШИБКА: Для автоаннотации требуется файл модели GroundingDINO!")
+                print(f"Ожидается файл: {groundingdino_path.absolute()}")
+                print("\nСкачайте модель:")
+                print("wget https://github.com/IDEA-Research/GroundingDINO/releases/download/v0.1.0-alpha/groundingdino_swinb_cogcoor.pth")
+                sys.exit(1)
+        
         # Настройка конфигурации
         config = {
             'restaurant_classes': [
-                'person', 'chair', 'dining_table', 'cup', 'bowl',
-                'bottle', 'wine_glass', 'fork', 'knife', 'spoon',
-                'plate', 'food', 'phone', 'book', 'laptop'
+                'chicken', 'meat', 'salad', 'soup', 'cup',
+                'plate', 'bowl', 'spoon', 'fork', 'knife'
             ],
             'auto_annotation': {
                 'enabled': args.auto_annotate,
                 'confidence_threshold': args.confidence,
-                'models': args.models,
-                'max_models': 2
+                'method': 'groundingdino',
+                'checkpoint_path': 'groundingdino_swinb_cogcoor.pth'
             },
             'processing': {
                 'create_structure_if_missing': args.create_structure,
-                'overwrite_existing': False,
+                'overwrite_existing': args.overwrite,
                 'splits_to_process': args.splits
             }
         }
@@ -721,19 +610,33 @@ def main():
         
         fixer.run_fix_process()
         
-        print("\n" + "="*50)
-        print("🎉 ИСПРАВЛЕНИЕ АННОТАЦИЙ ЗАВЕРШЕНО!")
-        print("="*50)
+        print("\n" + "="*60)
+        print("🎉 ИСПРАВЛЕНИЕ АННОТАЦИЙ С GROUNDINGDINO ЗАВЕРШЕНО!")
+        print("="*60)
         print(f"📁 Датасет: {args.dataset}")
-        print(f"⚙️ Конфигурация: {args.dataset}/dataset.yaml")
+        print(f"📄 Конфигурация: {args.dataset}/dataset.yaml")
         print(f"📋 Отчет: {args.dataset}/annotation_fix_report.json")
-        print("\n🚀 Датасет готов для обучения модели!")
-        print("="*50)
+        
+        if args.auto_annotate:
+            print(f"🧠 Метод аннотации: GroundingDINO")
+            print(f"🎯 Классы: chicken, meat, salad, soup, cup, plate, bowl, spoon, fork, knife")
+            print(f"📊 Порог уверенности: {args.confidence}")
+        else:
+            print("📝 Созданы пустые файлы аннотаций")
+        
+        print(f"📂 Обработанные splits: {', '.join(args.splits)}")
+        print("\n🚀 Следующий шаг: запустите train_model.py")
+        print("="*60)
         
     except Exception as e:
         print(f"\n❌ ОШИБКА: {e}")
-        print("📋 Проверьте error_report.json для деталей")
+        print("\n💡 Частые проблемы:")
+        print("- Отсутствует файл groundingdino_swinb_cogcoor.pth")
+        print("- Не установлен groundingdino-py")
+        print("- Некорректная структура датасета")
+        print("- Недостаточно прав доступа к файлам")
         sys.exit(1)
+
 
 if __name__ == "__main__":
     main()

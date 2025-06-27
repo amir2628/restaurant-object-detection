@@ -1,0 +1,19 @@
+{
+  "experiment_name": "yolo_restaurant_detection_1750968957",
+  "total_training_time_seconds": 4684.6786732673645,
+  "total_training_time_minutes": 78.0779778877894,
+  "epochs_completed": 200,
+  "device_used": "0",
+  "training_interrupted": false,
+  "best_model_path": "outputs\\experiments\\yolo_restaurant_detection_1750968957\\weights\\best.pt",
+  "last_model_path": "outputs\\experiments\\yolo_restaurant_detection_1750968957\\weights\\last.pt",
+  "final_metrics": {
+    "metrics/precision(B)": 0.673355193985759,
+    "metrics/recall(B)": 0.7804504262528921,
+    "metrics/mAP50(B)": 0.7456527410869247,
+    "metrics/mAP50-95(B)": 0.7034474774392239,
+    "fitness": 0.707668003803994
+  },
+  "final_map50": 0.7456527410869247,
+  "final_map50_95": 0.7034474774392239
+}

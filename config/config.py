@@ -1,94 +1,74 @@
 """
-Основной конфигурационный файл для проекта детекции объектов
+Конфигурация проекта для детекции объектов в ресторане с GroundingDINO
+Обновлено для использования специализированных классов еды и посуды
 """
-import os
+
+from dataclasses import dataclass, field
+from typing import List, Optional, Dict, Any
 from pathlib import Path
-from dataclasses import dataclass
-from typing import List, Dict, Any, Optional
 
-# Базовые пути проекта
-BASE_DIR = Path(__file__).parent.parent
-DATA_DIR = BASE_DIR / "data"
-MODELS_DIR = BASE_DIR / "models"
-OUTPUTS_DIR = BASE_DIR / "outputs"
 
-@dataclass
-class PathConfig:
-    """Конфигурация путей к файлам и директориям"""
-    base_dir: Path = BASE_DIR
-    data_dir: Path = DATA_DIR
-    raw_data_dir: Path = DATA_DIR / "raw"
-    processed_data_dir: Path = DATA_DIR / "processed"
-    annotations_dir: Path = DATA_DIR / "annotations"
-    datasets_dir: Path = DATA_DIR / "datasets"
-    
-    models_dir: Path = MODELS_DIR
-    pretrained_models_dir: Path = MODELS_DIR / "pretrained"
-    trained_models_dir: Path = MODELS_DIR / "trained"
-    
-    outputs_dir: Path = OUTPUTS_DIR
-    logs_dir: Path = OUTPUTS_DIR / "logs"
-    metrics_dir: Path = OUTPUTS_DIR / "metrics"
-    visualizations_dir: Path = OUTPUTS_DIR / "visualizations"
-    reports_dir: Path = OUTPUTS_DIR / "reports"
-    
-    def create_directories(self):
-        """Создание всех необходимых директорий"""
-        directories = [
-            self.raw_data_dir, self.processed_data_dir, 
-            self.annotations_dir, self.datasets_dir,
-            self.pretrained_models_dir, self.trained_models_dir,
-            self.logs_dir, self.metrics_dir, 
-            self.visualizations_dir, self.reports_dir
-        ]
-        
-        for directory in directories:
-            directory.mkdir(parents=True, exist_ok=True)
-
-@dataclass
+@dataclass 
 class VideoProcessingConfig:
-    """Конфигурация для обработки видео"""
-    # Параметры извлечения кадров
-    frame_extraction_rate: int = 30  # Каждый N-й кадр
-    target_resolution: tuple = (640, 640)  # Целевое разрешение
-    min_frame_quality: float = 0.7  # Минимальное качество кадра
+    """Конфигурация обработки видео"""
+    # Извлечение кадров
+    fps_extraction: float = 2.0
+    max_frames_per_video: int = 1000
     
-    # Форматы файлов
-    supported_video_formats: List[str] = None
-    output_image_format: str = "jpg"
+    # Обработка изображений
+    resize_frames: bool = True
+    target_size: tuple = (640, 640)
     
-    def __post_init__(self):
-        if self.supported_video_formats is None:
-            self.supported_video_formats = ['.mp4', '.avi', '.mov', '.mkv', '.wmv']
+    # Поддерживаемые форматы
+    supported_formats: List[str] = field(default_factory=lambda: 
+        ['.mp4', '.avi', '.mov', '.mkv', '.wmv'])
+
 
 @dataclass
 class AnnotationConfig:
-    """Конфигурация для автоматической аннотации"""
-    # Предобученная модель для аннотации
-    pretrained_model_name: str = "yolov8n.pt"
-    confidence_threshold: float = 0.1
-    iou_threshold: float = 0.45
+    """Конфигурация для автоматической аннотации с GroundingDINO"""
+    # GroundingDINO модель
+    groundingdino_checkpoint: str = "groundingdino_swinb_cogcoor.pth"
+    groundingdino_config_paths: List[str] = field(default_factory=lambda: [
+        "GroundingDINO/groundingdino/config/GroundingDINO_SwinB_cfg.py",
+        "groundingdino_config.py"
+    ])
     
-    # Классы для детекции (можно настроить под конкретную задачу)
+    # Пороги детекции
+    confidence_threshold: float = 0.25
+    text_threshold: float = 0.25
+    box_threshold: float = 0.25
+    
+    # Специализированные классы для ресторанной среды
     target_classes: Optional[List[str]] = None
+    detection_prompt: str = "chicken . meat . salad . soup . cup . plate . bowl . spoon . fork . knife ."
     
     # Параметры улучшения аннотаций
     enable_auto_refinement: bool = True
     refinement_confidence_threshold: float = 0.5
     
     # Валидация аннотаций
-    min_bbox_area: int = 100  # Минимальная площадь bbox
-    max_bbox_ratio: float = 0.8  # Максимальное отношение bbox к изображению
+    min_bbox_area: float = 0.01  # Минимальная площадь bbox (нормализованная)
+    max_bbox_area: float = 0.9   # Максимальная площадь bbox
+    min_bbox_side: float = 0.05  # Минимальная сторона bbox
+    aspect_ratio_range: tuple = (0.1, 10.0)  # Диапазон соотношения сторон
     
     def __post_init__(self):
         if self.target_classes is None:
-            # COCO классы, которые могут встречаться в ресторанной сцене
+            # Специализированные классы еды и посуды для GroundingDINO
             self.target_classes = [
-                "person", "chair", "dining table", "cup", "fork", "knife", 
-                "spoon", "bowl", "banana", "apple", "sandwich", "orange",
-                "broccoli", "carrot", "hot dog", "pizza", "donut", "cake",
-                "bottle", "wine glass", "cell phone", "laptop", "book"
+                "chicken",     # Курица
+                "meat",        # Мясо
+                "salad",       # Салат  
+                "soup",        # Суп
+                "cup",         # Чашка
+                "plate",       # Тарелка
+                "bowl",        # Миска
+                "spoon",       # Ложка
+                "fork",        # Вилка
+                "knife"        # Нож
             ]
+
 
 @dataclass
 class DatasetConfig:
@@ -105,6 +85,7 @@ class DatasetConfig:
     # Валидация датасета
     min_images_per_class: int = 10
     max_images_per_class: int = 1000
+
 
 @dataclass
 class ModelConfig:
@@ -128,146 +109,238 @@ class ModelConfig:
     scheduler: str = "cosine"
     warmup_epochs: int = 3
     
-    # Регуляризация
-    dropout: float = 0.0
-    label_smoothing: float = 0.0
-    
-    # Аугментация при обучении
-    mosaic: float = 1.0
-    mixup: float = 0.0
-    copy_paste: float = 0.0
+    # Loss weights
+    box_loss_weight: float = 7.5
+    cls_loss_weight: float = 0.5
+    dfl_loss_weight: float = 1.5
 
-# @dataclass
-# class TrainingConfig:
-#     """Конфигурация процесса обучения"""
-#     # Устройство
-#     device: str = "auto"  # auto, cpu, cuda, mps
-#     workers: int = 4
-    
-#     # Сохранение модели
-#     save_period: int = 10  # Сохранять каждые N эпох
-#     save_best_only: bool = True
-    
-#     # Валидация
-#     val_period: int = 1  # Валидация каждые N эпох
-    
-#     # Логирование
-#     log_metrics: bool = True
-#     log_images: bool = True
-#     log_period: int = 10  # Логировать каждые N батчей
-    
-#     # Checkpoint
-#     resume_training: bool = False
-#     checkpoint_path: Optional[str] = None
 
 @dataclass
-class TrainingConfig:
-    """Конфигурация процесса обучения"""
-    # Устройство
-    device: str = "auto"  # auto, cpu, cuda, mps
-    workers: int = 4
+class GroundingDINOConfig:
+    """Специальная конфигурация для GroundingDINO"""
+    # Пути к модели
+    checkpoint_path: str = "groundingdino_swinb_cogcoor.pth"
+    config_paths: List[str] = field(default_factory=lambda: [
+        "GroundingDINO/groundingdino/config/GroundingDINO_SwinB_cfg.py",
+        "groundingdino_config.py"
+    ])
     
-    # Сохранение модели
-    save_period: int = 10  # Сохранять каждые N эпох
-    save_best_only: bool = True
-    
-    # Валидация
-    val_period: int = 1  # Валидация каждые N эпох
-    
-    # Early stopping
-    patience: int = 10  # Early stopping patience
-    
-    # Логирование
-    log_metrics: bool = True
-    log_images: bool = True
-    log_period: int = 10  # Логировать каждые N батчей
-    
-    # Checkpoint
-    resume_training: bool = False
-    checkpoint_path: Optional[str] = None
-
-@dataclass
-class EvaluationConfig:
-    """Конфигурация для оценки модели"""
-    # Метрики
-    iou_thresholds: List[float] = None
-    confidence_thresholds: List[float] = None
-    
-    # Визуализация
-    max_detection_images: int = 100
-    max_predictions_per_image: int = 10
-    
-    # Анализ ошибок
-    enable_error_analysis: bool = True
-    save_confusion_matrix: bool = True
-    save_pr_curves: bool = True
-    
-    def __post_init__(self):
-        if self.iou_thresholds is None:
-            self.iou_thresholds = [0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95]
-        if self.confidence_thresholds is None:
-            self.confidence_thresholds = [i/100 for i in range(5, 100, 5)]
-
-@dataclass
-class InferenceConfig:
-    """Конфигурация для инференса"""
     # Параметры детекции
-    confidence_threshold: float = 0.25
-    iou_threshold: float = 0.45
-    max_detections: int = 300
+    detection_threshold: float = 0.25
+    text_threshold: float = 0.25
+    box_threshold: float = 0.25
     
-    # Постобработка
-    agnostic_nms: bool = False
-    multi_label: bool = False
+    # Промпты для детекции
+    main_prompt: str = "chicken . meat . salad . soup . cup . plate . bowl . spoon . fork . knife ."
     
-    # Визуализация
-    line_thickness: int = 3
-    font_size: float = 0.5
-    show_labels: bool = True
-    show_confidence: bool = True
+    # Маппинг промптов на классы
+    class_prompts: Dict[str, List[str]] = field(default_factory=lambda: {
+        "chicken": ["chicken", "курица", "птица"],
+        "meat": ["meat", "мясо", "говядина", "свинина"],
+        "salad": ["salad", "салат", "зелень", "овощи"],
+        "soup": ["soup", "суп", "бульон"],
+        "cup": ["cup", "чашка", "кружка"],
+        "plate": ["plate", "тарелка", "блюдо"],
+        "bowl": ["bowl", "миска", "чаша"],
+        "spoon": ["spoon", "ложка"],
+        "fork": ["fork", "вилка"],
+        "knife": ["knife", "нож"]
+    })
     
-    # Сохранение результатов
-    save_txt: bool = True
-    save_conf: bool = True
-    save_crop: bool = False
+    # Настройки устройства
+    device: str = "auto"  # auto, cuda, cpu
+    use_half_precision: bool = True
 
-class Config:
-    """Главный класс конфигурации"""
+
+@dataclass  
+class QualityControlConfig:
+    """Конфигурация контроля качества аннотаций"""
+    # Фильтрация детекций
+    min_confidence: float = 0.15
+    min_detection_size: float = 0.01  # Минимальный размер детекции
+    max_detection_size: float = 0.8   # Максимальный размер детекции
+    aspect_ratio_range: tuple = (0.1, 10.0)  # Диапазон соотношения сторон
     
-    def __init__(self):
-        self.paths = PathConfig()
-        self.video_processing = VideoProcessingConfig()
-        self.annotation = AnnotationConfig()
-        self.dataset = DatasetConfig()
-        self.model = ModelConfig()
-        self.training = TrainingConfig()
-        self.evaluation = EvaluationConfig()
-        self.inference = InferenceConfig()
+    # Удаление дубликатов
+    duplicate_removal_enabled: bool = True
+    iou_threshold_duplicates: float = 0.6
+    
+    # TTA (Test Time Augmentation)
+    enable_tta: bool = False
+    tta_scales: List[float] = field(default_factory=lambda: [1.0, 1.1, 0.9])
+    tta_flips: List[bool] = field(default_factory=lambda: [False, True])
+
+
+@dataclass
+class PipelineConfig:
+    """Основная конфигурация пайплайна"""
+    # Компоненты конфигурации
+    video_processing: VideoProcessingConfig = field(default_factory=VideoProcessingConfig)
+    annotation: AnnotationConfig = field(default_factory=AnnotationConfig)
+    dataset: DatasetConfig = field(default_factory=DatasetConfig)
+    model: ModelConfig = field(default_factory=ModelConfig)
+    groundingdino: GroundingDINOConfig = field(default_factory=GroundingDINOConfig)
+    quality_control: QualityControlConfig = field(default_factory=QualityControlConfig)
+    
+    # Общие настройки
+    project_name: str = "restaurant_object_detection"
+    version: str = "2.0_groundingdino"
+    random_seed: int = 42
+    
+    # Пути
+    data_dir: Path = Path("data")
+    output_dir: Path = Path("outputs")
+    models_dir: Path = Path("models")
+    logs_dir: Path = Path("logs")
+    
+    # Производительность
+    use_gpu: bool = True
+    num_workers: int = 4
+    batch_size: int = 8
+    memory_limit_gb: int = 8
+    
+    # Отладка и логирование
+    debug_mode: bool = False
+    log_level: str = "INFO"
+    save_intermediate_results: bool = True
+    cleanup_temp_files: bool = True
+
+
+# Константы для ресторанных классов (обновлено для GroundingDINO)
+RESTAURANT_CLASSES = [
+    "chicken",     # Курица
+    "meat",        # Мясо
+    "salad",       # Салат
+    "soup",        # Суп
+    "cup",         # Чашка
+    "plate",       # Тарелка
+    "bowl",        # Миска
+    "spoon",       # Ложка
+    "fork",        # Вилка
+    "knife"        # Нож
+]
+
+# Цветовая схема для визуализации классов
+CLASS_COLORS = {
+    "chicken": (255, 165, 0),    # Оранжевый
+    "meat": (139, 69, 19),       # Коричневый
+    "salad": (0, 128, 0),        # Зеленый
+    "soup": (255, 215, 0),       # Золотой
+    "cup": (70, 130, 180),       # Стальной голубой
+    "plate": (220, 220, 220),    # Светло-серый
+    "bowl": (255, 192, 203),     # Розовый
+    "spoon": (192, 192, 192),    # Серебряный
+    "fork": (169, 169, 169),     # Темно-серый
+    "knife": (105, 105, 105)     # Тускло-серый
+}
+
+# Маппинг классов для совместимости с COCO (если требуется)
+COCO_TO_RESTAURANT_MAPPING = {
+    62: "chair",           # COCO chair -> не используется в новой схеме
+    67: "dining_table",    # COCO dining table -> не используется
+    47: "cup",             # COCO cup -> cup
+    51: "bowl",            # COCO bowl -> bowl  
+    44: "bottle",          # COCO bottle -> не используется
+    46: "wine_glass",      # COCO wine glass -> не используется
+    48: "fork",            # COCO fork -> fork
+    49: "knife",           # COCO knife -> knife
+    50: "spoon"            # COCO spoon -> spoon
+}
+
+
+def get_default_config() -> PipelineConfig:
+    """Получение конфигурации по умолчанию"""
+    return PipelineConfig()
+
+
+def load_config_from_file(config_path: Path) -> PipelineConfig:
+    """Загрузка конфигурации из файла"""
+    import json
+    
+    config = get_default_config()
+    
+    if config_path.exists():
+        try:
+            with open(config_path, 'r', encoding='utf-8') as f:
+                user_config = json.load(f)
+            
+            # Обновление конфигурации из файла
+            # Реализация зависит от структуры JSON файла
+            
+        except Exception as e:
+            print(f"Ошибка загрузки конфигурации: {e}")
+    
+    return config
+
+
+def save_config_to_file(config: PipelineConfig, config_path: Path):
+    """Сохранение конфигурации в файл"""
+    import json
+    from dataclasses import asdict
+    
+    try:
+        config_dict = asdict(config)
         
-        # Создание директорий при инициализации
-        self.paths.create_directories()
-    
-    def update_from_dict(self, config_dict: Dict[str, Any]):
-        """Обновление конфигурации из словаря"""
-        for section, values in config_dict.items():
-            if hasattr(self, section):
-                section_config = getattr(self, section)
-                for key, value in values.items():
-                    if hasattr(section_config, key):
-                        setattr(section_config, key, value)
-    
-    def to_dict(self) -> Dict[str, Any]:
-        """Преобразование конфигурации в словарь"""
-        return {
-            'paths': self.paths.__dict__,
-            'video_processing': self.video_processing.__dict__,
-            'annotation': self.annotation.__dict__,
-            'dataset': self.dataset.__dict__,
-            'model': self.model.__dict__,
-            'training': self.training.__dict__,
-            'evaluation': self.evaluation.__dict__,
-            'inference': self.inference.__dict__,
-        }
+        # Конвертация Path объектов в строки
+        def convert_paths(obj):
+            if isinstance(obj, dict):
+                return {k: convert_paths(v) for k, v in obj.items()}
+            elif isinstance(obj, list):
+                return [convert_paths(item) for item in obj]
+            elif isinstance(obj, Path):
+                return str(obj)
+            else:
+                return obj
+        
+        config_dict = convert_paths(config_dict)
+        
+        with open(config_path, 'w', encoding='utf-8') as f:
+            json.dump(config_dict, f, ensure_ascii=False, indent=2)
+            
+    except Exception as e:
+        print(f"Ошибка сохранения конфигурации: {e}")
 
-# Глобальная конфигурация
-config = Config()
+
+# Валидация конфигурации
+def validate_config(config: PipelineConfig) -> List[str]:
+    """Валидация конфигурации и возврат списка ошибок"""
+    errors = []
+    
+    # Проверка GroundingDINO файлов
+    if not Path(config.groundingdino.checkpoint_path).exists():
+        errors.append(f"Файл модели GroundingDINO не найден: {config.groundingdino.checkpoint_path}")
+    
+    # Проверка соотношения splits
+    total_split = config.dataset.train_split + config.dataset.val_split + config.dataset.test_split
+    if abs(total_split - 1.0) > 0.001:
+        errors.append(f"Сумма train/val/test splits должна быть 1.0, получено: {total_split}")
+    
+    # Проверка пороговых значений
+    if not (0.0 <= config.annotation.confidence_threshold <= 1.0):
+        errors.append("confidence_threshold должен быть между 0.0 и 1.0")
+    
+    if not (0.0 <= config.quality_control.min_confidence <= 1.0):
+        errors.append("min_confidence должен быть между 0.0 и 1.0")
+    
+    # Проверка классов
+    if not config.annotation.target_classes:
+        errors.append("target_classes не может быть пустым")
+    
+    return errors
+
+
+# Создание глобального объекта конфигурации для совместимости
+config = get_default_config()
+
+# Настройка конфигурации для инференса (добавлено для совместимости)
+class InferenceConfig:
+    """Конфигурация для инференса (для совместимости со старым кодом)"""
+    def __init__(self):
+        self.confidence_threshold = 0.25
+        self.iou_threshold = 0.45
+        self.device = "auto"
+        self.batch_size = 1
+        self.save_visualizations = True
+
+# Добавление к глобальному config объекту
+config.inference = InferenceConfig()

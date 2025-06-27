@@ -7,11 +7,17 @@
     "supported_formats": [".mp4", ".avi", ".mov", ".mkv", ".wmv", ".flv", ".webm"]
   },
   "annotation": {
+    "method": "groundingdino",
     "confidence_threshold": 0.25,
+    "text_threshold": 0.25,
+    "box_threshold": 0.25,
     "create_empty_annotations": true,
-    "use_ensemble_models": true,
-    "ensemble_models": ["yolo11n.pt", "yolo11s.pt", "yolov8n.pt"],
-    "max_models_in_ensemble": 3,
+    "groundingdino_checkpoint": "groundingdino_swinb_cogcoor.pth",
+    "groundingdino_config_paths": [
+      "GroundingDINO/groundingdino/config/GroundingDINO_SwinB_cfg.py",
+      "groundingdino_config.py"
+    ],
+    "detection_prompt": "chicken . meat . salad . soup . cup . plate . bowl . spoon . fork . knife .",
     "iou_threshold": 0.6,
     "tta_enabled": false
   },
@@ -20,35 +26,92 @@
     "val_ratio": 0.2,
     "test_ratio": 0.1,
     "class_names": [
-      "person",
-      "chair", 
-      "dining_table",
+      "chicken",
+      "meat",
+      "salad",
+      "soup",
       "cup",
-      "bowl",
-      "bottle",
-      "wine_glass",
-      "fork",
-      "knife",
-      "spoon",
       "plate",
-      "food",
-      "phone",
-      "book",
-      "laptop"
+      "bowl",
+      "spoon",
+      "fork",
+      "knife"
     ],
-    "min_images_per_split": 10
+    "min_images_per_split": 10,
+    "enable_massive_augmentation": true,
+    "augmentation_factors": {
+      "train": 8,
+      "val": 3,
+      "test": 2
+    }
+  },
+  "augmentation": {
+    "enabled": true,
+    "geometric_transformations": {
+      "rotation_limit": 15,
+      "scale_limit": 0.2,
+      "translate_limit": 0.1,
+      "shear_limit": 10,
+      "flip_horizontal": true,
+      "flip_vertical": false
+    },
+    "color_transformations": {
+      "brightness_limit": 0.3,
+      "contrast_limit": 0.3,
+      "saturation_limit": 0.3,
+      "hue_limit": 20
+    },
+    "noise_and_blur": {
+      "blur_limit": 3,
+      "noise_limit": 0.1,
+      "gaussian_noise_prob": 0.2,
+      "motion_blur_prob": 0.1
+    },
+    "probabilities": {
+      "geometric_prob": 0.8,
+      "color_prob": 0.7,
+      "blur_prob": 0.3,
+      "noise_prob": 0.2
+    }
   },
   "quality_control": {
     "min_detection_size": 0.01,
     "max_detection_size": 0.8,
-    "aspect_ratio_range": [0.2, 5.0],
-    "duplicate_removal_enabled": true
+    "aspect_ratio_range": [0.1, 10.0],
+    "duplicate_removal_enabled": true,
+    "min_confidence": 0.15
+  },
+  "groundingdino": {
+    "checkpoint_path": "groundingdino_swinb_cogcoor.pth",
+    "config_paths": [
+      "GroundingDINO/groundingdino/config/GroundingDINO_SwinB_cfg.py", 
+      "groundingdino_config.py"
+    ],
+    "detection_threshold": 0.25,
+    "text_threshold": 0.25,
+    "box_threshold": 0.25,
+    "main_prompt": "chicken . meat . salad . soup . cup . plate . bowl . spoon . fork . knife .",
+    "class_prompts": {
+      "chicken": ["chicken", "курица", "птица"],
+      "meat": ["meat", "мясо", "говядина", "свинина"],
+      "salad": ["salad", "салат", "зелень", "овощи"],
+      "soup": ["soup", "суп", "бульон"],
+      "cup": ["cup", "чашка", "кружка"],
+      "plate": ["plate", "тарелка", "блюдо"],
+      "bowl": ["bowl", "миска", "чаша"],
+      "spoon": ["spoon", "ложка"],
+      "fork": ["fork", "вилка"],
+      "knife": ["knife", "нож"]
+    },
+    "device": "auto",
+    "use_half_precision": true
   },
   "output": {
     "save_visualizations": false,
     "create_reports": true,
     "log_level": "INFO",
-    "cleanup_temp_files": true
+    "cleanup_temp_files": true,
+    "save_annotated_images": true
   },
   "performance": {
     "batch_size": 1,

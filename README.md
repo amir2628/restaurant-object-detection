@@ -20,8 +20,7 @@
 ![NumPy](https://img.shields.io/badge/NumPy-013243?style=for-the-badge&logo=numpy&logoColor=white)
 ![Pandas](https://img.shields.io/badge/Pandas-150458?style=for-the-badge&logo=pandas&logoColor=white)
 ![Matplotlib](https://img.shields.io/badge/Matplotlib-11557c?style=for-the-badge&logo=python&logoColor=white)
-![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white)
-![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)
+![GroundingDINO](https://img.shields.io/badge/GroundingDINO-FF6B35?style=for-the-badge&logo=ai&logoColor=white)
 
 </div>
 
@@ -31,35 +30,34 @@
 
 ## 🧠 Профессиональная система детекции объектов в ресторанах
 
-**Высокопроизводительная система детекции объектов с использованием YOLOv11 для ресторанной среды**
+**Высокопроизводительная система детекции объектов с использованием YOLOv11 и автоматической аннотации GroundingDINO для ресторанной среды**
 
 [![GitHub](https://img.shields.io/badge/GitHub-amir2628-181717?style=flat-square&logo=github)](https://github.com/amir2628/restaurant-object-detection)
 [![Python](https://img.shields.io/badge/Python-3.8+-3776AB?style=flat-square&logo=python&logoColor=white)](https://python.org)
 [![YOLOv11](https://img.shields.io/badge/YOLOv11-Ultralytics-00FFFF?style=flat-square)](https://github.com/ultralytics/ultralytics)
+[![GroundingDINO](https://img.shields.io/badge/GroundingDINO-IDEA--Research-FF6B35?style=flat-square)](https://github.com/IDEA-Research/GroundingDINO)
 [![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
 
 ## 📋 Описание проекта
 
-Профессиональная система автоматической детекции объектов, специально разработанная для ресторанной среды. Система использует современную архитектуру YOLOv11 и включает полный пайплайн машинного обучения: от автоматической аннотации данных до развертывания готовой модели.
+Профессиональная система автоматической детекции объектов, специально разработанная для ресторанной среды. Система использует современную архитектуру YOLOv11 и включает **революционный механизм автоматической аннотации с GroundingDINO**, что позволяет обрабатывать тысячи кадров видео без ручной разметки данных.
 
-### 🎯 Ключевые особенности
+### 🌟 Ключевые особенности
 
-- **🤖 Автоматическая аннотация** с использованием ансамбля моделей
-- **🎯 Высокая точность** - mAP@0.5: 79.7%
-- **⚡ Быстрый инференс** - ~2ms на изображение
-- **🔧 Production-ready** - готово к внедрению
-- **📊 Comprehensive мониторинг** - детальная аналитика
+- **🤖 Автоматическая аннотация GroundingDINO**: Устраняет необходимость ручной разметки тысяч кадров
+- **⚡ YOLOv11**: Последняя версия архитектуры YOLO для высокой точности и скорости
+- **🎯 Специализация на ресторанах**: Оптимизировано для детекции еды и посуды
+- **📊 Полный ML пайплайн**: От видео до готовой модели
+- **🚀 GPU ускорение**: Поддержка CUDA для быстрой обработки
 
-### 🍽️ Детектируемые объекты
+### 🍕 Детектируемые объекты
 
-- 👥 **Люди** (персонал, посетители)
-- 🪑 **Мебель** (столы, стулья)
-- 🍽️ **Посуда** (тарелки, чашки, бокалы)
-- 🍴 **Приборы** (вилки, ножи, ложки)
-- 🍕 **Еда** (пицца, торты, фрукты)
-- 📱 **Предметы** (телефоны, ноутбуки, книги)
+Система обучена распознавать 10 ключевых категорий ресторанных объектов:
+- **Еда**: `chicken` (курица), `meat` (мясо), `salad` (салат), `soup` (суп)
+- **Посуда**: `cup` (чашка), `plate` (тарелка), `bowl` (миска)
+- **Приборы**: `spoon` (ложка), `fork` (вилка), `knife` (нож)
 
-## 🏗️ Архитектура проекта
+## 📁 Структура проекта
 
 ```
 restaurant-object-detection/
@@ -68,36 +66,45 @@ restaurant-object-detection/
 │   └── model_config.yaml             # Параметры модели
 ├── 📁 scripts/
 │   ├── fix_annotations.py            # 🔧 Исправление аннотаций
-│   ├── prepare_data.py               # 📊 Подготовка данных
+│   ├── prepare_data.py               # 📊 Подготовка данных с GroundingDINO
 │   ├── train_model.py                # 🚀 Обучение модели
-│   ├── run_inference.py              # 🎯 Инференс
-│   └── generate_final_report.py      # 📋 Генерация отчетов
+│   └── run_inference.py              # 🎯 Инференс
 ├── 📁 src/
 │   ├── data/                         # Модули обработки данных
 │   ├── models/                       # Модели и инференс
 │   └── utils/                        # Утилиты
 ├── 📁 data/
 │   ├── raw/                          # Исходные видео
-│   ├── processed/dataset/            # Готовый датасет
-│   └── annotations/                  # Аннотации
+│   ├── processed/dataset/            # Готовый датасет с аннотациями
+│   └── annotations/                  # Аннотации GroundingDINO
 ├── 📁 outputs/
 │   ├── experiments/                  # Результаты обучения
-│   ├── inference/                    # Результаты инференса
-│   └── reports/                      # Отчеты
+│   └── inference/                    # Результаты инференса
+├── 📄 groundingdino_swinb_cogcoor.pth # Модель GroundingDINO
+├── 📁 GroundingDINO/                 # Исходный код GroundingDINO
 └── 📄 requirements.txt               # Зависимости
 ```
 
 ## 🚀 Быстрый старт
 
-### 1. Установка
+### 1. Установка зависимостей
 
 ```bash
 # Клонирование репозитория
 git clone https://github.com/amir2628/restaurant-object-detection.git
 cd restaurant-object-detection
 
-# Установка зависимостей
+# Установка основных зависимостей
 pip install -r requirements.txt
+
+# Установка GroundingDINO
+pip install groundingdino-py
+
+# Клонирование исходного кода GroundingDINO
+git clone https://github.com/IDEA-Research/GroundingDINO.git
+
+# Скачивание предобученной модели GroundingDINO
+wget https://github.com/IDEA-Research/GroundingDINO/releases/download/v0.1.0-alpha2/groundingdino_swinb_cogcoor.pth
 ```
 
 ### 2. Подготовка исходных данных
@@ -117,100 +124,154 @@ mkdir -p data/raw
 # └── restaurant_video_3.avi
 ```
 
-### 3. Подготовка данных (если нужна аннотация)
+### 3. Подготовка данных с автоматической аннотацией GroundingDINO
 
 ```bash
-# Автоматическое исправление пустых аннотаций
-python scripts/fix_annotations.py --dataset "data/processed/dataset"
+# Полный пайплайн: извлечение кадров + автоматическая аннотация
+python scripts/prepare_data.py --input "data/raw" --config "config/pipeline_config.json" --confidence 0.1
 
-# Полный пайплайн подготовки данных (извлечение кадров + аннотация)
-python scripts/prepare_data.py --input "data/raw" --config "config/pipeline_config.json"
+# С настройкой FPS для извлечения кадров
+python scripts/prepare_data.py --input "data/raw" --config "config/pipeline_config.json" --fps 1.5 --confidence 0.2
+
+# Увеличение порога уверенности для более качественных аннотаций
+python scripts/prepare_data.py --input "data/raw" --config "config/pipeline_config.json" --confidence 0.3
 ```
 
-### 4. Обучение модели
+**🧠 Что происходит на этапе подготовки данных:**
+1. **Извлечение кадров** из видеофайлов с заданным FPS
+2. **Автоматическая аннотация** каждого кадра с помощью GroundingDINO
+3. **Фильтрация детекций** по порогу уверенности
+4. **Разделение на train/val/test** splits (70%/20%/10%)
+5. **Генерация dataset.yaml** для обучения YOLO
+6. **Создание отчета** о качестве аннотаций
+
+### 4. Обучение модели YOLOv11
 
 ```bash
-# Обучение с готовым датасетом
-python scripts/train_model.py --data "data/processed/dataset/dataset.yaml"
+# Базовое обучение с автоматически созданным датасетом
+python scripts/train_model.py --data "data\processed\dataset\dataset.yaml" --device cuda
 
-# Обучение с кастомной конфигурацией
-python scripts/train_model.py --data "dataset.yaml" --config "config/train_config.json"
+# Обучение с настройкой количества эпох
+python scripts/train_model.py --data "data\processed\dataset\dataset.yaml" --device cuda --epochs 200
 
-# Обучение с Weights & Biases мониторингом
-python scripts/train_model.py --data "dataset.yaml" --wandb
+# Обучение с мониторингом Weights & Biases
+python scripts/train_model.py --data "data\processed\dataset\dataset.yaml" --device cuda --wandb
+
+# Обучение с настройкой размера батча
+python scripts/train_model.py --data "data\processed\dataset\dataset.yaml" --device cuda --batch-size 32
 ```
 
-### 5. Инференс
+### 5. Запуск инференса
 
 ```bash
+# Инференс на видео с сохранением результатов
+python scripts/run_inference.py --model "outputs\experiments\yolo_restaurant_detection_[EXPERIMENT_ID]\weights\best.pt" --video "[SOME_VIDEO_OR_DIRECTORY_OF_VIDEOS]" --output "outputs\final_demo" --device cuda
+
 # Инференс на изображениях
-python scripts/run_inference.py \
-  --model "outputs/experiments/yolo_*/weights/best.pt" \
-  --input-dir "path/to/images"
+python scripts/run_inference.py --model "outputs\experiments\yolo_restaurant_detection_[EXPERIMENT_ID]\weights\best.pt" --input-dir "path/to/images" --output "outputs\inference_results"
 
-# Инференс на видео
-python scripts/run_inference.py \
-  --model "outputs/experiments/yolo_*/weights/best.pt" \
-  --video "path/to/video.mp4"
+# Real-time инференс с веб-камеры
+python scripts/run_inference.py --model "outputs\experiments\yolo_restaurant_detection_[EXPERIMENT_ID]\weights\best.pt" --realtime --camera 0
 
-# Real-time инференс с камеры
-python scripts/run_inference.py \
-  --model "outputs/experiments/yolo_*/weights/best.pt" \
-  --realtime --camera 0
+# Инференс с настройкой порога уверенности
+python scripts/run_inference.py --model "outputs\experiments\yolo_restaurant_detection_[EXPERIMENT_ID]\weights\best.pt" --video "test_video.mp4" --confidence 0.3 --iou 0.5
 ```
 
-### 6. Генерация отчетов
+## 🤖 GroundingDINO: Революция в автоматической аннотации
 
-```bash
-# Полный отчет по проекту
-python scripts/generate_final_report.py \
-  --model-path "outputs/experiments/yolo_*/weights/best.pt" \
-  --dataset-dir "data/processed/dataset" \
-  --experiment-dir "outputs/experiments/yolo_*" \
-  --output "final_report.md" \
-  --project-time 8.5
+### Почему GroundingDINO?
+
+Традиционная аннотация видеоданных для детекции объектов - это **крайне трудозатратный процесс**:
+- 📹 Один час видео = ~108,000 кадров (при 30 FPS)
+- ⏱️ Ручная разметка одного кадра = 2-5 минут
+- 💰 Общее время: **3,600-9,000 часов** на один час видео!
+
+**GroundingDINO решает эту проблему полностью автоматически:**
+
+### 🔧 Как работает интеграция GroundingDINO
+
+1. **Текстовые промпты**: Система использует естественные описания объектов
+   ```
+   "chicken . meat . salad . soup . cup . plate . bowl . spoon . fork . knife ."
+   ```
+
+2. **Автоматическая детекция**: GroundingDINO находит объекты по текстовому описанию
+
+3. **Фильтрация качества**: Удаление детекций с низкой уверенностью
+
+4. **YOLO формат**: Автоматическое преобразование в формат аннотаций YOLO
+
+### ⚙️ Настройки GroundingDINO (config/pipeline_config.json)
+
+```json
+{
+  "annotation": {
+    "method": "groundingdino",
+    "confidence_threshold": 0.25,
+    "text_threshold": 0.25,
+    "box_threshold": 0.25,
+    "detection_prompt": "chicken . meat . salad . soup . cup . plate . bowl . spoon . fork . knife .",
+    "iou_threshold": 0.6
+  },
+  "groundingdino": {
+    "checkpoint_path": "groundingdino_swinb_cogcoor.pth",
+    "config_paths": [
+      "GroundingDINO/groundingdino/config/GroundingDINO_SwinB_cfg.py"
+    ]
+  }
+}
 ```
 
-## 📊 Результаты
+### 🎯 Преимущества автоматической аннотации
+
+- **⚡ Скорость**: 1000+ кадров в час вместо 10-20 при ручной разметке
+- **💰 Экономия**: Снижение затрат на аннотацию в 100+ раз
+- **🎯 Консистентность**: Единые стандарты разметки для всего датасета  
+- **📈 Масштабируемость**: Легкое добавление новых видео и классов
+
+## 📊 Результаты обучения
 
 ### 🏆 Достигнутые метрики
 
+Результаты обучения YOLOv11 на GPU (500 эпох, 87.3 минуты):
+
+```
+============================================================
+🎯 ИТОГИ ОБУЧЕНИЯ
+============================================================
+📁 Эксперимент: yolo_restaurant_detection_1750973996
+⏱️ Время обучения: 87.3 минут
+🔄 Эпох завершено: 500
+💻 Устройство: 0
+📊 Финальный mAP@0.5: 0.7478
+📊 Финальный mAP@0.5:0.95: 0.7055
+💎 Лучшая модель: outputs\experiments\yolo_restaurant_detection_1750973996\weights\best.pt
+============================================================
+
+==================================================
+🎉 ОБУЧЕНИЕ YOLO11 УСПЕШНО ЗАВЕРШЕНО!
+==================================================
+💎 Лучшая модель: outputs\experiments\yolo_restaurant_detection_1750973996\weights\best.pt
+📊 mAP@0.5: 74.8%
+⏱️ Время обучения: 87.3 мин
+```
+
 | Метрика | Значение | Комментарий |
 |---------|----------|-------------|
-| **mAP@0.5** | **79.7%** | 🥇 Отличный результат |
-| **mAP@0.5:0.95** | **74.2%** | 🥈 Высокая точность |
+| **mAP@0.5** | **74.8%** | 🥇 Отличный результат |
+| **mAP@0.5:0.95** | **70.6%** | 🥈 Высокая точность |
 | **Скорость инференса** | **~2ms** | ⚡ Real-time обработка |
 | **Размер модели** | **~6MB** | 📦 Компактная |
-| **Время обучения** | **17.5 мин** | 🚀 Быстрое обучение |
+| **Время обучения** | **87.3 мин** | 🚀 Быстрое обучение |
 
 <img width="1280" alt="Image" src="https://github.com/user-attachments/assets/acc152e7-2ed4-485e-a824-da97a6c7bef3" />
 
 ### 📈 Особенности реализации
 
-- **🤖 Ensemble аннотация** - Использование 3 моделей (YOLOv11n, s, m)
-- **🎯 TTA (Test Time Augmentation)** - Повышение точности
-- **🔍 Smart фильтрация** - Автоматическое удаление некачественных детекций
+- **🤖 GroundingDINO аннотация** - Полностью автоматическая разметка данных
+- **🎯 Умная фильтрация** - Автоматическое удаление некачественных детекций
 - **⚡ GPU оптимизация** - CUDA, AMP, оптимизированные батчи
-- **📊 Comprehensive мониторинг** - Wandb, TensorBoard, кастомные метрики
-
-## 🔧 Конфигурация
-
-### Основные параметры (config/pipeline_config.json)
-
-```json
-{
-  "annotation": {
-    "confidence_threshold": 0.25,
-    "ensemble_models": ["yolo11n", "yolo11s", "yolo11m"],
-    "tta_enabled": true
-  },
-  "training": {
-    "epochs": 100,
-    "batch_size": 16,
-    "learning_rate": 0.01
-  }
-}
-```
+- **📊 Comprehensive мониторинг** - Детальные отчеты о процессе
 
 ## 🛠️ Системные требования
 
@@ -219,6 +280,7 @@ python scripts/generate_final_report.py \
 - **RAM:** 8GB+
 - **GPU память:** 4GB+ (рекомендуется)
 - **Место на диске:** 10GB+
+- **GroundingDINO модель:** ~1.8GB
 
 ## 📝 Лицензия
 
@@ -234,35 +296,34 @@ MIT License - см. [LICENSE](LICENSE) файл.
 
 ## 🧠 Professional Restaurant Object Detection System
 
-**High-performance object detection system using YOLOv11 for restaurant environments**
+**High-performance object detection system using YOLOv11 with automated GroundingDINO annotation for restaurant environments**
 
 [![GitHub](https://img.shields.io/badge/GitHub-amir2628-181717?style=flat-square&logo=github)](https://github.com/amir2628/restaurant-object-detection)
 [![Python](https://img.shields.io/badge/Python-3.8+-3776AB?style=flat-square&logo=python&logoColor=white)](https://python.org)
 [![YOLOv11](https://img.shields.io/badge/YOLOv11-Ultralytics-00FFFF?style=flat-square)](https://github.com/ultralytics/ultralytics)
+[![GroundingDINO](https://img.shields.io/badge/GroundingDINO-IDEA--Research-FF6B35?style=flat-square)](https://github.com/IDEA-Research/GroundingDINO)
 [![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
 
 ## 📋 Project Description
 
-Professional automatic object detection system specifically designed for restaurant environments. The system uses state-of-the-art YOLOv11 architecture and includes a complete machine learning pipeline: from automatic data annotation to production-ready model deployment.
+Professional automatic object detection system specifically designed for restaurant environments. The system uses the modern YOLOv11 architecture and includes a **revolutionary automatic annotation mechanism with GroundingDINO**, eliminating the need for manual annotation of thousands of video frames.
 
-### 🎯 Key Features
+### 🌟 Key Features
 
-- **🤖 Automatic annotation** using ensemble of models
-- **🎯 High accuracy** - mAP@0.5: 79.7%
-- **⚡ Fast inference** - ~2ms per image
-- **🔧 Production-ready** - ready for deployment
-- **📊 Comprehensive monitoring** - detailed analytics
+- **🤖 Automatic GroundingDINO Annotation**: Eliminates the need for manual annotation of thousands of frames
+- **⚡ YOLOv11**: Latest YOLO architecture for high accuracy and speed
+- **🎯 Restaurant Specialization**: Optimized for food and tableware detection
+- **📊 Complete ML Pipeline**: From video to ready-to-use model
+- **🚀 GPU Acceleration**: CUDA support for fast processing
 
-### 🍽️ Detectable Objects
+### 🍕 Detectable Objects
 
-- 👥 **People** (staff, customers)
-- 🪑 **Furniture** (tables, chairs)
-- 🍽️ **Tableware** (plates, cups, glasses)
-- 🍴 **Utensils** (forks, knives, spoons)
-- 🍕 **Food** (pizza, cakes, fruits)
-- 📱 **Objects** (phones, laptops, books)
+The system is trained to recognize 10 key categories of restaurant objects:
+- **Food**: `chicken`, `meat`, `salad`, `soup`
+- **Tableware**: `cup`, `plate`, `bowl`
+- **Utensils**: `spoon`, `fork`, `knife`
 
-## 🏗️ Project Architecture
+## 📁 Project Structure
 
 ```
 restaurant-object-detection/
@@ -270,23 +331,23 @@ restaurant-object-detection/
 │   ├── pipeline_config.json           # Pipeline configuration
 │   └── model_config.yaml             # Model parameters
 ├── 📁 scripts/
-│   ├── fix_annotations.py            # 🔧 Fix annotations
-│   ├── prepare_data.py               # 📊 Data preparation
+│   ├── fix_annotations.py            # 🔧 Annotation fixing
+│   ├── prepare_data.py               # 📊 Data preparation with GroundingDINO
 │   ├── train_model.py                # 🚀 Model training
-│   ├── run_inference.py              # 🎯 Inference
-│   └── generate_final_report.py      # 📋 Report generation
+│   └── run_inference.py              # 🎯 Inference
 ├── 📁 src/
 │   ├── data/                         # Data processing modules
 │   ├── models/                       # Models and inference
 │   └── utils/                        # Utilities
 ├── 📁 data/
 │   ├── raw/                          # Source videos
-│   ├── processed/dataset/            # Ready dataset
-│   └── annotations/                  # Annotations
+│   ├── processed/dataset/            # Ready dataset with annotations
+│   └── annotations/                  # GroundingDINO annotations
 ├── 📁 outputs/
 │   ├── experiments/                  # Training results
-│   ├── inference/                    # Inference results
-│   └── reports/                      # Reports
+│   └── inference/                    # Inference results
+├── 📄 groundingdino_swinb_cogcoor.pth # GroundingDINO model
+├── 📁 GroundingDINO/                 # GroundingDINO source code
 └── 📄 requirements.txt               # Dependencies
 ```
 
@@ -299,8 +360,17 @@ restaurant-object-detection/
 git clone https://github.com/amir2628/restaurant-object-detection.git
 cd restaurant-object-detection
 
-# Install dependencies
+# Install main dependencies
 pip install -r requirements.txt
+
+# Install GroundingDINO
+pip install groundingdino-py
+
+# Clone GroundingDINO source code
+git clone https://github.com/IDEA-Research/GroundingDINO.git
+
+# Download pre-trained GroundingDINO model
+wget https://github.com/IDEA-Research/GroundingDINO/releases/download/v0.1.0-alpha2/groundingdino_swinb_cogcoor.pth
 ```
 
 ### 2. Prepare Source Data
@@ -320,100 +390,154 @@ mkdir -p data/raw
 # └── restaurant_video_3.avi
 ```
 
-### 3. Data Preparation (if annotation needed)
+### 3. Data Preparation with Automatic GroundingDINO Annotation
 
 ```bash
-# Automatic fix for empty annotations
-python scripts/fix_annotations.py --dataset "data/processed/dataset"
+# Full pipeline: frame extraction + automatic annotation
+python scripts/prepare_data.py --input "data/raw" --config "config/pipeline_config.json" --confidence 0.1
 
-# Full data preparation pipeline (frame extraction + annotation)
-python scripts/prepare_data.py --input "data/raw" --config "config/pipeline_config.json"
+# With FPS setting for frame extraction
+python scripts/prepare_data.py --input "data/raw" --config "config/pipeline_config.json" --fps 1.5 --confidence 0.2
+
+# Increase confidence threshold for higher quality annotations
+python scripts/prepare_data.py --input "data/raw" --config "config/pipeline_config.json" --confidence 0.3
 ```
 
-### 4. Model Training
+**🧠 What happens during data preparation:**
+1. **Frame extraction** from video files at specified FPS
+2. **Automatic annotation** of each frame using GroundingDINO
+3. **Detection filtering** by confidence threshold
+4. **Train/val/test split** (70%/20%/10%)
+5. **dataset.yaml generation** for YOLO training
+6. **Quality report creation** about annotations
+
+### 4. YOLOv11 Model Training
 
 ```bash
-# Training with ready dataset
-python scripts/train_model.py --data "data/processed/dataset/dataset.yaml"
+# Basic training with automatically created dataset
+python scripts/train_model.py --data "data\processed\dataset\dataset.yaml" --device cuda
 
-# Training with custom configuration
-python scripts/train_model.py --data "dataset.yaml" --config "config/train_config.json"
+# Training with custom epoch count
+python scripts/train_model.py --data "data\processed\dataset\dataset.yaml" --device cuda --epochs 200
 
 # Training with Weights & Biases monitoring
-python scripts/train_model.py --data "dataset.yaml" --wandb
+python scripts/train_model.py --data "data\processed\dataset\dataset.yaml" --device cuda --wandb
+
+# Training with custom batch size
+python scripts/train_model.py --data "data\processed\dataset\dataset.yaml" --device cuda --batch-size 32
 ```
 
-### 4. Inference
+### 5. Run Inference
 
 ```bash
-# Inference on images
-python scripts/run_inference.py \
-  --model "outputs/experiments/yolo_*/weights/best.pt" \
-  --input-dir "path/to/images"
+# Video inference with result saving
+python scripts/run_inference.py --model "outputs\experiments\yolo_restaurant_detection_[EXPERIMENT_ID]\weights\best.pt" --video "[SOME_VIDEO_OR_DIRECTORY_OF_VIDEOS]" --output "outputs\final_demo" --device cuda
 
-# Inference on video
-python scripts/run_inference.py \
-  --model "outputs/experiments/yolo_*/weights/best.pt" \
-  --video "path/to/video.mp4"
+# Image inference
+python scripts/run_inference.py --model "outputs\experiments\yolo_restaurant_detection_[EXPERIMENT_ID]\weights\best.pt" --input-dir "path/to/images" --output "outputs\inference_results"
 
-# Real-time inference from camera
-python scripts/run_inference.py \
-  --model "outputs/experiments/yolo_*/weights/best.pt" \
-  --realtime --camera 0
+# Real-time inference from webcam
+python scripts/run_inference.py --model "outputs\experiments\yolo_restaurant_detection_[EXPERIMENT_ID]\weights\best.pt" --realtime --camera 0
+
+# Inference with confidence threshold settings
+python scripts/run_inference.py --model "outputs\experiments\yolo_restaurant_detection_[EXPERIMENT_ID]\weights\best.pt" --video "test_video.mp4" --confidence 0.3 --iou 0.5
 ```
 
-### 5. Report Generation
+## 🤖 GroundingDINO: Revolution in Automatic Annotation
 
-```bash
-# Complete project report
-python scripts/generate_final_report.py \
-  --model-path "outputs/experiments/yolo_*/weights/best.pt" \
-  --dataset-dir "data/processed/dataset" \
-  --experiment-dir "outputs/experiments/yolo_*" \
-  --output "final_report.md" \
-  --project-time 8.5
+### Why GroundingDINO?
+
+Traditional video data annotation for object detection is an **extremely labor-intensive process**:
+- 📹 One hour of video = ~108,000 frames (at 30 FPS)
+- ⏱️ Manual annotation of one frame = 2-5 minutes
+- 💰 Total time: **3,600-9,000 hours** for one hour of video!
+
+**GroundingDINO solves this problem completely automatically:**
+
+### 🔧 How GroundingDINO Integration Works
+
+1. **Text Prompts**: System uses natural object descriptions
+   ```
+   "chicken . meat . salad . soup . cup . plate . bowl . spoon . fork . knife ."
+   ```
+
+2. **Automatic Detection**: GroundingDINO finds objects based on text descriptions
+
+3. **Quality Filtering**: Removal of low-confidence detections
+
+4. **YOLO Format**: Automatic conversion to YOLO annotation format
+
+### ⚙️ GroundingDINO Settings (config/pipeline_config.json)
+
+```json
+{
+  "annotation": {
+    "method": "groundingdino",
+    "confidence_threshold": 0.25,
+    "text_threshold": 0.25,
+    "box_threshold": 0.25,
+    "detection_prompt": "chicken . meat . salad . soup . cup . plate . bowl . spoon . fork . knife .",
+    "iou_threshold": 0.6
+  },
+  "groundingdino": {
+    "checkpoint_path": "groundingdino_swinb_cogcoor.pth",
+    "config_paths": [
+      "GroundingDINO/groundingdino/config/GroundingDINO_SwinB_cfg.py"
+    ]
+  }
+}
 ```
 
-## 📊 Results
+### 🎯 Advantages of Automatic Annotation
+
+- **⚡ Speed**: 1000+ frames per hour instead of 10-20 with manual annotation
+- **💰 Cost Savings**: 100+ times reduction in annotation costs
+- **🎯 Consistency**: Uniform annotation standards across the entire dataset
+- **📈 Scalability**: Easy addition of new videos and classes
+
+## 📊 Training Results
 
 ### 🏆 Achieved Metrics
 
+YOLOv11 training results on GPU (500 epochs, 87.3 minutes):
+
+```
+============================================================
+🎯 TRAINING SUMMARY
+============================================================
+📁 Experiment: yolo_restaurant_detection_1750973996
+⏱️ Training time: 87.3 minutes
+🔄 Epochs completed: 500
+💻 Device: 0
+📊 Final mAP@0.5: 0.7478
+📊 Final mAP@0.5:0.95: 0.7055
+💎 Best model: outputs\experiments\yolo_restaurant_detection_1750973996\weights\best.pt
+============================================================
+
+==================================================
+🎉 YOLO11 TRAINING COMPLETED SUCCESSFULLY!
+==================================================
+💎 Best model: outputs\experiments\yolo_restaurant_detection_1750973996\weights\best.pt
+📊 mAP@0.5: 74.8%
+⏱️ Training time: 87.3 min
+```
+
 | Metric | Value | Comment |
 |--------|-------|---------|
-| **mAP@0.5** | **79.7%** | 🥇 Excellent result |
-| **mAP@0.5:0.95** | **74.2%** | 🥈 High accuracy |
+| **mAP@0.5** | **74.8%** | 🥇 Excellent result |
+| **mAP@0.5:0.95** | **70.6%** | 🥈 High accuracy |
 | **Inference Speed** | **~2ms** | ⚡ Real-time processing |
 | **Model Size** | **~6MB** | 📦 Compact |
-| **Training Time** | **17.5 min** | 🚀 Fast training |
+| **Training Time** | **87.3 min** | 🚀 Fast training |
 
 <img width="1280" alt="Image" src="https://github.com/user-attachments/assets/acc152e7-2ed4-485e-a824-da97a6c7bef3" />
 
 ### 📈 Implementation Features
 
-- **🤖 Ensemble annotation** - Using 3 models (YOLOv11n, s, m)
-- **🎯 TTA (Test Time Augmentation)** - Improved accuracy
-- **🔍 Smart filtering** - Automatic removal of low-quality detections
-- **⚡ GPU optimization** - CUDA, AMP, optimized batching
-- **📊 Comprehensive monitoring** - Wandb, TensorBoard, custom metrics
-
-## 🔧 Configuration
-
-### Main Parameters (config/pipeline_config.json)
-
-```json
-{
-  "annotation": {
-    "confidence_threshold": 0.25,
-    "ensemble_models": ["yolo11n", "yolo11s", "yolo11m"],
-    "tta_enabled": true
-  },
-  "training": {
-    "epochs": 100,
-    "batch_size": 16,
-    "learning_rate": 0.01
-  }
-}
-```
+- **🤖 GroundingDINO Annotation** - Fully automatic data annotation
+- **🎯 Smart Filtering** - Automatic removal of low-quality detections
+- **⚡ GPU Optimization** - CUDA, AMP, optimized batching
+- **📊 Comprehensive Monitoring** - Detailed process reports
 
 ## 🛠️ System Requirements
 
@@ -422,13 +546,7 @@ python scripts/generate_final_report.py \
 - **RAM:** 8GB+
 - **GPU Memory:** 4GB+ (recommended)
 - **Disk Space:** 10GB+
-
-## 📈 Performance Benchmarks
-
-- **Real-time processing:** ✅ 30+ FPS
-- **Batch processing:** ✅ 500+ images/minute
-- **Memory usage:** ✅ <2GB GPU memory
-- **Model accuracy:** ✅ Production-ready (79.7% mAP@0.5)
+- **GroundingDINO Model:** ~1.8GB
 
 ## 🤝 Contributing
 
@@ -442,14 +560,185 @@ python scripts/generate_final_report.py \
 
 MIT License - see [LICENSE](LICENSE) file.
 
+## 🙏 Acknowledgments
+
+- [Ultralytics](https://github.com/ultralytics/ultralytics) for YOLOv11
+- [IDEA-Research](https://github.com/IDEA-Research/GroundingDINO) for GroundingDINO
+- Open-source community for tools and libraries
+
 ## 👥 Author
 
 **Amir** - [@amir2628](https://github.com/amir2628)
 
-## 🙏 Acknowledgments
+## 🚀 Advanced Usage
 
-- [Ultralytics](https://github.com/ultralytics/ultralytics) for YOLOv11
-- Open-source community for tools and libraries
+### Additional Command Options
+
+#### Data Preparation Advanced Options
+
+```bash
+# Extract frames at different FPS rates
+python scripts/prepare_data.py --input "data/raw" --config "config/pipeline_config.json" --fps 0.5  # Lower FPS for fewer frames
+python scripts/prepare_data.py --input "data/raw" --config "config/pipeline_config.json" --fps 5.0  # Higher FPS for more frames
+
+# Adjust confidence threshold for annotation quality
+python scripts/prepare_data.py --input "data/raw" --config "config/pipeline_config.json" --confidence 0.05  # More detections, lower quality
+python scripts/prepare_data.py --input "data/raw" --config "config/pipeline_config.json" --confidence 0.4   # Fewer detections, higher quality
+
+# Custom output directory
+python scripts/prepare_data.py --input "data/raw" --config "config/pipeline_config.json" --output "data/custom_dataset"
+```
+
+#### Training Advanced Options
+
+```bash
+# Training with different model sizes
+python scripts/train_model.py --data "data/processed/dataset/dataset.yaml" --device cuda --model yolo11n  # Nano (fastest)
+python scripts/train_model.py --data "data/processed/dataset/dataset.yaml" --device cuda --model yolo11s  # Small
+python scripts/train_model.py --data "data/processed/dataset/dataset.yaml" --device cuda --model yolo11m  # Medium
+python scripts/train_model.py --data "data/processed/dataset/dataset.yaml" --device cuda --model yolo11l  # Large
+python scripts/train_model.py --data "data/processed/dataset/dataset.yaml" --device cuda --model yolo11x  # Extra Large
+
+# Training with custom image size
+python scripts/train_model.py --data "data/processed/dataset/dataset.yaml" --device cuda --imgsz 512   # Smaller images, faster training
+python scripts/train_model.py --data "data/processed/dataset/dataset.yaml" --device cuda --imgsz 1024  # Larger images, better accuracy
+
+# Training with custom learning rate and optimization
+python scripts/train_model.py --data "data/processed/dataset/dataset.yaml" --device cuda --lr0 0.001 --optimizer AdamW
+
+# Resume training from checkpoint
+python scripts/train_model.py --data "data/processed/dataset/dataset.yaml" --device cuda --resume "outputs/experiments/yolo_*/weights/last.pt"
+
+# Training with data augmentation settings
+python scripts/train_model.py --data "data/processed/dataset/dataset.yaml" --device cuda --augment --mixup 0.2 --copy_paste 0.1
+```
+
+#### Inference Advanced Options
+
+```bash
+# Batch inference on multiple videos
+python scripts/run_inference.py --model "outputs/experiments/yolo_*/weights/best.pt" --input-dir "path/to/videos" --output "results" --device cuda
+
+# Inference with custom confidence and IoU thresholds
+python scripts/run_inference.py --model "outputs/experiments/yolo_*/weights/best.pt" --video "test.mp4" --confidence 0.1 --iou 0.3 --output "low_confidence_results"
+
+# Inference with specific classes only
+python scripts/run_inference.py --model "outputs/experiments/yolo_*/weights/best.pt" --video "test.mp4" --classes 0 1 2  # Only detect first 3 classes
+
+# Save inference results in different formats
+python scripts/run_inference.py --model "outputs/experiments/yolo_*/weights/best.pt" --video "test.mp4" --save-json --save-txt --save-crop
+
+# Inference with video output settings
+python scripts/run_inference.py --model "outputs/experiments/yolo_*/weights/best.pt" --video "test.mp4" --output "results" --fps 15 --quality high
+```
+
+#### Annotation Fixing Advanced Options
+
+```bash
+# Fix annotations for specific splits only
+python scripts/fix_annotations.py --dataset "data/processed/dataset" --splits train val --auto-annotate
+
+# Fix with different confidence thresholds
+python scripts/fix_annotations.py --dataset "data/processed/dataset" --auto-annotate --confidence 0.15
+
+# Create dataset structure and annotate in one step
+python scripts/fix_annotations.py --dataset "data/new_dataset" --create-structure --auto-annotate --confidence 0.2
+
+# Overwrite existing annotations
+python scripts/fix_annotations.py --dataset "data/processed/dataset" --auto-annotate --overwrite --confidence 0.3
+```
+
+### 🔧 Configuration Customization
+
+#### Custom Detection Classes
+
+To detect different objects, modify `config/pipeline_config.json`:
+
+```json
+{
+  "annotation": {
+    "detection_prompt": "pizza . burger . fries . drink . napkin . menu .",
+    "target_classes": ["pizza", "burger", "fries", "drink", "napkin", "menu"]
+  },
+  "dataset": {
+    "class_names": ["pizza", "burger", "fries", "drink", "napkin", "menu"]
+  }
+}
+```
+
+#### Performance Optimization Settings
+
+```json
+{
+  "video_processing": {
+    "fps_extraction": 1.0,
+    "max_frames_per_video": 500,
+    "target_size": [416, 416]
+  },
+  "annotation": {
+    "confidence_threshold": 0.3,
+    "iou_threshold": 0.5
+  },
+  "quality_control": {
+    "min_detection_size": 0.02,
+    "max_detection_size": 0.9
+  }
+}
+```
+
+## 🐛 Troubleshooting
+
+### Common Issues and Solutions
+
+#### 1. GroundingDINO Model Not Found
+```bash
+Error: groundingdino_swinb_cogcoor.pth not found
+```
+**Solution:**
+```bash
+wget https://github.com/IDEA-Research/GroundingDINO/releases/download/v0.1.0-alpha2/groundingdino_swinb_cogcoor.pth
+```
+
+#### 2. CUDA Out of Memory
+```bash
+Error: CUDA out of memory
+```
+**Solutions:**
+- Reduce batch size: `--batch-size 8`
+- Use smaller image size: `--imgsz 416`
+- Use CPU: `--device cpu`
+
+#### 3. No Video Files Found
+```bash
+Error: No supported video files found in data/raw/
+```
+**Solution:**
+- Check file formats: `.mp4`, `.avi`, `.mov`, `.mkv`, `.wmv`
+- Verify files are in `data/raw/` directory
+
+#### 4. Empty Annotations
+```bash
+Warning: Many empty annotation files created
+```
+**Solutions:**
+- Lower confidence threshold: `--confidence 0.1`
+- Check video quality and lighting
+- Verify detection prompt matches objects in videos
+
+### 📊 Performance Monitoring
+
+Monitor training progress with:
+- **TensorBoard**: `tensorboard --logdir outputs/experiments/`
+- **Weights & Biases**: Add `--wandb` flag to training
+- **Live plots**: Check `outputs/experiments/*/` for training curves
+
+### 💡 Tips for Better Results
+
+1. **Video Quality**: Use well-lit, clear videos for better annotations
+2. **Frame Rate**: Start with 1-2 FPS for initial experiments
+3. **Confidence Tuning**: Lower thresholds (0.1-0.2) for more detections
+4. **Class Balance**: Ensure diverse examples of all object types
+5. **Validation**: Always check a sample of annotations manually
 
 ---
 

@@ -1,21 +1,32 @@
 """
 Профессиональная система автоматической аннотации для YOLOv11
-Использует предобученные модели для создания высококачественных аннотаций
+Использует GroundingDINO для создания высококачественных аннотаций
 """
 
 import logging
 import json
 import cv2
 import numpy as np
+import os
+import torch
 from pathlib import Path
 from typing import List, Dict, Any, Optional, Tuple
 from dataclasses import dataclass
-import torch
-from ultralytics import YOLO
-import supervision as sv
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from tqdm import tqdm
 import albumentations as A
+from PIL import Image, ImageDraw, ImageFont
+
+# Импорт GroundingDINO-py
+try:
+    from groundingdino.models import build_groundingdino
+    from groundingdino.util.inference import load_model, predict, load_image
+    USE_GROUNDINGDINO_PY = True
+    print("✓ Используется groundingdino-py")
+except ImportError:
+    print("✗ Не удалось импортировать groundingdino-py")
+    print("Убедитесь, что он установлен: pip install groundingdino-py")
+    USE_GROUNDINGDINO_PY = False
 
 
 @dataclass
@@ -30,18 +41,18 @@ class DetectionResult:
 
 class SmartAnnotator:
     """
-    Умная система автоматической аннотации с использованием ансамбля моделей
-    и продвинутых методов очистки данных
+    Умная система автоматической аннотации с использованием GroundingDINO
+    для создания точных аннотаций объектов в ресторанной среде
     """
     
     def __init__(self, config_path: Optional[Path] = None):
         self.logger = self._setup_logger()
         self.config = self._load_config(config_path)
         
-        # Инициализация моделей
-        self.models = {}
-        self.ensemble_weights = {}
-        self._init_models()
+        # Инициализация GroundingDINO
+        self.groundingdino_model = None
+        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        self._init_groundingdino()
         
         # Система валидации
         self.validator = AnnotationValidator()
@@ -72,516 +83,356 @@ class SmartAnnotator:
     def _load_config(self, config_path: Optional[Path]) -> Dict[str, Any]:
         """Загрузка конфигурации аннотатора"""
         default_config = {
-            'models': {
-                'yolo11n': {'weight': 0.3, 'confidence': 0.15},
-                'yolo11s': {'weight': 0.4, 'confidence': 0.2},
-                'yolo11m': {'weight': 0.3, 'confidence': 0.25}
-            },
-            'ensemble': {
-                'consensus_threshold': 0.6,  # Минимальное согласие моделей
-                'confidence_boost': 0.1,     # Бонус за согласие
-                'iou_threshold': 0.5
-            },
-            'filtering': {
-                'min_confidence': 0.25,
-                'min_area': 200,            # Минимальная площадь bbox
-                'max_area_ratio': 0.9,      # Максимальное отношение к изображению
-                'min_aspect_ratio': 0.1,    # Минимальное соотношение сторон
-                'max_aspect_ratio': 10.0,   # Максимальное соотношение сторон
-                'edge_threshold': 10        # Отступ от края изображения
+            'groundingdino': {
+                'checkpoint_path': 'groundingdino_swinb_cogcoor.pth',
+                'config_paths': [
+                    "GroundingDINO/groundingdino/config/GroundingDINO_SwinB_cfg.py",
+                    "groundingdino_config.py"
+                ],
+                'detection_threshold': 0.25,
+                'prompt': "chicken . meat . salad . soup . cup . plate . bowl . spoon . fork . knife ."
             },
             'restaurant_classes': [
-                'person', 'chair', 'dining table', 'cup', 'fork', 'knife',
-                'spoon', 'bowl', 'bottle', 'wine glass', 'sandwich', 'pizza',
-                'cake', 'apple', 'banana', 'orange', 'cell phone', 'laptop', 'book'
+                'chicken',     # Курица
+                'meat',        # Мясо  
+                'salad',       # Салат
+                'soup',        # Суп
+                'cup',         # Чашка
+                'plate',       # Тарелка
+                'bowl',        # Миска
+                'spoon',       # Ложка
+                'fork',        # Вилка
+                'knife'        # Нож
             ],
-            'augmentation': {
-                'enable_tta': True,  # Test Time Augmentation
-                'tta_transforms': ['flip', 'rotate', 'scale']
+            'processing': {
+                'batch_size': 8,
+                'num_workers': 4,
+                'confidence_threshold': 0.25,
+                'nms_threshold': 0.6,
+                'enable_tta': False
+            },
+            'validation': {
+                'min_bbox_size': 0.01,
+                'max_bbox_size': 0.9,
+                'min_confidence': 0.15,
+                'aspect_ratio_range': [0.1, 10.0]
+            },
+            'output': {
+                'save_annotated_images': True,
+                'create_visualization': False
             }
         }
         
         if config_path and config_path.exists():
-            with open(config_path, 'r', encoding='utf-8') as f:
-                user_config = json.load(f)
-                default_config.update(user_config)
+            try:
+                with open(config_path, 'r', encoding='utf-8') as f:
+                    user_config = json.load(f)
+                
+                # Обновление конфигурации
+                def update_dict(base, update):
+                    for key, value in update.items():
+                        if isinstance(value, dict) and key in base:
+                            update_dict(base[key], value)
+                        else:
+                            base[key] = value
+                
+                update_dict(default_config, user_config)
+                self.logger.info(f"Загружена конфигурация из: {config_path}")
+            except Exception as e:
+                self.logger.warning(f"Ошибка загрузки конфигурации: {e}")
         
         return default_config
     
-    def _init_models(self):
-        """Инициализация ансамбля моделей"""
-        self.logger.info("Инициализация ансамбля моделей YOLO...")
+    def _init_groundingdino(self):
+        """Инициализация модели GroundingDINO"""
+        if not USE_GROUNDINGDINO_PY:
+            self.logger.error("GroundingDINO-py не доступен!")
+            raise ImportError("Требуется установка groundingdino-py")
         
-        device = 'cuda' if torch.cuda.is_available() else 'cpu'
-        self.logger.info(f"Используется устройство: {device}")
+        self.logger.info("Инициализация GroundingDINO...")
         
-        for model_name, model_config in self.config['models'].items():
-            try:
-                # Загрузка предобученной модели
-                model_path = f"{model_name}.pt"
-                self.logger.info(f"Загрузка модели: {model_path}")
-                
-                model = YOLO(model_path)
-                model.to(device)
-                
-                self.models[model_name] = {
-                    'model': model,
-                    'confidence': model_config['confidence'],
-                    'weight': model_config['weight']
-                }
-                
-                self.logger.info(f"✅ Модель {model_name} успешно загружена")
-                
-            except Exception as e:
-                self.logger.warning(f"❌ Не удалось загрузить модель {model_name}: {e}")
-        
-        if not self.models:
-            # Если ни одна модель не загрузилась, используем базовую
-            self.logger.info("Использование базовой модели YOLOv8n...")
-            model = YOLO('yolov8n.pt')
-            model.to(device)
-            self.models['yolov8n'] = {
-                'model': model,
-                'confidence': 0.2,
-                'weight': 1.0
-            }
+        try:
+            checkpoint_path = self.config['groundingdino']['checkpoint_path']
+            
+            if not os.path.exists(checkpoint_path):
+                raise FileNotFoundError(f"Файл модели не найден: {checkpoint_path}")
+            
+            # Попытка загрузки с конфигурацией
+            config_path = None
+            for config in self.config['groundingdino']['config_paths']:
+                if os.path.exists(config):
+                    config_path = config
+                    break
+            
+            if config_path:
+                try:
+                    self.groundingdino_model = load_model(config_path, checkpoint_path)
+                    self.logger.info(f"✓ GroundingDINO загружен с конфигурацией: {config_path}")
+                except Exception as config_error:
+                    self.logger.warning(f"Ошибка загрузки с конфигом: {config_error}")
+                    # Попытка использовать build_groundingdino
+                    try:
+                        self.groundingdino_model = build_groundingdino(checkpoint_path)
+                        self.logger.info("✓ GroundingDINO загружен через build_groundingdino")
+                    except Exception as build_error:
+                        self.logger.error(f"Ошибка build_groundingdino: {build_error}")
+                        raise
+            else:
+                self.logger.info("Конфигурационный файл не найден, попытка загрузки без конфига...")
+                try:
+                    # Попытка использовать build_groundingdino напрямую
+                    self.groundingdino_model = build_groundingdino(checkpoint_path)
+                    self.logger.info("✓ GroundingDINO загружен через build_groundingdino")
+                except Exception as build_error:
+                    self.logger.error(f"Ошибка build_groundingdino: {build_error}")
+                    # Последняя попытка - может быть load_model работает с одним параметром
+                    try:
+                        # Некоторые версии могут работать только с путем к чекпоинту
+                        import torch
+                        self.groundingdino_model = torch.load(checkpoint_path, map_location=self.device)
+                        self.logger.info("✓ GroundingDINO загружен через torch.load")
+                    except Exception as torch_error:
+                        self.logger.error(f"Ошибка torch.load: {torch_error}")
+                        raise
+            
+            self.logger.info(f"✓ Используется устройство: {self.device}")
+            
+        except Exception as e:
+            self.logger.error(f"✗ Ошибка загрузки GroundingDINO: {e}")
+            self.logger.error("Попробуйте скачать конфигурационный файл или проверьте версию groundingdino-py")
+            raise
     
-    def annotate_dataset(self, 
-                        images_dir: Path, 
-                        output_dir: Path,
-                        batch_size: int = 8,
-                        num_workers: int = 4) -> Dict[str, Any]:
+    def annotate_dataset(self, images_dir: Path, output_dir: Path, 
+                        batch_size: int = 8, num_workers: int = 4) -> Dict[str, Any]:
         """
-        Аннотация всего датасета с использованием ансамбля моделей
+        Аннотация датасета с использованием GroundingDINO
         
         Args:
             images_dir: Директория с изображениями
-            output_dir: Директория для сохранения аннотаций
-            batch_size: Размер батча для обработки
+            output_dir: Директория для аннотаций
+            batch_size: Размер батча
             num_workers: Количество потоков
             
         Returns:
-            Статистика аннотации
+            Статистика обработки
         """
         self.logger.info(f"Начало аннотации датасета: {images_dir}")
         
-        # Подготовка директорий
+        # Создание выходной директории
         output_dir.mkdir(parents=True, exist_ok=True)
         
         # Поиск изображений
         image_extensions = {'.jpg', '.jpeg', '.png', '.bmp', '.tiff'}
         image_files = []
+        
         for ext in image_extensions:
-            image_files.extend(list(images_dir.glob(f"*{ext}")))
-            image_files.extend(list(images_dir.glob(f"*{ext.upper()}")))
+            image_files.extend(images_dir.glob(f"*{ext}"))
+            image_files.extend(images_dir.glob(f"*{ext.upper()}"))
         
         if not image_files:
-            self.logger.error(f"Не найдено изображений в {images_dir}")
-            return self.stats
+            self.logger.warning("Изображения не найдены!")
+            return {'processed_images': 0, 'total_detections': 0, 'success_rate': 0.0}
         
-        self.logger.info(f"Найдено {len(image_files)} изображений для аннотации")
-        self.stats['total_images'] = len(image_files)
+        self.logger.info(f"Найдено {len(image_files)} изображений")
         
-        # Обработка батчами
+        # Сброс статистики
+        self.stats = {
+            'total_images': 0,
+            'total_detections': 0,
+            'filtered_detections': 0,
+            'class_distribution': {},
+            'confidence_distribution': {},
+            'processing_time': 0
+        }
+        
+        # Обработка изображений
         processed_count = 0
-        failed_count = 0
+        total_detections = 0
         
-        with ThreadPoolExecutor(max_workers=num_workers) as executor:
-            # Создание батчей
-            batches = [image_files[i:i + batch_size] 
-                      for i in range(0, len(image_files), batch_size)]
-            
-            # Отправка задач на выполнение
-            future_to_batch = {}
-            for batch in batches:
-                future = executor.submit(self._process_batch, batch, output_dir)
-                future_to_batch[future] = batch
-            
-            # Обработка результатов
-            with tqdm(total=len(image_files), desc="Аннотация изображений") as pbar:
-                for future in as_completed(future_to_batch):
-                    batch = future_to_batch[future]
-                    try:
-                        batch_results = future.result()
-                        processed_count += batch_results['processed']
-                        failed_count += batch_results['failed']
-                        
-                        # Обновление статистики
-                        for class_name, count in batch_results['class_distribution'].items():
-                            self.stats['class_distribution'][class_name] = \
-                                self.stats['class_distribution'].get(class_name, 0) + count
-                        
-                        self.stats['total_detections'] += batch_results['total_detections']
-                        self.stats['filtered_detections'] += batch_results['filtered_detections']
-                        
-                    except Exception as e:
-                        self.logger.error(f"Ошибка обработки батча: {e}")
-                        failed_count += len(batch)
+        for image_path in tqdm(image_files, desc="Аннотация изображений"):
+            try:
+                # Аннотация одного изображения
+                detections = self._annotate_single_image(image_path)
+                
+                if detections:
+                    # Сохранение аннотации в формате YOLO
+                    annotation_path = output_dir / f"{image_path.stem}.txt"
+                    self._save_yolo_annotation(detections, annotation_path, image_path)
                     
-                    pbar.update(len(batch))
-        
-        # Финальная статистика
-        self.stats['processed_images'] = processed_count
-        self.stats['failed_images'] = failed_count
-        self.stats['success_rate'] = processed_count / len(image_files) if image_files else 0
-        
-        self.logger.info(f"Аннотация завершена:")
-        self.logger.info(f"  - Обработано: {processed_count}/{len(image_files)}")
-        self.logger.info(f"  - Неудачно: {failed_count}")
-        self.logger.info(f"  - Всего детекций: {self.stats['total_detections']}")
-        self.logger.info(f"  - После фильтрации: {self.stats['total_detections'] - self.stats['filtered_detections']}")
+                    # Обновление статистики
+                    processed_count += 1
+                    total_detections += len(detections)
+                    
+                    for detection in detections:
+                        class_name = detection.class_name
+                        self.stats['class_distribution'][class_name] = \
+                            self.stats['class_distribution'].get(class_name, 0) + 1
+                else:
+                    # Создание пустой аннотации
+                    annotation_path = output_dir / f"{image_path.stem}.txt"
+                    annotation_path.touch()
+                
+                self.stats['total_images'] += 1
+                
+            except Exception as e:
+                self.logger.error(f"Ошибка обработки {image_path}: {e}")
+                continue
         
         # Сохранение статистики
         self._save_annotation_stats(output_dir)
         
-        return self.stats
-    
-    def _process_batch(self, image_batch: List[Path], output_dir: Path) -> Dict[str, Any]:
-        """Обработка батча изображений"""
-        batch_stats = {
-            'processed': 0,
-            'failed': 0,
-            'total_detections': 0,
-            'filtered_detections': 0,
-            'class_distribution': {}
+        success_rate = processed_count / len(image_files) if image_files else 0
+        
+        result = {
+            'processed_images': processed_count,
+            'total_detections': total_detections,
+            'success_rate': success_rate,
+            'total_images': len(image_files)
         }
         
-        for image_path in image_batch:
-            try:
-                # Загрузка изображения
-                image = cv2.imread(str(image_path))
-                if image is None:
-                    self.logger.warning(f"Не удалось загрузить изображение: {image_path}")
-                    batch_stats['failed'] += 1
-                    continue
-                
-                # Аннотация изображения
-                detections = self._annotate_single_image(image, image_path)
-                
-                # Сохранение аннотации
-                annotation_path = output_dir / f"{image_path.stem}.txt"
-                self._save_yolo_annotation(detections, annotation_path, image.shape)
-                
-                # Обновление статистики
-                batch_stats['processed'] += 1
-                batch_stats['total_detections'] += len(detections)
-                
-                for detection in detections:
-                    class_name = detection.class_name
-                    batch_stats['class_distribution'][class_name] = \
-                        batch_stats['class_distribution'].get(class_name, 0) + 1
-                
-            except Exception as e:
-                self.logger.error(f"Ошибка обработки {image_path}: {e}")
-                batch_stats['failed'] += 1
+        self.logger.info(f"Аннотация завершена: {processed_count}/{len(image_files)} изображений")
+        self.logger.info(f"Всего детекций: {total_detections}")
+        self.logger.info(f"Успешность: {success_rate:.1%}")
         
-        return batch_stats
+        return result
     
-    def _annotate_single_image(self, image: np.ndarray, image_path: Path) -> List[DetectionResult]:
-        """Аннотация одного изображения с использованием ансамбля"""
+    def _annotate_single_image(self, image_path: Path) -> List[DetectionResult]:
+        """Аннотация одного изображения с использованием GroundingDINO"""
         
-        # Получение детекций от всех моделей
-        all_detections = []
-        
-        for model_name, model_info in self.models.items():
-            try:
-                model = model_info['model']
-                confidence = model_info['confidence']
-                
-                # Базовая детекция
-                results = model(image, conf=confidence, verbose=False)
-                model_detections = self._parse_yolo_results(results, model_name)
-                
-                # Test Time Augmentation (TTA)
-                if self.config['augmentation']['enable_tta']:
-                    tta_detections = self._apply_tta(image, model, confidence)
-                    model_detections.extend(tta_detections)
-                
-                all_detections.extend(model_detections)
-                
-            except Exception as e:
-                self.logger.warning(f"Ошибка детекции с моделью {model_name}: {e}")
-        
-        # Применение ансамбля и фильтрации
-        consensus_detections = self._apply_ensemble_consensus(all_detections, image.shape)
-        filtered_detections = self._filter_detections(consensus_detections, image.shape)
-        
-        # Фильтрация по классам ресторана
-        restaurant_detections = self._filter_restaurant_classes(filtered_detections)
-        
-        return restaurant_detections
-    
-    def _parse_yolo_results(self, results, model_name: str) -> List[DetectionResult]:
-        """Парсинг результатов YOLO"""
-        detections = []
-        
-        if not results or len(results) == 0:
-            return detections
-        
-        result = results[0]  # Первое изображение в батче
-        
-        if result.boxes is None or len(result.boxes) == 0:
-            return detections
-        
-        boxes = result.boxes.xyxy.cpu().numpy()
-        confidences = result.boxes.conf.cpu().numpy()
-        class_ids = result.boxes.cls.cpu().numpy().astype(int)
-        
-        height, width = result.orig_shape
-        
-        for i, (box, conf, class_id) in enumerate(zip(boxes, confidences, class_ids)):
-            if class_id >= len(result.names):
-                continue
-                
-            class_name = result.names[class_id]
+        try:
+            # Загрузка изображения
+            image_source, image = load_image(str(image_path))
             
-            # Конвертация в формат YOLO (нормализованные координаты)
-            x1, y1, x2, y2 = box
-            x_center = (x1 + x2) / 2 / width
-            y_center = (y1 + y2) / 2 / height
-            w = (x2 - x1) / width
-            h = (y2 - y1) / height
+            # Получение промпта
+            prompt = self.config['groundingdino']['prompt']
+            detection_threshold = self.config['groundingdino']['detection_threshold']
             
-            detection = DetectionResult(
-                class_id=class_id,
-                class_name=class_name,
-                confidence=float(conf),
-                bbox=[x_center, y_center, w, h],
-                original_bbox=[int(x1), int(y1), int(x2), int(y2)]
+            # Выполнение детекции
+            boxes, logits, phrases = predict(
+                model=self.groundingdino_model,
+                image=image,
+                caption=prompt,
+                box_threshold=detection_threshold,
+                text_threshold=detection_threshold,
+                device=self.device
             )
             
-            detections.append(detection)
-        
-        return detections
-    
-    def _apply_tta(self, image: np.ndarray, model, confidence: float) -> List[DetectionResult]:
-        """Применение Test Time Augmentation"""
-        tta_detections = []
-        
-        # Горизонтальное отражение
-        if 'flip' in self.config['augmentation']['tta_transforms']:
-            flipped = cv2.flip(image, 1)
-            results = model(flipped, conf=confidence, verbose=False)
-            flipped_detections = self._parse_yolo_results(results, 'tta_flip')
+            # Обработка результатов
+            detections = []
             
-            # Корректировка координат для отраженного изображения
-            for det in flipped_detections:
-                det.bbox[0] = 1.0 - det.bbox[0]  # Инвертируем x_center
-                det.confidence *= 0.9  # Небольшое снижение уверенности для TTA
+            if len(boxes) > 0:
+                # Конвертация тензоров в списки
+                if hasattr(boxes, 'cpu'):
+                    boxes = boxes.cpu().numpy()
+                if hasattr(logits, 'cpu'):
+                    logits = logits.cpu().numpy()
+                
+                # Создание объектов детекции
+                for i, (box, confidence, phrase) in enumerate(zip(boxes, logits, phrases)):
+                    # Маппинг обнаруженной фразы на наши классы
+                    mapped_class = self._map_to_food_classes(phrase)
+                    
+                    if mapped_class and confidence >= self.config['processing']['confidence_threshold']:
+                        # Получение ID класса
+                        class_id = self._get_class_mapping().get(mapped_class, 0)
+                        
+                        # Создание объекта детекции
+                        detection = DetectionResult(
+                            class_id=class_id,
+                            class_name=mapped_class,
+                            confidence=float(confidence),
+                            bbox=box.tolist(),  # Уже в нормализованном формате XYXY центр
+                            original_bbox=[]  # Заполним при необходимости
+                        )
+                        
+                        detections.append(detection)
             
-            tta_detections.extend(flipped_detections)
-        
-        # Поворот
-        if 'rotate' in self.config['augmentation']['tta_transforms']:
-            # Незначительный поворот на ±5 градусов
-            for angle in [-5, 5]:
-                h, w = image.shape[:2]
-                center = (w // 2, h // 2)
-                matrix = cv2.getRotationMatrix2D(center, angle, 1.0)
-                rotated = cv2.warpAffine(image, matrix, (w, h))
-                
-                results = model(rotated, conf=confidence, verbose=False)
-                rotated_detections = self._parse_yolo_results(results, f'tta_rotate_{angle}')
-                
-                # Снижение уверенности для повернутых изображений
-                for det in rotated_detections:
-                    det.confidence *= 0.85
-                
-                tta_detections.extend(rotated_detections)
-        
-        return tta_detections
-    
-    def _apply_ensemble_consensus(self, all_detections: List[DetectionResult], 
-                                image_shape: Tuple[int, int, int]) -> List[DetectionResult]:
-        """Применение консенсуса ансамбля"""
-        if not all_detections:
+            # Фильтрация и валидация
+            filtered_detections = self._filter_detections(detections)
+            
+            return filtered_detections
+            
+        except Exception as e:
+            self.logger.error(f"Ошибка детекции на изображении {image_path}: {e}")
             return []
-        
-        # Группировка детекций по IoU
-        consensus_detections = []
-        used_indices = set()
-        
-        for i, detection in enumerate(all_detections):
-            if i in used_indices:
-                continue
-            
-            # Поиск схожих детекций
-            similar_detections = [detection]
-            used_indices.add(i)
-            
-            for j, other_detection in enumerate(all_detections[i+1:], i+1):
-                if j in used_indices:
-                    continue
-                
-                # Проверка IoU и класса
-                if (detection.class_name == other_detection.class_name and
-                    self._calculate_iou(detection.bbox, other_detection.bbox) > 
-                    self.config['ensemble']['iou_threshold']):
-                    
-                    similar_detections.append(other_detection)
-                    used_indices.add(j)
-            
-            # Создание консенсусной детекции
-            if len(similar_detections) >= 1:  # Минимум одна детекция
-                consensus_det = self._create_consensus_detection(similar_detections)
-                
-                # Проверка порога консенсуса
-                consensus_ratio = len(similar_detections) / len(self.models)
-                if consensus_ratio >= self.config['ensemble']['consensus_threshold'] / len(self.models):
-                    # Бонус за консенсус
-                    consensus_det.confidence = min(1.0, 
-                        consensus_det.confidence + 
-                        self.config['ensemble']['confidence_boost'] * consensus_ratio)
-                    
-                    consensus_detections.append(consensus_det)
-        
-        return consensus_detections
     
-    def _create_consensus_detection(self, detections: List[DetectionResult]) -> DetectionResult:
-        """Создание консенсусной детекции из группы схожих"""
-        # Взвешенное усреднение координат по уверенности
-        total_weight = sum(det.confidence for det in detections)
+    def _map_to_food_classes(self, detected_label: str) -> Optional[str]:
+        """Маппинг обнаруженных меток на наши классы еды"""
+        label_lower = str(detected_label).lower().strip()
         
-        if total_weight == 0:
-            return detections[0]
+        # Простое маппинг на основе вхождения
+        for class_name in self.config['restaurant_classes']:
+            if class_name.lower() in label_lower:
+                return class_name
         
-        weighted_bbox = [0, 0, 0, 0]
-        for detection in detections:
-            weight = detection.confidence / total_weight
-            for i in range(4):
-                weighted_bbox[i] += detection.bbox[i] * weight
-        
-        # Максимальная уверенность
-        max_confidence = max(det.confidence for det in detections)
-        
-        # Наиболее частый класс
-        class_votes = {}
-        for det in detections:
-            key = (det.class_id, det.class_name)
-            class_votes[key] = class_votes.get(key, 0) + det.confidence
-        
-        best_class = max(class_votes.items(), key=lambda x: x[1])[0]
-        
-        return DetectionResult(
-            class_id=best_class[0],
-            class_name=best_class[1],
-            confidence=max_confidence,
-            bbox=weighted_bbox,
-            original_bbox=[]  # Будет пересчитан при необходимости
-        )
+        return None
     
-    def _calculate_iou(self, bbox1: List[float], bbox2: List[float]) -> float:
-        """Вычисление IoU между двумя bbox в формате YOLO"""
-        # Конвертация из YOLO формата в углы
-        def yolo_to_corners(bbox):
-            x_center, y_center, width, height = bbox
-            x1 = x_center - width / 2
-            y1 = y_center - height / 2
-            x2 = x_center + width / 2
-            y2 = y_center + height / 2
-            return x1, y1, x2, y2
-        
-        x1_1, y1_1, x2_1, y2_1 = yolo_to_corners(bbox1)
-        x1_2, y1_2, x2_2, y2_2 = yolo_to_corners(bbox2)
-        
-        # Пересечение
-        x1_inter = max(x1_1, x1_2)
-        y1_inter = max(y1_1, y1_2)
-        x2_inter = min(x2_1, x2_2)
-        y2_inter = min(y2_1, y2_2)
-        
-        if x2_inter <= x1_inter or y2_inter <= y1_inter:
-            return 0.0
-        
-        intersection = (x2_inter - x1_inter) * (y2_inter - y1_inter)
-        
-        # Площади
-        area1 = (x2_1 - x1_1) * (y2_1 - y1_1)
-        area2 = (x2_2 - x1_2) * (y2_2 - y1_2)
-        
-        union = area1 + area2 - intersection
-        
-        return intersection / union if union > 0 else 0.0
-    
-    def _filter_detections(self, detections: List[DetectionResult], 
-                          image_shape: Tuple[int, int, int]) -> List[DetectionResult]:
+    def _filter_detections(self, detections: List[DetectionResult]) -> List[DetectionResult]:
         """Фильтрация детекций по качеству"""
         filtered = []
-        height, width = image_shape[:2]
         
         for detection in detections:
             # Проверка уверенности
-            if detection.confidence < self.config['filtering']['min_confidence']:
-                self.stats['filtered_detections'] += 1
+            if detection.confidence < self.config['validation']['min_confidence']:
                 continue
             
-            # Проверка размера
-            w_pixels = detection.bbox[2] * width
-            h_pixels = detection.bbox[3] * height
-            area = w_pixels * h_pixels
-            
-            if area < self.config['filtering']['min_area']:
-                self.stats['filtered_detections'] += 1
-                continue
-            
-            # Проверка отношения к изображению
-            image_area = width * height
-            if area / image_area > self.config['filtering']['max_area_ratio']:
-                self.stats['filtered_detections'] += 1
-                continue
-            
-            # Проверка соотношения сторон
-            aspect_ratio = w_pixels / h_pixels if h_pixels > 0 else float('inf')
-            if (aspect_ratio < self.config['filtering']['min_aspect_ratio'] or
-                aspect_ratio > self.config['filtering']['max_aspect_ratio']):
-                self.stats['filtered_detections'] += 1
-                continue
-            
-            # Проверка близости к краям
-            edge_threshold = self.config['filtering']['edge_threshold'] / width
-            x_center, y_center = detection.bbox[0], detection.bbox[1]
-            half_w, half_h = detection.bbox[2] / 2, detection.bbox[3] / 2
-            
-            if (x_center - half_w < edge_threshold or
-                x_center + half_w > 1 - edge_threshold or
-                y_center - half_h < edge_threshold or
-                y_center + half_h > 1 - edge_threshold):
-                # Не отфильтровываем полностью, но снижаем уверенность
-                detection.confidence *= 0.8
+            # Проверка размера bbox
+            bbox = detection.bbox
+            if len(bbox) >= 4:
+                width = bbox[2] if len(bbox) > 2 else 0
+                height = bbox[3] if len(bbox) > 3 else 0
+                
+                bbox_area = width * height
+                
+                if (bbox_area < self.config['validation']['min_bbox_size'] or 
+                    bbox_area > self.config['validation']['max_bbox_size']):
+                    continue
+                
+                # Проверка соотношения сторон
+                if height > 0:
+                    aspect_ratio = width / height
+                    min_ratio, max_ratio = self.config['validation']['aspect_ratio_range']
+                    
+                    if not (min_ratio <= aspect_ratio <= max_ratio):
+                        continue
             
             filtered.append(detection)
         
         return filtered
     
-    def _filter_restaurant_classes(self, detections: List[DetectionResult]) -> List[DetectionResult]:
-        """Фильтрация по релевантным для ресторана классам"""
-        restaurant_classes = set(self.config['restaurant_classes'])
-        
-        filtered = []
-        for detection in detections:
-            if detection.class_name in restaurant_classes:
-                filtered.append(detection)
-            else:
-                self.stats['filtered_detections'] += 1
-        
-        return filtered
-    
     def _save_yolo_annotation(self, detections: List[DetectionResult], 
-                             output_path: Path, image_shape: Tuple[int, int, int]):
+                             annotation_path: Path, image_path: Path):
         """Сохранение аннотации в формате YOLO"""
         
-        # Создание маппинга классов
-        class_mapping = self._get_class_mapping()
+        # Получение размеров изображения
+        try:
+            img = Image.open(image_path)
+            img_width, img_height = img.size
+            img.close()
+        except Exception as e:
+            self.logger.error(f"Ошибка чтения размеров изображения {image_path}: {e}")
+            return
         
-        with open(output_path, 'w', encoding='utf-8') as f:
+        with open(annotation_path, 'w', encoding='utf-8') as f:
             for detection in detections:
-                # Получение ID класса в нашей системе
-                if detection.class_name in class_mapping:
-                    class_id = class_mapping[detection.class_name]
+                # Формат YOLO: class_id x_center y_center width height (нормализованные)
+                # bbox от GroundingDINO уже в правильном формате
+                bbox = detection.bbox
+                
+                if len(bbox) >= 4:
+                    x_center, y_center, width, height = bbox[:4]
                     
-                    # Формат YOLO: class_id x_center y_center width height
-                    line = f"{class_id} {detection.bbox[0]:.6f} {detection.bbox[1]:.6f} " \
-                           f"{detection.bbox[2]:.6f} {detection.bbox[3]:.6f}\n"
+                    # Убеждаемся, что координаты нормализованы
+                    if x_center > 1 or y_center > 1 or width > 1 or height > 1:
+                        # Нормализация, если это пиксельные координаты
+                        x_center = x_center / img_width
+                        y_center = y_center / img_height  
+                        width = width / img_width
+                        height = height / img_height
+                    
+                    # Запись в файл
+                    line = f"{detection.class_id} {x_center:.6f} {y_center:.6f} " \
+                           f"{width:.6f} {height:.6f}\n"
                     f.write(line)
     
     def _get_class_mapping(self) -> Dict[str, int]:
@@ -596,6 +447,8 @@ class SmartAnnotator:
         # Добавление маппинга классов к статистике
         self.stats['class_mapping'] = self._get_class_mapping()
         self.stats['total_classes'] = len(self.config['restaurant_classes'])
+        self.stats['detection_method'] = 'GroundingDINO'
+        self.stats['prompt_used'] = self.config['groundingdino']['prompt']
         
         with open(stats_path, 'w', encoding='utf-8') as f:
             json.dump(self.stats, f, ensure_ascii=False, indent=2)
@@ -611,62 +464,51 @@ class AnnotationValidator:
     
     def validate_annotation_file(self, annotation_path: Path, 
                                 image_path: Optional[Path] = None) -> Dict[str, Any]:
-        """Валидация одного файла аннотации"""
+        """Валидация файла аннотации"""
         validation_result = {
             'valid': True,
             'issues': [],
-            'bbox_count': 0,
-            'class_distribution': {}
+            'line_count': 0,
+            'bbox_count': 0
         }
-        
-        if not annotation_path.exists():
-            validation_result['valid'] = False
-            validation_result['issues'].append("Файл аннотации не существует")
-            return validation_result
         
         try:
             with open(annotation_path, 'r', encoding='utf-8') as f:
                 lines = f.readlines()
             
-            if not lines:
-                # Пустой файл - это нормально (нет объектов)
-                return validation_result
+            validation_result['line_count'] = len(lines)
             
             for line_num, line in enumerate(lines, 1):
                 line = line.strip()
-                if not line:
+                
+                if not line:  # Пустая строка
                     continue
                 
                 parts = line.split()
+                
                 if len(parts) != 5:
                     validation_result['valid'] = False
                     validation_result['issues'].append(
-                        f"Строка {line_num}: неверный формат (ожидается 5 значений)"
+                        f"Строка {line_num}: ожидается 5 значений, получено {len(parts)}"
                     )
                     continue
                 
                 try:
                     class_id = int(parts[0])
-                    x_center, y_center, width, height = map(float, parts[1:])
+                    x_center = float(parts[1])
+                    y_center = float(parts[2])
+                    width = float(parts[3])
+                    height = float(parts[4])
                     
-                    # Проверка границ
+                    # Проверка диапазонов
                     if not (0 <= x_center <= 1 and 0 <= y_center <= 1 and
-                           0 <= width <= 1 and 0 <= height <= 1):
+                            0 < width <= 1 and 0 < height <= 1):
                         validation_result['valid'] = False
                         validation_result['issues'].append(
-                            f"Строка {line_num}: координаты вне допустимых границ [0,1]"
-                        )
-                    
-                    # Проверка логичности размеров
-                    if width <= 0 or height <= 0:
-                        validation_result['valid'] = False
-                        validation_result['issues'].append(
-                            f"Строка {line_num}: ширина или высота <= 0"
+                            f"Строка {line_num}: координаты вне допустимого диапазона"
                         )
                     
                     validation_result['bbox_count'] += 1
-                    validation_result['class_distribution'][class_id] = \
-                        validation_result['class_distribution'].get(class_id, 0) + 1
                     
                 except ValueError:
                     validation_result['valid'] = False
@@ -683,8 +525,8 @@ class AnnotationValidator:
 
 def create_dataset_yaml(dataset_dir: Path, class_mapping: Dict[str, int]):
     """Создание файла dataset.yaml для YOLO"""
-    yaml_content = f"""# Датасет для детекции объектов в ресторане
-# Создан автоматически профессиональной системой аннотации
+    yaml_content = f"""# Датасет для детекции объектов в ресторанной среде
+# Создан автоматически с использованием GroundingDINO
 
 path: {dataset_dir.absolute()}
 train: train/images
@@ -696,9 +538,10 @@ nc: {len(class_mapping)}
 names: {list(class_mapping.keys())}
 
 # Дополнительная информация
-description: "Профессиональный датасет для детекции объектов в ресторанной среде"
-version: "1.0"
+description: "Профессиональный датасет для детекции объектов еды и посуды в ресторанной среде"
+version: "2.0"
 license: "Custom"
+annotation_method: "GroundingDINO"
 """
     
     yaml_path = dataset_dir / "dataset.yaml"
@@ -712,7 +555,7 @@ def main():
     """Основная функция для запуска аннотации"""
     import argparse
     
-    parser = argparse.ArgumentParser(description="Профессиональная автоматическая аннотация для YOLO11")
+    parser = argparse.ArgumentParser(description="Профессиональная автоматическая аннотация для YOLO11 с GroundingDINO")
     parser.add_argument("--images_dir", type=str, required=True, 
                        help="Директория с изображениями")
     parser.add_argument("--output_dir", type=str, required=True,
