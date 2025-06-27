@@ -477,12 +477,16 @@ inference_config = {
 **Сравнение качества детекции на тестовых изображениях:**
 
 **YOLOv11 Nano результаты:**
-![Placeholder для результатов Nano инференса]
-*Nano модель демонстрирует точную детекцию с высокими confidence scores*
+
+![Nano Inference Results](outputs/final_demo/similar_video_inference_results.png)
+
+*Nano модель демонстрирует более точную детекцию с высокими confidence scores*
 
 **YOLOv11 Large результаты:**
-![Placeholder для результатов Large инференса]
-*Large модель показывает сопоставимое качество, но с большими вычислительными затратами*
+
+![Large Inference Results](outputs/final_demo/L/Large inference.png)
+
+*Large модель показывает плохое качество и с большими вычислительными затратами*
 
 #### 📈 Рекомендации для практического применения
 
@@ -1284,12 +1288,16 @@ To select the optimal architecture, a comparative study was conducted between tw
 **Detection Quality Comparison on Test Images:**
 
 **YOLOv11 Nano Results:**
-![Placeholder for Nano inference results]
-*Nano model demonstrates precise detection with high confidence scores*
+
+![Nano Inference Results](outputs/final_demo/similar_video_inference_results.png)
+
+*Nano model demonstrates more precise detection with higher confidence scores*
 
 **YOLOv11 Large Results:**
-![Placeholder for Large inference results]
-*Large model shows comparable quality but with higher computational costs*
+
+![Large Inference Results](outputs/final_demo/L/Large inference.png)
+
+*Large model shows poor quality and with higher computational costs*
 
 #### 📈 Practical Application Recommendations
 
