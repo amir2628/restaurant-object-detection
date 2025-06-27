@@ -610,8 +610,6 @@ inference_config = {
 
 #### 🖼️ Detection Examples
 
-**Файл изображения:** `detection_results_grid.png`
-
 **Multi-object scenes:**
 - Модель успешно обрабатывает 8-12 объектов на кадр
 - Хорошая производительность несмотря на object overlap
@@ -619,10 +617,8 @@ inference_config = {
 
 #### 🎯 Confidence Analysis
 
-**Файл изображения:** `detection_with_confidence_scores.png`
-
 **High-confidence detections:**
-- Clear, unoccluded objects показывают confidence >0.8
+- Clear, unoccluded objects показывают confidence >0.7
 - Consistent lighting производит stable confidence scores
 - Canonical views достигают highest confidence
 
@@ -692,6 +688,8 @@ inference_config = {
 
 **Экспериментальная проверка Domain Shift:**
 
+![Domain Shift Test Result](outputs/final_demo/domain_shift_test_results.png)
+
 **Файл изображения:** `domain_shift_test_results.png`
 
 #### 🎯 Выбор похожих видео для инференса
@@ -709,6 +707,8 @@ inference_config = {
 - Сопоставимым качеством изображения
 
 **Результаты тестирования на похожем видео:**
+
+![Similar Video Inference Results](outputs/final_demo/similar_video_inference_results.png)
 
 **Файл изображения:** `similar_video_inference_results.png`
 
@@ -1417,8 +1417,6 @@ To select the optimal architecture, a comparative study was conducted between tw
 
 #### 🖼️ Detection Examples
 
-**Image file:** `detection_results_grid.png`
-
 **Multi-object scenes:**
 - Model successfully handles 8-12 objects per frame
 - Good performance despite object overlap
@@ -1426,10 +1424,8 @@ To select the optimal architecture, a comparative study was conducted between tw
 
 #### 🎯 Confidence Analysis
 
-**Image file:** `detection_with_confidence_scores.png`
-
 **High-confidence detections:**
-- Clear, unoccluded objects show confidence >0.8
+- Clear, unoccluded objects show confidence >0.7
 - Consistent lighting produces stable confidence scores
 - Canonical views achieve highest confidence
 
@@ -1499,6 +1495,8 @@ To select the optimal architecture, a comparative study was conducted between tw
 
 **Experimental verification of Domain Shift:**
 
+![Domain Shift Test Result](outputs/final_demo/domain_shift_test_results.png)
+
 **Image file:** `domain_shift_test_results.png`
 
 #### 🎯 Selecting Similar Videos for Inference
@@ -1516,6 +1514,8 @@ We used the **iStock platform**, uploading one of our training videos to search 
 - Comparable image quality
 
 **Results of testing on similar video:**
+
+![Similar Video Inference Results](outputs/final_demo/similar_video_inference_results.png)
 
 **Image file:** `similar_video_inference_results.png`
 
