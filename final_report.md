@@ -509,8 +509,6 @@ inference_config = {
 
 ![Confusion Matrix Normalized](outputs/experiments/yolo_restaurant_detection_1750973996/confusion_matrix_normalized.png)
 
-**Файл изображения:** `confusion_matrix.png` и `confusion_matrix_normalized.png`
-
 **Лучшие классы:**
 
 <div align="center">
@@ -538,8 +536,6 @@ inference_config = {
 
 ![F1 Confidence Curve](outputs/experiments/yolo_restaurant_detection_1750973996/f1_curve.png)
 
-**Файл изображения:** `f1_confidence_curve.png`
-
 **Ключевые наблюдения:**
 - **🎯 Optimal threshold**: 0.301 (F1 = 0.72)
 - **📊 Стабильные классы**: Plate, Salad, Soup
@@ -553,8 +549,6 @@ inference_config = {
 
 ![Recall Confidence Curve](outputs/experiments/yolo_restaurant_detection_1750973996/R_curve.png)
 
-**Файл изображения:** `precision_recall_curve.png`
-
 **Outstanding performers:**
 - **🍽️ Plate: 98.1% mAP@0.5** - near perfect detection
 - **🥗 Salad: 91.6% mAP@0.5** - excellent despite visual variety
@@ -565,8 +559,6 @@ inference_config = {
 #### 📈 Class Distribution
 
 ![Class Distribution Histogram](outputs/experiments/yolo_restaurant_detection_1750973996/labels.jpg)
-
-**Файл изображения:** `class_distribution_histogram.png`
 
 <div align="center">
 
@@ -597,8 +589,6 @@ inference_config = {
 ![Validation Batch 1: Labels](outputs/experiments/yolo_restaurant_detection_1750973996/val_batch1_labels.jpg)
 
 ![Validation Batch 1: Prediction](outputs/experiments/yolo_restaurant_detection_1750973996/val_batch1_pred.jpg)
-
-**Файл изображения:** `training_curves.png`
 
 **Box Loss analysis:**
 - Быстрая конвергенция в первые 50 эпох (1.1 → 0.35)
@@ -694,8 +684,6 @@ inference_config = {
 
 ![Domain Shift Test Result](outputs/final_demo/domain_shift_test_results.png)
 
-**Файл изображения:** `domain_shift_test_results.png`
-
 #### 🎯 Выбор похожих видео для инференса
 
 **Практический подход для domain-specific проекта:**
@@ -713,8 +701,6 @@ inference_config = {
 **Результаты тестирования на похожем видео:**
 
 ![Similar Video Inference Results](outputs/final_demo/similar_video_inference_results.png)
-
-**Файл изображения:** `similar_video_inference_results.png`
 
 **Наблюдения:**
 - ✅ **Сохранение performance**: модель показала разумные результаты на похожем видео
@@ -1320,8 +1306,6 @@ To select the optimal architecture, a comparative study was conducted between tw
 
 ![Confusion Matrix Normalized](outputs/experiments/yolo_restaurant_detection_1750973996/confusion_matrix_normalized.png)
 
-**Image file:** `confusion_matrix.png` and `confusion_matrix_normalized.png`
-
 **Best classes:**
 
 <div align="center">
@@ -1349,8 +1333,6 @@ To select the optimal architecture, a comparative study was conducted between tw
 
 ![F1 Confidence Curve](outputs/experiments/yolo_restaurant_detection_1750973996/F1_curve.png)
 
-**Image file:** `f1_confidence_curve.png`
-
 **Key observations:**
 - **🎯 Optimal threshold**: 0.301 (F1 = 0.72)
 - **📊 Stable classes**: Plate, Salad, Soup
@@ -1364,8 +1346,6 @@ To select the optimal architecture, a comparative study was conducted between tw
 
 ![Recall Confidence Curve](outputs/experiments/yolo_restaurant_detection_1750973996/R_curve.png)
 
-**Image file:** `precision_recall_curve.png`
-
 **Outstanding performers:**
 - **🍽️ Plate: 98.1% mAP@0.5** - near perfect detection
 - **🥗 Salad: 91.6% mAP@0.5** - excellent despite visual variety
@@ -1376,8 +1356,6 @@ To select the optimal architecture, a comparative study was conducted between tw
 #### 📈 Class Distribution
 
 ![Class Distribution Histogram](outputs/experiments/yolo_restaurant_detection_1750973996/labels.jpg)
-
-**Image file:** `class_distribution_histogram.png`
 
 <div align="center">
 
@@ -1408,8 +1386,6 @@ To select the optimal architecture, a comparative study was conducted between tw
 ![Validation Batch 1: Labels](outputs/experiments/yolo_restaurant_detection_1750973996/val_batch1_labels.jpg)
 
 ![Validation Batch 1: Prediction](outputs/experiments/yolo_restaurant_detection_1750973996/val_batch1_pred.jpg)
-
-**Image file:** `training_curves.png`
 
 **Box Loss analysis:**
 - Rapid convergence in first 50 epochs (1.1 → 0.35)
@@ -1505,8 +1481,6 @@ To select the optimal architecture, a comparative study was conducted between tw
 
 ![Domain Shift Test Result](outputs/final_demo/domain_shift_test_results.png)
 
-**Image file:** `domain_shift_test_results.png`
-
 #### 🎯 Selecting Similar Videos for Inference
 
 **Practical approach for domain-specific project:**
@@ -1524,8 +1498,6 @@ We used the **iStock platform**, uploading one of our training videos to search 
 **Results of testing on similar video:**
 
 ![Similar Video Inference Results](outputs/final_demo/similar_video_inference_results.png)
-
-**Image file:** `similar_video_inference_results.png`
 
 **Observations:**
 - ✅ **Performance preservation**: model showed reasonable results on similar video
