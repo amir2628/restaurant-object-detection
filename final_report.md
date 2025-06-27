@@ -1288,6 +1288,8 @@ To select the optimal architecture, a comparative study was conducted between tw
 
 #### 🔍 Confusion Matrix Analysis
 
+![Confusion Matrix](outputs/experiments/yolo_restaurant_detection_1750973996/confusion_matrix.png)
+
 **Image file:** `confusion_matrix.png` and `confusion_matrix_normalized.png`
 
 **Best classes:**
