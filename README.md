@@ -268,7 +268,7 @@ python scripts/run_inference.py --model "outputs\experiments\yolo_restaurant_det
 | **Размер модели** | **~6MB** | 📦 Компактная |
 | **Время обучения** | **87.3 мин** | 🚀 Быстрое обучение |
 
-<img width="1280" alt="Image" src="https://github.com/user-attachments/assets/acc152e7-2ed4-485e-a824-da97a6c7bef3" />
+![example](outputs/train_example.png)
 
 ### 📈 Особенности реализации
 
@@ -538,7 +538,7 @@ YOLOv11 training results on GPU (500 epochs, 87.3 minutes):
 | **Model Size** | **~6MB** | 📦 Compact |
 | **Training Time** | **87.3 min** | 🚀 Fast training |
 
-<img width="1280" alt="Image" src="https://github.com/user-attachments/assets/acc152e7-2ed4-485e-a824-da97a6c7bef3" />
+![example](outputs/train_example.png)
 
 ### 📈 Implementation Features
 
