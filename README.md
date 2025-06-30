@@ -126,6 +126,8 @@ mkdir -p data/raw
 # └── restaurant_video_3.avi
 ```
 
+**⚠️ ВАЖНО: Модели YOLO11l (Large: `yolo_restaurant_detection_1750941635`) и YOLO11n (nano: `yolo_restaurant_detection_1750973996`) уже были обучены на основе предоставленных тестовых данных. Вы можете пропустить подготовку данных и выполнить логический вывод. Если вы хотите обучить модель YOLO 11 самостоятельно, то вам необходимо выполнить подготовку данных и запустить обучение заново.**
+
 ### 3. Подготовка данных с автоматической аннотацией GroundingDINO
 
 ```bash
@@ -393,6 +395,8 @@ mkdir -p data/raw
 # ├── restaurant_video_2.mp4
 # └── restaurant_video_3.avi
 ```
+
+**⚠️ IMPORTANT: A YOLO11l (Large: `yolo_restaurant_detection_1750941635`) and a YOLO11n (nano: `yolo_restaurant_detection_1750973996`) has already been trained on the test data which was provided. You can skip the data preparation and run the inference. If you want to train a YOLO 11 model yourself, then you have to do the data preparation and run the training again.**
 
 ### 3. Data Preparation with Automatic GroundingDINO Annotation
 
